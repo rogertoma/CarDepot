@@ -1,0 +1,19 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:VehicleControls="clr-namespace:CarDepot.Controls.VehicleControls" x:Class="CarDepot.VehicleInfoWindow"
+        Title="VehicleInfoWindow" Height="768" Width="1024" Closed="Window_Closed_1" Closing="VehicleInfoWindow_OnClosing">
+    <Grid x:Name="fullgrid">
+        <TabControl HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto">
+            <TabItem Header="General Info">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <VehicleControls:BasicVehicleInfoControl x:Name="BasicVehicleControlPropertyPanel" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Tasks">
+                <VehicleControls:ManageVehicleTasksControl x:Name="ManageVehicleTasksControlPropertyPanel" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

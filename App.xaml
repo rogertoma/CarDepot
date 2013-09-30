@@ -1,0 +1,10 @@
+﻿<Application x:Class="CarDepot.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+             <!--StartupUri="Pages\VehicleInfoPage.xaml">-->
+             <!--StartupUri="Pages\LogonPage.xaml">-->             
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

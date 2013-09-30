@@ -1,0 +1,9 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:CarDepot.Controls" x:Class="CarDepot.Pages.LogonPage"
+        Title="LogonPage" Height="471" Width="747">
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <controls:LogonPageControl x:Name="LogonControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsVisibleChanged="LogonPageControl_IsVisibleChanged"/>
+    </DockPanel>
+</Window>

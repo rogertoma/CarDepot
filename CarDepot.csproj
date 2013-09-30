@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1FC39AED-1669-4B38-A441-BC7C204F6309}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CarDepot</RootNamespace>
+    <AssemblyName>CarDepot</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="Controls\AdminLabel.cs" />
+    <Compile Include="Controls\AdminLabelTextBox.xaml.cs">
+      <DependentUpon>AdminLabelTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AdminListView.cs" />
+    <Compile Include="Controls\AdminTextBox.cs" />
+    <Compile Include="Controls\ImageViewerControl.xaml.cs">
+      <DependentUpon>ImageViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\IPropertyPanel.cs" />
+    <Compile Include="Controls\LogonPageControl.xaml.cs">
+      <DependentUpon>LogonPageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LogonTileControl.xaml.cs">
+      <DependentUpon>LogonTileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TaskItemControl.xaml.cs">
+      <DependentUpon>TaskItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VehicleControls\BasicVehicleInfoControl.xaml.cs">
+      <DependentUpon>BasicVehicleInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VehicleControls\ManageVehicleTasksControl.xaml.cs">
+      <DependentUpon>ManageVehicleTasksControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VehicleTileControl.xaml.cs">
+      <DependentUpon>VehicleTileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ActiveVehiclePage.xaml.cs">
+      <DependentUpon>ActiveVehiclePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\IPropertyPage.cs" />
+    <Compile Include="Pages\LogonPage.xaml.cs">
+      <DependentUpon>LogonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\VehicleInfoPage.xaml.cs">
+      <DependentUpon>VehicleInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyId.cs" />
+    <Compile Include="PropertyIdAttribute.cs" />
+    <Compile Include="Resources\Settings.cs" />
+    <Compile Include="Resources\Strings.Designer.cs" />
+    <Compile Include="UserAdminObject.cs" />
+    <Compile Include="VehicleAdminObject.cs" />
+    <Compile Include="VehicleStore\ActiveVehicleCache.cs" />
+    <Compile Include="VehicleStore\CacheManager.cs" />
+    <Compile Include="VehicleStore\UserCache.cs" />
+    <Compile Include="VehicleStore\VehicleCache.cs" />
+    <Compile Include="VehicleTask.cs" />
+    <Page Include="Controls\AdminLabelTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ImageViewerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LogonPageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LogonTileControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TaskItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\VehicleControls\BasicVehicleInfoControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\VehicleControls\ManageVehicleTasksControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\VehicleTileControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="AdminItemCache.cs" />
+    <Compile Include="AdminObject.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IAdminItemCache.cs" />
+    <Compile Include="IAdminObject.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\ActiveVehiclePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LogonPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\VehicleInfoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\SearchControls\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
