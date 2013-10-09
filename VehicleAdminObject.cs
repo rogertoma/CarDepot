@@ -22,25 +22,10 @@ namespace CarDepot
 
         public override IAdminItemCache Cache { get; set; }
 
-        public VehicleAdminObject()
+        public VehicleAdminObject() 
+            : base() 
         {
-            List<string> directories = Directory.GetDirectories(Settings.VehiclePath).ToList();
-            directories.Sort();
-            DirectoryInfo directoryInfo = new  DirectoryInfo(directories[directories.Count - 1]);
 
-            int lastId;
-            if (!int.TryParse(directoryInfo.Name, out lastId))
-            {
-                MessageBox.Show(Strings.VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR, Strings.ERROR, MessageBoxButton.OK);
-                return;
-            }
-
-            DirectoryInfo newDirectory = Directory.CreateDirectory(Settings.VehiclePath + "\\" + (lastId + 1));
-            FileStream newfile = File.Create(newDirectory.FullName + "\\" + Settings.VehicleInfoFileName);
-            string fileName = newfile.Name;
-            newfile.Close();
-
-            File.WriteAllText(fileName, Settings.VehicleInfoDefaultFileText);
         }
 
         public VehicleAdminObject(string objectId)

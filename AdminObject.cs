@@ -178,18 +178,20 @@ namespace CarDepot
             System.Diagnostics.Debug.Print("Saving item to policy store");
             System.Diagnostics.Debug.Print("this.Name = {0}", GetValue(PropertyId.Name));
 
-            bool isNew = !Cache.ContainsKey(objectId);
+            bool isNew = Cache == null || !Cache.ContainsKey(objectId);
+
+
             UpdateData();
 
             if (isNew)
             {
                 System.Diagnostics.Debug.Print("Adding item to cache");
-                Cache.AddItem(this);
+                if (Cache != null) Cache.AddItem(this);
             }
             else
             {
                 System.Diagnostics.Debug.Print("Modifying item in cache");
-                Cache.ModifyItem(this);
+                if (Cache != null) Cache.ModifyItem(this);
             }
 
             return true;

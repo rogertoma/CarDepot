@@ -59,6 +59,13 @@
     </Compile>
     <Compile Include="Controls\AdminListView.cs" />
     <Compile Include="Controls\AdminTextBox.cs" />
+    <Compile Include="Controls\ClosableTab.cs" />
+    <Compile Include="Controls\CloseableHeaderControl.xaml.cs">
+      <DependentUpon>CloseableHeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ActionsPage.xaml.cs">
+      <DependentUpon>ActionsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageViewerControl.xaml.cs">
       <DependentUpon>ImageViewerControl.xaml</DependentUpon>
     </Compile>
@@ -68,6 +75,9 @@
     </Compile>
     <Compile Include="Controls\LogonTileControl.xaml.cs">
       <DependentUpon>LogonTileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\VehicleSearchPage.xaml.cs">
+      <DependentUpon>VehicleSearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TaskItemControl.xaml.cs">
       <DependentUpon>TaskItemControl.xaml</DependentUpon>
@@ -81,8 +91,8 @@
     <Compile Include="Controls\VehicleTileControl.xaml.cs">
       <DependentUpon>VehicleTileControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ActiveVehiclePage.xaml.cs">
-      <DependentUpon>ActiveVehiclePage.xaml</DependentUpon>
+    <Compile Include="Controls\VehicleControls\ActiveVehicleControl.xaml.cs">
+      <DependentUpon>ActiveVehicleControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\IPropertyPage.cs" />
     <Compile Include="Pages\LogonPage.xaml.cs">
@@ -106,6 +116,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\CloseableHeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ActionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ImageViewerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +135,10 @@
     <Page Include="Controls\LogonTileControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\VehicleSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TaskItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -150,7 +172,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\ActiveVehiclePage.xaml">
+    <Page Include="Controls\VehicleControls\ActiveVehicleControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -194,6 +216,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controls\GeneralControls\" />
     <Folder Include="Controls\SearchControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -73,6 +73,9 @@ namespace CarDepot.Controls
         private string MoveToImageFolder(string origionalFilePath)
         {
             string filePath = new FileInfo(_item.ObjectId).Directory.FullName + Settings.VehicleImageFolder + "\\";
+            if (!Directory.Exists(filePath))
+                Directory.CreateDirectory(filePath);
+
             string[] allImages = Directory.GetFiles(filePath);
 
             int fileNumber = 0;

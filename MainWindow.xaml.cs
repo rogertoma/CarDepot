@@ -14,8 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Controls;
+using CarDepot.Controls.VehicleControls;
 using CarDepot.Pages;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot
 {
@@ -28,7 +30,8 @@ namespace CarDepot
         public MainWindow()
         {
             InitializeComponent();
-            LoadTabs();
+            _user = CacheManager.UserCache[0];
+            LoadUserTabs();
         }
 
         public MainWindow(UserAdminObject user)
@@ -42,31 +45,53 @@ namespace CarDepot
         {
             foreach (string tab in _user.MainTabPages)
             {
-                TabItem tabItem = new TabItem();
                 Type elementType = Type.GetType(tab);
                 object page = Activator.CreateInstance(elementType);
-                tabItem.Header = ((IPropertyPage)page).PageTitle;
-                tabItem.Content = page;
-                PagesTabControl.Items.Add(tabItem);
+
+                PagesTabControl.Items.Add(GetPageTabItem(page as IPropertyPage));
+                ((IPropertyPage)page).SetTabControlContext(PagesTabControl);
             }
         }
 
-        private void LoadTabs()
+        private TabItem GetPageTabItem(IPropertyPage page)
         {
-            TabItem tabItem = new TabItem ();
-            tabItem.Header = "ROGER";
-            Type elementType = Type.GetType("CarDepot.Controls.LogonPageControl");
-            object list = Activator.CreateInstance(elementType);
-            tabItem.Content = (LogonPageControl)list;
-            PagesTabControl.Items.Add(tabItem);
+            if (page == null)
+                return null;
 
-            TabItem tabItem2 = new TabItem();
-            tabItem2.Header = "ActiveVehiclePage";
-            Type elementType2 = Type.GetType("CarDepot.Pages.ActiveVehiclePage");
-            object list2 = Activator.CreateInstance(elementType2);
-            tabItem2.Content = (ActiveVehiclePage)list2;
-            PagesTabControl.Items.Add(tabItem2);
+            if (page.IsCloseable)
+            {
+                ClosableTab theTabItem = new ClosableTab();
+                theTabItem.Height = LookAndFeel.TabItemHeight;
+                theTabItem.Title = ((IPropertyPage)page).PageTitle;
+                theTabItem.Content = page;
+                return theTabItem;
+            }
+            else
+            {
+                TabItem tabItem = new TabItem();
+                tabItem.Height = LookAndFeel.TabItemHeight;
+                tabItem.Header = ((IPropertyPage)page).PageTitle;
+                tabItem.Content = page;
+                return tabItem;
+            }
         }
+
+        //private void LoadTabs()
+        //{
+        //    TabItem tabItem = new TabItem ();
+        //    tabItem.Header = "ROGER";
+        //    Type elementType = Type.GetType("CarDepot.Controls.LogonPageControl");
+        //    object list = Activator.CreateInstance(elementType);
+        //    tabItem.Content = (LogonPageControl)list;
+        //    PagesTabControl.Items.Add(tabItem);
+
+        //    TabItem tabItem2 = new TabItem();
+        //    tabItem2.Header = "ActiveVehiclePage";
+        //    Type elementType2 = Type.GetType("CarDepot.Pages.ActiveVehiclePage");
+        //    object list2 = Activator.CreateInstance(elementType2);
+        //    tabItem2.Content = (ActiveVehiclePage)list2;
+        //    PagesTabControl.Items.Add(tabItem2);
+        //}
 
         private void CarDepot_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

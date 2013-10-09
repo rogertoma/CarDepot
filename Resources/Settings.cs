@@ -20,6 +20,11 @@ namespace CarDepot.Resources
         public static int MultiValueValueIndex = 1;
     }
 
+    static class LookAndFeel
+    {
+        public static int TabItemHeight = 40;
+    }
+
     static class DefaultColors
     {
         //this.BorderBrush = new LinearGradientBrush(Colors.LimeGreen, Colors.White, new Point(0.5, 0), new Point(0.5, 1));

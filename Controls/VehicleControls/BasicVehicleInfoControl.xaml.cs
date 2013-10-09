@@ -41,7 +41,11 @@ namespace CarDepot.Controls.VehicleControls
                 BasicIdsGrid.RowDefinitions.Add(rowDefinition);
                 
                 Grid.SetRow(labelItem, i);
-                BasicIdsGrid.Children.Add(labelItem);
+
+                bool alreadyExists = BasicIdsGrid.Children.Cast<AdminLabelTextbox>().Any(textbox => textbox.PropertyId == propertyId);
+
+                if (!alreadyExists)
+                    BasicIdsGrid.Children.Add(labelItem);
             }
         }
 

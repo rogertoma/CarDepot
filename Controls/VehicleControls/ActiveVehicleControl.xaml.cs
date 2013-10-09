@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using CarDepot.Controls;
+using CarDepot.Pages;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
 
-namespace CarDepot.Pages
+namespace CarDepot.Controls.VehicleControls
 {
     /// <summary>
     /// Interaction logic for ActiveVehiclePage.xaml
@@ -89,5 +78,11 @@ namespace CarDepot.Pages
         {
             get { return Strings.PAGES_ACTIVEVEHICLE_TAB_TITLE; }
         }
+
+        public void SetTabControlContext(TabControl control)
+        {
+        }
+
+        public bool IsCloseable { get; private set; }
     }
 }

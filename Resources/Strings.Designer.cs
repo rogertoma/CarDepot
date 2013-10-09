@@ -222,5 +222,28 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("ERROR", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROL_ACTIONSCONTROL_TAB_TITLE.
+        /// </summary>
+        internal static string CONTROL_ACTIONSCONTROL_TAB_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("CONTROL_ACTIONSCONTROL_TAB_TITLE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGE_VEHICLESEARCHPAGE_TITLE.
+        /// </summary>
+        internal static string PAGE_VEHICLESEARCHPAGE_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGE_VEHICLESEARCHPAGE_TITLE", resourceCulture);
+            }
+        }
+        
     }
 }
