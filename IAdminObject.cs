@@ -18,8 +18,9 @@ namespace CarDepot
         string ObjectId { get; }
         void SetValue(PropertyId id, object value);
         void ApplyValue(PropertyId id, string value);
-        void ApplyMultiValue(PropertyId id, string[] value);
+        void ApplyMultiValue(PropertyId id, XElement element);
         void UpdateData();
+        XDocument XDocument { get; }
 
         bool Save(object sender);
         void Delete(object sender);

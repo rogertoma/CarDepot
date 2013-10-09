@@ -200,5 +200,27 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("SYSTEMADMINACCOUNTNAME", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR.
+        /// </summary>
+        internal static string VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR
+        {
+            get
+            {
+                return ResourceManager.GetString("VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR.
+        /// </summary>
+        internal static string ERROR
+        {
+            get
+            {
+                return ResourceManager.GetString("ERROR", resourceCulture);
+            }
+        }
     }
 }

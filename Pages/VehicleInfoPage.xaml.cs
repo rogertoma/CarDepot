@@ -26,14 +26,14 @@ namespace CarDepot
         private VehicleAdminObject _vehicle;
         List<IPropertyPanel> propertyPanels = new List<IPropertyPanel>();
 
-        public VehicleInfoWindow()
+        public VehicleInfoWindow() : this (new VehicleAdminObject())
         {
-            InitializeComponent();
-            _vehicle = CacheManager.ActiveVehicleCache[0];
+            //InitializeComponent();
+        }
 
-            propertyPanels.Add(BasicVehicleControlPropertyPanel);
-            propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
-            LoadPanel(_vehicle);
+        private void InitializePage()
+        {
+            
         }
 
         public VehicleInfoWindow(VehicleAdminObject vehicle)
@@ -43,8 +43,6 @@ namespace CarDepot
 
             propertyPanels.Add(BasicVehicleControlPropertyPanel);
             propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
-
-            ((VehicleCache)_vehicle.Cache).UpdateObjectWithDataFromFile(_vehicle);
 
             LoadPanel(_vehicle);
         }
@@ -64,6 +62,13 @@ namespace CarDepot
 
         private void VehicleInfoWindow_OnClosing(object sender, CancelEventArgs e)
         {
+            VehicleAdminObject origionalVehicle = new VehicleAdminObject(_vehicle.ObjectId);
+
+            bool same = _vehicle.Equals(origionalVehicle);
+
+            if (same)
+                return;
+
             MessageBoxResult result = MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING,
                 Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE, MessageBoxButton.YesNoCancel);
 
@@ -80,6 +85,16 @@ namespace CarDepot
             else if (result == MessageBoxResult.Cancel)
             {
                 e.Cancel = true;
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            bool successfulSave = _vehicle.Save(this);
+            if (!successfulSave)
+            {
+                MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_UNABLETOSAVE,
+                                Strings.PAGES_VEHICLEINFOPAGE_ERROR, MessageBoxButton.OK);
             }
         }
     }

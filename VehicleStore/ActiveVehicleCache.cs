@@ -10,7 +10,7 @@ namespace CarDepot.VehicleStore
     class ActiveVehicleCache: VehicleCache
     {
         public ActiveVehicleCache()
-            : base(Settings.VehicleActivePath)
+            : base(Settings.VehiclePath)
         {
             
         }

@@ -30,14 +30,14 @@ namespace CarDepot.Controls
             _vehicle = vehicle;
             _defaultBrush = this.BorderBrush;
             Initialize();
-            this.ToolTip = String.Format("{0} {1} {2} : {3}", _vehicle.Year, _vehicle.Make, _vehicle.Model,
-                                                      _vehicle.Trim);
+            this.ToolTip = String.Format("{0} {1} {2} : {3}", _vehicle.GetValue(PropertyId.Year), _vehicle.GetValue(PropertyId.Make), _vehicle.GetValue(PropertyId.Model),
+                                                      _vehicle.GetValue(PropertyId.Trim));
         }
 
         public void Initialize()
         {
-            VehicleTitle.Content = String.Format("{0} {1} {2} : {3}", _vehicle.Year, _vehicle.Make, _vehicle.Model,
-                                                      _vehicle.Trim);            
+            VehicleTitle.Content = String.Format("{0} {1} {2} : {3}", _vehicle.GetValue(PropertyId.Year), _vehicle.GetValue(PropertyId.Make), _vehicle.GetValue(PropertyId.Model),
+                                                      _vehicle.GetValue(PropertyId.Trim));            
 
             foreach (IPropertyPanel propertyLabel in LayoutGrid.Children.OfType<IPropertyPanel>())
             {

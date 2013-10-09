@@ -26,97 +26,11 @@ namespace CarDepot.VehicleStore
             }
         }
 
-        private VehicleTask CreateTask(XElement element)
-        {
-            VehicleTask task = new VehicleTask();
-            foreach (XElement descendant in element.Descendants())
-            {
-                PropertyId id;
-                try
-                {
-                    id = (PropertyId)Enum.Parse(typeof(PropertyId), descendant.Name.LocalName);
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-
-                task.ApplyValue(id, descendant.Value);
-            }
-
-            return task;
-        }
-
-        private void LoadMultiValueNode(PropertyId id, VehicleAdminObject vehicle, XElement element)
-        {
-            switch (id)
-            {
-                case PropertyId.Tasks:
-                    vehicle.VehicleTasks.Clear();
-                    foreach (XElement descendant in element.Descendants())
-                    {
-                        VehicleTask task = CreateTask(descendant);
-                        if (!string.IsNullOrEmpty(task.Id))
-                            vehicle.VehicleTasks.Add(task);
-                    }
-                    break;
-
-                default:
-                    vehicle.Images.Clear();
-                    foreach (XElement descendant in element.Descendants())
-                    {
-                        string[] multiValueItem = new string[2];
-                        multiValueItem[Settings.MultiValueKeyIndex] = descendant.Name.ToString();
-
-                        if (descendant.Value.StartsWith("\\"))
-                        {
-                            multiValueItem[Settings.MultiValueValueIndex] =
-                                new FileInfo(vehicle.ObjectId).Directory.FullName + descendant.Value;
-                        }
-                        else
-                        {
-                            multiValueItem[Settings.MultiValueValueIndex] = descendant.Value;
-                        }
-
-                        vehicle.ApplyMultiValue(id, multiValueItem);
-                    }
-                    break;
-            }
-        }
-
         private void LoadVehicle(string file)
         {
             VehicleAdminObject vehicle = new VehicleAdminObject(file);
             vehicle.Cache = this;
-            UpdateObjectWithDataFromFile(vehicle);
             this.Add(vehicle);
-        }
-
-        public void UpdateObjectWithDataFromFile(VehicleAdminObject vehicle)
-        {
-            XDocument doc = XDocument.Load(vehicle.ObjectId);
-            var elements = doc.Descendants();
-            foreach (var element in elements)
-            {
-                PropertyId id;
-                try
-                {
-                    id = (PropertyId)Enum.Parse(typeof(PropertyId), element.Name.LocalName);
-                }
-                catch (Exception)
-                {
-                    continue;
-                }
-
-                if (PropertyIdSettings.IsMultiValue(id))
-                {
-                    LoadMultiValueNode(id, vehicle, element);
-                }
-                else
-                {
-                    vehicle.ApplyValue(id, element.Value);
-                }
-            }
         }
 
         public event EventHandler<AdminItemCache.RefreshEventArgs> RefreshStarted;

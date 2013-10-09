@@ -21,10 +21,16 @@ namespace CarDepot
     [PropertyId(PropertyId.TaskMinutes)]
     public class VehicleTask
     {
-
+        private Dictionary<PropertyId, string> _basicInfo = new Dictionary<PropertyId, string>();
         //private const string NOTSTARTED = "Not Started";
         //private const string INPROGRESS = "In Progress";
         //private const string COMPLETED = "Completed";
+
+        public Dictionary<PropertyId, string> BasicInfo
+        {
+            get { return _basicInfo; }
+            set { _basicInfo = value; }
+        }
 
         public enum StatusTypes
         {
@@ -43,88 +49,84 @@ namespace CarDepot
             Other
         }
 
-        //public static StatusState StringToStatusState(string status)
-        //{
-        //    switch (status)
-        //    {
-        //        case NOTSTARTED:
-        //            return StatusState.NotStarted;
-        //        case COMPLETED:
-        //            return StatusState.Completed;
-        //        case INPROGRESS:
-        //            return StatusState.InProgress;
-        //        default:
-        //            return StatusState.UnKnown;
-        //    }
-        //}
+        #region SettingProperties
 
-        //public static string StatusStateToString(StatusState status)
-        //{
-        //    switch (status)
-        //    {
-        //        case StatusState.NotStarted:
-        //            return NOTSTARTED;
-        //        case StatusState.Completed:
-        //            return COMPLETED;
-        //        case StatusState.InProgress:
-        //            return INPROGRESS;
-        //        default:
-        //            return null;
-        //    }
-        //}
+        public string Id
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskName); } 
+            set { ApplyValue(PropertyId.TaskName, value); }
+        }
+        public string Status
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskStatus); }
+            set { ApplyValue(PropertyId.TaskStatus, value); }
+        }
+        public string CreatedBy
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskCreatedBy); }
+            set { ApplyValue(PropertyId.TaskCreatedBy, value); }
+        }
+        public string ChangedBy
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskChangedBy); }
+            set { ApplyValue(PropertyId.TaskChangedBy, value); }
+        }
+        public string ClosedBy
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskCompletedBy); }
+            set { ApplyValue(PropertyId.TaskCompletedBy, value); }
+        }
+        public string Comments
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskComments); }
+            set { ApplyValue(PropertyId.TaskComments, value); }
+        }
+        public string Cost
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskCost); }
+            set { ApplyValue(PropertyId.TaskCost, value); }
+        }
+        public string AssignedTo
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskAssignedTo); }
+            set { ApplyValue(PropertyId.TaskAssignedTo, value); }
+        }
+        public string Category
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskCategory); }
+            set { ApplyValue(PropertyId.TaskCategory, value); }
+        }
+        public string CreatedDate
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskCreatedDate); }
+            set { ApplyValue(PropertyId.TaskCreatedDate, value); }
+        }
+        public string DueDate
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskDueDate); }
+            set { ApplyValue(PropertyId.TaskDueDate, value); }
+        }
+        public string Minutes
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskMinutes); }
+            set { ApplyValue(PropertyId.TaskMinutes, value); }
+        }
 
-        public string Id { get; set; }
-        public string Status { get; set; }
-        public string CreatedBy { get; set; }
-        public string ChangedBy { get; set; }
-        public string ClosedBy { get; set; }
-        public string Comments { get; set; }
-        public string Cost { get; set; }
-        public string AssignedTo { get; set; }
-        public string Category { get; set; }
-        public string CreatedDate { get; set; }
-        public string DueDate { get; set; }
-        public string Minutes { get; set; }
+        #endregion
 
         public void ApplyValue(PropertyId id, string value)
         {
             switch (id)
             {
-                case PropertyId.TaskName:
-                    Id = value;
-                    break;
-                case PropertyId.TaskStatus:
-                    Status = value;
-                    break;
-                case PropertyId.TaskCreatedBy:
-                    CreatedBy = value;
-                    break;
-                case PropertyId.TaskChangedBy:
-                    ChangedBy = value;
-                    break;
-                case PropertyId.TaskCompletedBy:
-                    ClosedBy = value;
-                    break;
-                case PropertyId.TaskComments:
-                    Comments = value;
-                    break;
-                case PropertyId.TaskCost:
-                    Cost = value;
-                    break;
-                case PropertyId.TaskAssignedTo:
-                    AssignedTo = value;
-                    break;
-                case PropertyId.TaskCategory:
-                    Category = value;
-                    break;
-                case PropertyId.TaskCreatedDate:
-                    CreatedDate = value;
-                    break;
-                case PropertyId.TaskDueDate:
-                    DueDate = value;
-                    break;
-                case PropertyId.TaskMinutes:
-                    Minutes = value;
+                default:
+                    if (BasicInfo.ContainsKey(id))
+                    {
+                        BasicInfo[id] = value;
+                    }
+                    else
+                    {
+                        BasicInfo.Add(id, value);
+                    }
                     break;
             }
         }
@@ -133,33 +135,23 @@ namespace CarDepot
         {
             switch (id)
             {
-                case PropertyId.TaskName:
-                    return Id;
-                case PropertyId.TaskStatus:
-                    return Status;
-                case PropertyId.TaskCreatedBy:
-                    return CreatedBy;
-                case PropertyId.TaskChangedBy:
-                    return ChangedBy;
-                case PropertyId.TaskCompletedBy:
-                    return ClosedBy;
-                case PropertyId.TaskComments:
-                    return Comments;
-                case PropertyId.TaskCost:
-                    return Cost;
-                case PropertyId.TaskAssignedTo:
-                    return AssignedTo;
-                case PropertyId.TaskCategory:
-                    return Category;
-                case PropertyId.TaskCreatedDate:
-                    return CreatedDate;
-                case PropertyId.TaskDueDate:
-                    return DueDate;
-                case PropertyId.TaskMinutes:
-                    return Minutes;
                 default:
+                    if (BasicInfo.ContainsKey(id))
+                        return BasicInfo[id];
+
                     return null;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            VehicleTask task = obj as VehicleTask;
+            if (task == null)
+                return false;
+
+            Attribute[] attrs = Attribute.GetCustomAttributes(this.GetType());
+
+            return attrs.Cast<PropertyIdAttribute>().All(attribute => this.GetPropertyIdValue(attribute.PropertyId) == task.GetPropertyIdValue(attribute.PropertyId));
         }
     }
 }

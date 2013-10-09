@@ -17,7 +17,6 @@ namespace CarDepot
     public abstract class AdminObject : IAdminObject
     {
         private string objectId;
-        private string fileVersion;
         private XDocument xdoc;
 
         public AdminObject()
@@ -29,13 +28,19 @@ namespace CarDepot
         {
             this.objectId = objectId;
 
-            if (objectId != "")
-                xdoc = XDocument.Load(objectId);
+            if (String.IsNullOrEmpty(objectId))
+            {
+                return;
+            }
+
+            xdoc = XDocument.Load(objectId);
+            UpdateObjectWithDataFromFile();
         }
 
-        public void SetFileVersion(string fVersion)
+        public string FileVersion
         {
-            fileVersion = fVersion;
+            set;
+            get;
         }
 
         public abstract IAdminItemCache Cache { set; get; }
@@ -47,6 +52,33 @@ namespace CarDepot
         protected virtual int GetListViewImageIndex()
         {
             return -1;
+        }
+
+        public void UpdateObjectWithDataFromFile()
+        {
+            XDocument doc = XDocument.Load(objectId);
+            var elements = doc.Descendants();
+            foreach (var element in elements)
+            {
+                PropertyId id;
+                try
+                {
+                    id = (PropertyId)Enum.Parse(typeof(PropertyId), element.Name.LocalName);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+
+                if (PropertyIdSettings.IsMultiValue(id))
+                {
+                    ApplyMultiValue(id, element);
+                }
+                else
+                {
+                    ApplyValue(id, element.Value);
+                }
+            }
         }
 
         #region IAdminObject Members
@@ -81,16 +113,6 @@ namespace CarDepot
 
         public virtual string GetValue(PropertyId id)
         {
-            //SingleValueProperty property = null;
-            //try
-            //{
-            //    property = (SingleValueProperty)this[id.ToString()];
-            //}
-            //catch (InvalidCastException)
-            //{
-            //    DebugLog.AssertionFailure("InvalidCastException in GetValue<>() for property {0}", id);
-            //}
-            //return ConvertPropertyValue.FromString<T>(id, property.Value);
             return "value returned";
         }
 
@@ -99,9 +121,8 @@ namespace CarDepot
 
         }
 
-        public virtual void ApplyMultiValue(PropertyId id, string[] value)
+        public virtual void ApplyMultiValue(PropertyId id, XElement element)
         {
-
 
         }
 
@@ -128,14 +149,14 @@ namespace CarDepot
             if (element == null)
                 return true;
 
-            if (fileVersion.Trim() == element.Value.Trim())
+            if (FileVersion.Trim() == element.Value.Trim())
             {
-                fileVersion = (int.Parse(fileVersion) + 1).ToString(CultureInfo.InvariantCulture);
+                FileVersion = (int.Parse(FileVersion) + 1).ToString(CultureInfo.InvariantCulture);
                 elements = from node in xdoc.Descendants() where node.Name.LocalName == PropertyId.FileVersion.ToString() select node;
                 element = elements.FirstOrDefault() as XElement;
                 if (element != null)
                 {
-                    element.Value = fileVersion;
+                    element.Value = FileVersion;
                 }
 
                 return true;
@@ -177,12 +198,10 @@ namespace CarDepot
         public void SetValue(PropertyId id, object value)
         {
             var elements = from node in xdoc.Descendants() where node.Name.LocalName == id.ToString() select node;
-            //var elements = xdoc.Root.DescendantsAndSelf().Elements().Where(d => d.Name.LocalName == "Year");
             XElement element = elements.FirstOrDefault() as XElement;
 
             if (element != null)
             {
-                //element.Value = value.ToString();
                 element.Remove();
             }
 
@@ -249,6 +268,11 @@ namespace CarDepot
         /// </summary>
         public virtual void UpdateData()
         {
+        }
+
+        public XDocument XDocument 
+        { 
+            get { return xdoc; }
         }
 
         #endregion

@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Car Depot" Height="511" Width="778" Closing="CarDepot_Closing">
     <TabControl x:Name="PagesTabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-        <!--
         <TabItem Header="TabItem" Height="40">
-            <Grid Background="#FFE5E5E5"/>
+            <Grid Background="#FFE5E5E5">
+                <Button Content="Button" HorizontalAlignment="Left" Margin="48,88,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+            </Grid>
         </TabItem>
+        <!--
         <TabItem Header="TabItem">
             <Grid Background="#FFE5E5E5"/>
         </TabItem>

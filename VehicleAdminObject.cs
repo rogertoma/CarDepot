@@ -6,9 +6,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
 using System.Xml.Linq;
 using CarDepot.VehicleStore;
+using CarDepot.Resources;
 
 namespace CarDepot
 {
@@ -16,21 +18,30 @@ namespace CarDepot
     {
         private Dictionary<PropertyId, string> _basicInfo = new Dictionary<PropertyId, string>();
         private List<string[]> _images = new List<string[]>();
-        private List<VehicleTask> _vehicleTasks2 = new List<VehicleTask>();
         private ObservableCollection<VehicleTask> _vehicleTasks = new ObservableCollection<VehicleTask>();
 
-        public string FileVersion { get; set; }
-        public string Year { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public string Trim { get; set; }
-        public string Comments { get; set; }
-
-
-        public string ListPrice { get; set; }
-        public string SalePrice { get; set; }
-
         public override IAdminItemCache Cache { get; set; }
+
+        public VehicleAdminObject()
+        {
+            List<string> directories = Directory.GetDirectories(Settings.VehiclePath).ToList();
+            directories.Sort();
+            DirectoryInfo directoryInfo = new  DirectoryInfo(directories[directories.Count - 1]);
+
+            int lastId;
+            if (!int.TryParse(directoryInfo.Name, out lastId))
+            {
+                MessageBox.Show(Strings.VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR, Strings.ERROR, MessageBoxButton.OK);
+                return;
+            }
+
+            DirectoryInfo newDirectory = Directory.CreateDirectory(Settings.VehiclePath + "\\" + (lastId + 1));
+            FileStream newfile = File.Create(newDirectory.FullName + "\\" + Settings.VehicleInfoFileName);
+            string fileName = newfile.Name;
+            newfile.Close();
+
+            File.WriteAllText(fileName, Settings.VehicleInfoDefaultFileText);
+        }
 
         public VehicleAdminObject(string objectId)
             : base(objectId)
@@ -56,14 +67,64 @@ namespace CarDepot
             get { return _basicInfo; }
         }
 
-        public override void ApplyMultiValue(PropertyId id, string[] value)
+        public override void ApplyMultiValue(PropertyId id, XElement element)
         {
             switch (id)
             {
-                case PropertyId.Images:
-                    _images.Add(value);
+                case PropertyId.Tasks:
+                    VehicleTasks.Clear();
+                    foreach (XElement descendant in element.Descendants())
+                    {
+                        VehicleTask task = CreateTask(descendant);
+                        if (!string.IsNullOrEmpty(task.Id))
+                            VehicleTasks.Add(task);
+                    }
+                    break;
+
+                default:
+                    Images.Clear();
+                    foreach (XElement descendant in element.Descendants())
+                    {
+                        string[] multiValueItem = new string[2];
+                        multiValueItem[Settings.MultiValueKeyIndex] = descendant.Name.ToString();
+
+                        if (descendant.Value.StartsWith("\\"))
+                        {
+                            var directoryInfo = new FileInfo(ObjectId).Directory;
+                            if (directoryInfo != null)
+                                multiValueItem[Settings.MultiValueValueIndex] =
+                                    directoryInfo.FullName + descendant.Value;
+                        }
+                        else
+                        {
+                            multiValueItem[Settings.MultiValueValueIndex] = descendant.Value;
+                        }
+
+                        _images.Add(multiValueItem);
+                    }
                     break;
             }
+        }
+
+        private VehicleTask CreateTask(XElement element)
+        {
+            VehicleTask task = new VehicleTask();
+            foreach (XElement descendant in element.Descendants())
+            {
+                PropertyId id;
+                try
+                {
+                    id = (PropertyId)Enum.Parse(typeof(PropertyId), descendant.Name.LocalName);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+
+                task.ApplyValue(id, descendant.Value);
+            }
+
+            return task;
         }
 
         public override void ApplyValue(PropertyId id, string value)
@@ -71,36 +132,9 @@ namespace CarDepot
             switch (id)
             {
                 case PropertyId.FileVersion:
-                    SetFileVersion(value);
+                    base.FileVersion = value;
                     break;
-                case PropertyId.Year:
-                    Year = value;
-                    break;
-                case PropertyId.Make:
-                    Make = value;
-                    break;
-                case PropertyId.Model:
-                    Model = value;
-                    break;
-                case PropertyId.Trim:
-                    Trim = value;
-                    break;
-                case PropertyId.Comments:
-                    Comments = value;
-                    break;
-                case PropertyId.ListPrice:
-                    ListPrice = value;
-                    break;
-                case PropertyId.Bodystyle:
-                case PropertyId.Engine:
-                case PropertyId.Fueltype:
-                case PropertyId.Transmission:
-                case PropertyId.ExtColor:
-                case PropertyId.IntColor:
-                case PropertyId.Mileage:
-                case PropertyId.StockNumber:
-                case PropertyId.ModelCode:
-                case PropertyId.VinNumber:
+                default:
                     if (BasicInfo.ContainsKey(id))
                     {
                         BasicInfo[id] = value;
@@ -115,24 +149,8 @@ namespace CarDepot
 
         public override string GetValue(PropertyId id)
         {
-            //FieldInfo fi = this.GetType().GetField(id.ToString());
-            //string value = (string) fi.GetValue(null);
-            //return value;
-
             switch (id)
             {
-                case PropertyId.Year:
-                    return Year;
-                case PropertyId.Make:
-                    return Make;
-                case PropertyId.Model:
-                    return Model;
-                case PropertyId.Trim:
-                    return Trim;
-                case PropertyId.Comments:
-                    return Comments;
-                case PropertyId.ListPrice:
-                    return ListPrice;
                 default:
                     if (_basicInfo.ContainsKey(id))
                     {
@@ -155,5 +173,82 @@ namespace CarDepot
                     return null;
             }
         }
+
+        public override bool Equals(IAdminObject item)
+        {
+            VehicleAdminObject vehicle = item as VehicleAdminObject;
+            if (vehicle == null)
+                return false;
+
+            //Tasks, Images, Basic Info
+
+            if (VehicleTasks.Any(vehicleTask => !vehicle.VehicleTasks.Contains(vehicleTask)))
+            {
+                return false;
+            }
+
+            if (_images.Select(image => vehicle.Images.Any(otherImg => otherImg[0] == image[0])).Any(subListFound => !subListFound))
+            {
+                return false;
+            }
+
+            foreach (var info in _basicInfo)
+            {
+                if (!vehicle.BasicInfo.ContainsKey(info.Key))
+                    return false;
+
+                if (!vehicle.BasicInfo[info.Key].Equals(info.Value))
+                    return false;
+            }
+
+            return true;
+
+            #region PreLinq
+            //            VehicleAdminObject vehicle = item as VehicleAdminObject;
+            //if (vehicle == null)
+            //    return false;
+
+            ////Tasks, Images, Basic Info
+
+            //foreach (var vehicleTask in VehicleTasks)
+            //{
+            //    if (!vehicle.VehicleTasks.Contains(vehicleTask))
+            //        return false;
+            //}
+
+            //foreach (var image in _images)
+            //{
+            //    bool subListFound = false; 
+            //    foreach (var otherImg in vehicle.Images)
+            //    {
+            //        if (otherImg[0] == image[0])
+            //        {
+            //            subListFound = true;
+            //            break;
+            //        }
+            //    }
+
+            //    if (subListFound)
+            //    {
+            //        continue;
+            //    }
+
+            //    return false;
+            //}
+
+            //foreach (var info in _basicInfo)
+            //{
+            //    if (!vehicle.BasicInfo.ContainsKey(info.Key))
+            //        return false;
+
+            //    if (!vehicle.BasicInfo[info.Key].Equals(info.Value))
+            //        return false;
+            //}
+
+            //return true;
+#endregion
+        }
+
+
     }
 }

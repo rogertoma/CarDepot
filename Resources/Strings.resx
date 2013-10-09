@@ -123,6 +123,9 @@
   <data name="CONTROL_MANAGEVEHICLETASKS_CONFIRMDELETETITLE" xml:space="preserve">
     <value>Confirm Delete</value>
   </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="FILTER_ALL_XML" xml:space="preserve">
     <value>*.xml</value>
   </data>
@@ -139,10 +142,10 @@
     <value>Error</value>
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_UNABLETOSAVE" xml:space="preserve">
-    <value>We were unable to save the vehicle updates.  It appears someone has made a change before you.  Please close and reopen this page to get the latest data.</value>
+    <value>We were unable to save the vehicle updates.  It appears someone has made a change before you.  Please refresh this page to get the latest data.</value>
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING" xml:space="preserve">
-    <value>You are about to close this page, please ensure you have saved all data before leaving.  Would you like to save now?</value>
+    <value>It appears you may have made some changes .  Would you like to save now?</value>
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE" xml:space="preserve">
     <value>Save and Close</value>
@@ -152,5 +155,8 @@
   </data>
   <data name="SYSTEMADMINACCOUNTNAME" xml:space="preserve">
     <value>SystemAdminAccount</value>
+  </data>
+  <data name="VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR" xml:space="preserve">
+    <value>Error creating a new vehicle.  Please contact the system administrator.  File structure is not correctly set up.</value>
   </data>
 </root>

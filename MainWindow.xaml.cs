@@ -73,5 +73,11 @@ namespace CarDepot
             LogonPage logon = new LogonPage();
             logon.Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            VehicleInfoWindow page = new VehicleInfoWindow();
+            page.Show();
+        }
     }
 }
