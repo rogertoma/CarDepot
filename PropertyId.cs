@@ -42,6 +42,7 @@ namespace CarDepot
         VehicleImage,
         Images,
         Bodystyle,
+        DriveTrain,
         Engine,
         Fueltype,
         Transmission,

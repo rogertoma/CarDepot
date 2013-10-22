@@ -13,7 +13,7 @@ namespace CarDepot.Controls.VehicleControls
     public partial class BasicVehicleInfoControl : UserControl, IPropertyPanel
     {
         private PropertyId[] basicIds = {PropertyId.Bodystyle, PropertyId.Engine, PropertyId.Fueltype, 
-                                            PropertyId.Transmission, PropertyId.ExtColor, PropertyId.IntColor, 
+                                            PropertyId.DriveTrain, PropertyId.Transmission, PropertyId.ExtColor, PropertyId.IntColor, 
                                             PropertyId.Mileage, PropertyId.StockNumber, PropertyId.ModelCode, 
                                             PropertyId.VinNumber, PropertyId.Comments, };
         public BasicVehicleInfoControl()

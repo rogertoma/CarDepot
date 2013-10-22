@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,6 +22,61 @@ namespace CarDepot
         private ObservableCollection<VehicleTask> _vehicleTasks = new ObservableCollection<VehicleTask>();
 
         public override IAdminItemCache Cache { get; set; }
+
+        #region ExposedPropertiesForListResults
+
+        public string Year
+        {
+            get { return GetValue(PropertyId.Year); }
+            set { ApplyValue(PropertyId.Year, value); }
+        }
+        public string Make
+        {
+            get { return GetValue(PropertyId.Make); }
+            set { ApplyValue(PropertyId.Make, value); }
+        }
+        public string Model
+        {
+            get { return GetValue(PropertyId.Model); }
+            set { ApplyValue(PropertyId.Model, value); }
+        }
+        public string ListPrice
+        {
+            get { return GetValue(PropertyId.ListPrice); }
+            set { ApplyValue(PropertyId.ListPrice, value); }
+        }
+        public string DriveTrain
+        {
+            get { return GetValue(PropertyId.DriveTrain); }
+            set { ApplyValue(PropertyId.DriveTrain, value); }
+        }
+        public string Transmission
+        {
+            get { return GetValue(PropertyId.Transmission); }
+            set { ApplyValue(PropertyId.Transmission, value); }
+        }
+        public string Mileage
+        {
+            get { return GetValue(PropertyId.Mileage); }
+            set { ApplyValue(PropertyId.Mileage, value); }
+        }
+        public string Engine
+        {
+            get { return GetValue(PropertyId.Engine); }
+            set { ApplyValue(PropertyId.Engine, value); }
+        }
+        public string ExtColor
+        {
+            get { return GetValue(PropertyId.ExtColor); }
+            set { ApplyValue(PropertyId.ExtColor, value); }
+        }
+        public string StockNumber
+        {
+            get { return GetValue(PropertyId.StockNumber); }
+            set { ApplyValue(PropertyId.StockNumber, value); }
+        }
+
+        #endregion
 
         public VehicleAdminObject() 
             : base() 
@@ -233,7 +289,6 @@ namespace CarDepot
             //return true;
 #endregion
         }
-
 
     }
 }

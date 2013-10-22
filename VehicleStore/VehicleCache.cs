@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,20 +11,33 @@ using CarDepot.Resources;
 
 namespace CarDepot.VehicleStore
 {
+    public enum VehicleCacheSearchKey
+    {
+        IsSold,
+        IsAvailable,
+        FromDate,
+        ToDate
+    }
+
     internal class VehicleCache : List<VehicleAdminObject>, IAdminItemCache
     {
         private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
         public VehicleCache(string vehiclePath)
         {
-            string[] users = Directory.GetDirectories(vehiclePath);
-            foreach (var user in users)
+            string[] vehicles = Directory.GetDirectories(vehiclePath);
+            foreach (var vehicle in vehicles)
             {
-                foreach (string file in Directory.GetFiles(user, Strings.FILTER_ALL_XML))
+                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
                 {
                     LoadVehicle(file);
                 }
             }
+        }
+
+        public VehicleCache(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam):this(vehiclePath)
+        {
+
         }
 
         private void LoadVehicle(string file)
@@ -120,6 +134,18 @@ namespace CarDepot.VehicleStore
         public bool TryEnterReadLock()
         {
             throw new NotImplementedException();
+        }
+
+        public void SortCache(PropertyId category, ListSortDirection direction)
+        {
+            List<VehicleAdminObject> sortedList = new List<VehicleAdminObject>();
+
+            sortedList.AddRange(direction == ListSortDirection.Ascending
+                                    ? this.OrderBy(vehicleAdminObject => vehicleAdminObject.GetValue(category))
+                                    : this.OrderByDescending(vehicleAdminObject => vehicleAdminObject.GetValue(category)));
+
+            this.Clear();
+            this.AddRange(sortedList);
         }
     }
 }

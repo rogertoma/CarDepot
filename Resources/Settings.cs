@@ -9,8 +9,8 @@ namespace CarDepot.Resources
 {
     static class Settings
     {
-        public static string UserAccountsPath = @"C:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
-        public static string VehiclePath = @"C:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Vehicles";
+        public static string UserAccountsPath = @"C:\Data\Users";
+        public static string VehiclePath = @"C:\Data\Vehicles";
         public static string VehicleInfoFileName = @"info.xml";
         public static string VehicleInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Vehicle>\n</Vehicle>";
         public static string VehicleSoldPath = @"C:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";

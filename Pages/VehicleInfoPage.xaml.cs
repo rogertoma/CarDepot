@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,18 +38,28 @@ namespace CarDepot
 
         }
 
+        private int GetNextFolderId()
+        {
+            int largestId = 0;
+            List<string> directories = Directory.GetDirectories(Settings.VehiclePath).ToList();
+
+            foreach (var directory in directories)
+            {
+                DirectoryInfo dir = new DirectoryInfo(directory);
+                int id = 0;
+                if (int.TryParse(dir.Name, out id))
+                {
+                    if (id > largestId)
+                        largestId = id;
+                }
+            }
+
+            return largestId;
+        }
+
         private VehicleAdminObject CreateNewDefaultVehicleObject()
         {
-            List<string> directories = Directory.GetDirectories(Settings.VehiclePath).ToList();
-            directories.Sort();
-            DirectoryInfo directoryInfo = new DirectoryInfo(directories[directories.Count - 1]);
-
-            int lastId;
-            if (!int.TryParse(directoryInfo.Name, out lastId))
-            {
-                MessageBox.Show(Strings.VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR, Strings.ERROR, MessageBoxButton.OK);
-                return null;
-            }
+            int lastId = GetNextFolderId();
 
             DirectoryInfo newDirectory = Directory.CreateDirectory(Settings.VehiclePath + "\\" + (lastId + 1));
             FileStream newfile = File.Create(newDirectory.FullName + "\\" + Settings.VehicleInfoFileName);
@@ -58,6 +69,8 @@ namespace CarDepot
             File.WriteAllText(fileName, Settings.VehicleInfoDefaultFileText);
 
             return new VehicleAdminObject(fileName);
+
+            //TODO: add this vehicle to some cache.
         }
 
         public VehicleInfoWindow(VehicleAdminObject vehicle)
