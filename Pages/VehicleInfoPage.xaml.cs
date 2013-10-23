@@ -10,13 +10,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CarDepot.Controls;
+using CarDepot.Controls.VehicleControls;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using MessageBox = System.Windows.MessageBox;
 
 namespace CarDepot
 {
@@ -143,6 +146,34 @@ namespace CarDepot
             _vehicle = new VehicleAdminObject(_vehicle.ObjectId);
             cache.Add(_vehicle);
             LoadPanel(_vehicle);
+        }
+
+        private void BtnImport_Click(object sender, RoutedEventArgs e)
+        {
+            string result = Microsoft.VisualBasic.Interaction.InputBox("Prompt here", "Title here", "Default data", -1, -1);
+            VehicleUrlImport urlImport = new VehicleUrlImport(result);
+
+            if (urlImport == null)
+                return;
+
+            BasicVehicleInfoControl infoControl = null;
+
+            foreach (var propertyPanel in propertyPanels)
+            {
+                infoControl = propertyPanel as BasicVehicleInfoControl;
+                if (infoControl != null)
+                    break;
+            }
+
+            if (infoControl == null)
+                return;
+
+            List<AdminLabelTextbox> adminLabelTextboxes = infoControl.GetAdminLabelTextbox();
+
+            foreach (var adminLabelTextbox in adminLabelTextboxes)
+            {
+                adminLabelTextbox.TextBoxText = urlImport.GetDataFromPropertyId(adminLabelTextbox.PropertyId);
+            }
         }
     }
 }

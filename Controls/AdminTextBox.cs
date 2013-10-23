@@ -19,7 +19,28 @@ namespace CarDepot.Controls
             MouseEnter += AdminTextBox_MouseEnter;
             MouseLeave += AdminTextBox_MouseLeave;
             GotFocus += AdminTextBox_GotFocus;
-            LostFocus += AdminTextBox_LostFocus;
+            //LostFocus += AdminTextBox_LostFocus;
+            TextChanged += AdminTextBox_TextChanged;
+        }
+
+        void AdminTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_item == null)
+                return;
+
+            _item.SetValue(PropertyId, Text);
+
+            if (Text == string.Empty || Text == "")
+                this.MinWidth = UISettings.ADMINTEXTBOX_MINSIZE_WHEN_NO_TEXT;
+            else
+            {
+                this.MinWidth = 0;
+            }
+
+            Background = System.Windows.Media.Brushes.Transparent;
+            BorderThickness = new Thickness(0);
+
+            _hasFocus = false;
         }
 
         public void LoadPanel(IAdminObject item)
@@ -38,22 +59,10 @@ namespace CarDepot.Controls
             }
         }
 
-        void AdminTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            _item.SetValue(PropertyId, Text);
+        //void AdminTextBox_LostFocus(object sender, RoutedEventArgs e)
+        //{
 
-            if (Text == string.Empty || Text == "")
-                this.MinWidth = UISettings.ADMINTEXTBOX_MINSIZE_WHEN_NO_TEXT;
-            else
-            {
-                this.MinWidth = 0;
-            }
-
-            Background = System.Windows.Media.Brushes.Transparent;
-            BorderThickness = new Thickness(0);
-
-            _hasFocus = false;
-        }
+        //}
 
         void AdminTextBox_GotFocus(object sender, RoutedEventArgs e)
         {

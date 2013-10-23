@@ -12,7 +12,7 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class BasicVehicleInfoControl : UserControl, IPropertyPanel
     {
-        private PropertyId[] basicIds = {PropertyId.Bodystyle, PropertyId.Engine, PropertyId.Fueltype, 
+        private PropertyId[] basicIds = { PropertyId.Bodystyle, PropertyId.Engine, PropertyId.Fueltype, 
                                             PropertyId.DriveTrain, PropertyId.Transmission, PropertyId.ExtColor, PropertyId.IntColor, 
                                             PropertyId.Mileage, PropertyId.StockNumber, PropertyId.ModelCode, 
                                             PropertyId.VinNumber, PropertyId.Comments, };
@@ -68,6 +68,33 @@ namespace CarDepot.Controls.VehicleControls
         public string PageTitle
         {
             get { return Strings.PAGES_VEHICLEINFOWINDOW_BASICINFO_TAB_TITLE; }
+        }
+
+        public List<AdminLabelTextbox> GetAdminLabelTextbox()
+        {
+            return GetAdminLabelTextbox(BasicVehicleInfo);
+        }
+
+        public List<AdminLabelTextbox> GetAdminLabelTextbox(Grid myGrid)
+        {
+            List<AdminLabelTextbox> adminLabelTextboxes = new List<AdminLabelTextbox>();
+
+            foreach (var child in myGrid.Children)
+            {
+                Grid isGrid = child as Grid;
+                if (isGrid != null)
+                {
+                    adminLabelTextboxes.AddRange(GetAdminLabelTextbox(isGrid));
+                }
+
+                AdminLabelTextbox isAdminLabelTextBox = child as AdminLabelTextbox;
+                if (isAdminLabelTextBox != null)
+                {
+                    adminLabelTextboxes.Add(isAdminLabelTextBox);
+                }
+            }
+
+            return adminLabelTextboxes;
         }
     }
 }

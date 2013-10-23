@@ -57,8 +57,8 @@ namespace CarDepot
 
         public void UpdateObjectWithDataFromFile()
         {
-            XDocument doc = XDocument.Load(objectId);
-            var elements = doc.Descendants();
+            //XDocument doc = XDocument.Load(objectId);
+            var elements = xdoc.Descendants();
             foreach (var element in elements)
             {
                 PropertyId id;
@@ -119,12 +119,12 @@ namespace CarDepot
 
         public virtual void ApplyValue(PropertyId id, string value)
         {
-
+            
         }
 
         public virtual void ApplyMultiValue(PropertyId id, XElement element)
         {
-
+            
         }
 
         public virtual List<string[]> GetMultiValue(PropertyId id)

@@ -67,5 +67,11 @@ namespace CarDepot.Controls
             
             PropertyValueTextBox.LoadPanel(item);
         }
+
+        public string TextBoxText
+        {
+            set { PropertyValueTextBox.Text = value; }
+            get { return PropertyValueTextBox.Text; }
+        }
     }
 }
