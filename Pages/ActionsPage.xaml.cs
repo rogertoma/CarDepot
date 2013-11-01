@@ -66,5 +66,11 @@ namespace CarDepot.Controls.GeneralControls
             mainTabControl.Items.Add(tabItem);
             tabItem.Focus();
         }
+
+        private void BtnCreateNewCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerInfoPage customerInfo = new CustomerInfoPage();
+            customerInfo.Show();
+        }
     }
 }

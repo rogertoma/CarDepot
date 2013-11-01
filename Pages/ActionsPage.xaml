@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" Width="Auto">
+             mc:Ignorable="d" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="409">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -15,8 +15,9 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button x:Name="BtnCreateNewVehicle" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="1" Grid.Column="0" Click="BtnCreateNewVehicle_Click" />
+        <Button x:Name="BtnCreateNewVehicle" Margin="0,0,0,10" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="1" Grid.Column="0" Click="BtnCreateNewVehicle_Click" />
         <Button x:Name="BtnSearchVehicles" Content="Search Vehicles" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="1" Click="BtnSearchVehicles_Click" />
+        <Button x:Name="BtnCreateNewCustomer" Content="Create New Customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="2" Grid.Column="0" Click="BtnCreateNewCustomer_Click"/>
     </Grid>
 </UserControl>
 

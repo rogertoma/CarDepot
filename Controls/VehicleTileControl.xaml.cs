@@ -19,7 +19,7 @@ namespace CarDepot.Controls
     /// <summary>
     /// Interaction logic for VehicleTileControl.xaml
     /// </summary>
-    public partial class VehicleTileControl : UserControl
+    public partial class VehicleTileControl : Window
     {
         private VehicleAdminObject _vehicle;
         private Brush _defaultBrush = null;

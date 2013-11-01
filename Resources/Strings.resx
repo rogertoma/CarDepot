@@ -141,6 +141,9 @@
   <data name="PAGES_ACTIVEVEHICLE_TITLE_LOADING" xml:space="preserve">
     <value>Loading Vehicle's on lot</value>
   </data>
+  <data name="PAGES_VEHICLEINFOPAGE_CONFIRMDELETE" xml:space="preserve">
+    <value>Are you sure you want to delete this vehicle?</value>
+  </data>
   <data name="PAGES_VEHICLEINFOPAGE_ERROR" xml:space="preserve">
     <value>Error</value>
   </data>

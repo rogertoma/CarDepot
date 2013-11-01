@@ -175,5 +175,20 @@ namespace CarDepot
                 adminLabelTextbox.TextBoxText = urlImport.GetDataFromPropertyId(adminLabelTextbox.PropertyId);
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_CONFIRMDELETE,
+                Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE, MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.No)
+                return;
+
+            string id = _vehicle.ObjectId;
+            DirectoryInfo directory = new DirectoryInfo(_vehicle.ObjectId);
+            string name = directory.Parent.FullName;
+            Directory.Delete(name, true);
+            this.Close();
+        }
     }
 }

@@ -33,6 +33,18 @@ namespace CarDepot
         Picture,
         MainTabPages,
 
+        //Customer PropertId's
+        FirstName,
+        LastName,
+        JobTitle,
+        BusinessPhone,
+        HomePhone,
+        Fax,
+        MobilePhone,
+        HomeAddress,
+        BusinessAddress,
+        CustomerAssociatedVehicles,
+
         //Car PropertyId's
         Year,
         Make,

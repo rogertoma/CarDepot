@@ -19,7 +19,7 @@ namespace CarDepot.VehicleStore
         ToDate
     }
 
-    internal class VehicleCache : List<VehicleAdminObject>, IAdminItemCache
+    public class VehicleCache : List<VehicleAdminObject>, IAdminItemCache
     {
         private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
