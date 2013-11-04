@@ -36,9 +36,18 @@ namespace CarDepot
 
             xdoc = XDocument.Load(objectId);
             UpdateObjectWithDataFromFile();
+
+            DirectoryInfo directory = new DirectoryInfo(objectId);
+            Id = directory.Parent.Name;
         }
 
         public string FileVersion
+        {
+            set;
+            get;
+        }
+
+        public string Id
         {
             set;
             get;

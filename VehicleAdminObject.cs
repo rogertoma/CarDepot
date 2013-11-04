@@ -25,6 +25,11 @@ namespace CarDepot
 
         #region ExposedPropertiesForListResults
 
+        public string VehicleId
+        {
+            get { return Id; }
+        }
+
         public string Year
         {
             get { return GetValue(PropertyId.Year); }
@@ -192,6 +197,8 @@ namespace CarDepot
         {
             switch (id)
             {
+                case PropertyId.Id:
+                    return VehicleId;
                 default:
                     if (_basicInfo.ContainsKey(id))
                     {

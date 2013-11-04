@@ -26,6 +26,7 @@ namespace CarDepot
     {
         //Global
         FileVersion,
+        Id,
 
         //User PropertyId's
         Name,
@@ -44,6 +45,7 @@ namespace CarDepot
         HomeAddress,
         BusinessAddress,
         CustomerAssociatedVehicles,
+        CustomerAssociatedFiles,
 
         //Car PropertyId's
         Year,

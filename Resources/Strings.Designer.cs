@@ -245,7 +245,7 @@ namespace CarDepot.Resources
             }
         }
 
-                /// <summary>
+        /// <summary>
         ///   Looks up a localized string similar to PAGE_VEHICLESEARCHPAGE_TITLE.
         /// </summary>
         internal static string PAGES_VEHICLEINFOPAGE_CONFIRMDELETE
@@ -253,6 +253,28 @@ namespace CarDepot.Resources
             get
             {
                 return ResourceManager.GetString("PAGES_VEHICLEINFOPAGE_CONFIRMDELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAGE_VEHICLESEARCHPAGE_TITLE.
+        /// </summary>
+        internal static string CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE
+        {
+            get
+            {
+                return ResourceManager.GetString("CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAGE_VEHICLESEARCHPAGE_TITLE.
+        /// </summary>
+        internal static string CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE_TITLE", resourceCulture);
             }
         }
         

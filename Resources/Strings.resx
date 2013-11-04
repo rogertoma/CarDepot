@@ -126,6 +126,12 @@
   <data name="CONTROL_MANAGEVEHICLETASKS_CONFIRMDELETETITLE" xml:space="preserve">
     <value>Confirm Delete</value>
   </data>
+  <data name="CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE" xml:space="preserve">
+    <value>A file with this name already exists, would you like to replace it?</value>
+  </data>
+  <data name="CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE_TITLE" xml:space="preserve">
+    <value>Replace File?</value>
+  </data>
   <data name="ERROR" xml:space="preserve">
     <value>Error</value>
   </data>

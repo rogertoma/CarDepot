@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:VehicleControls="clr-namespace:CarDepot.Controls.CustomerControls"
       mc:Ignorable="d"
-	Title="CustomerInfoPage" Width="389" Height="230">
+	Title="CustomerInfoPage" Width="643" Height="736">
 
     <Grid>
         <Grid.RowDefinitions>

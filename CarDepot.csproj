@@ -62,6 +62,9 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Controls\AdditionalContentControl.xaml.cs">
+      <DependentUpon>AdditionalContentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AdminLabel.cs" />
     <Compile Include="Controls\AdminLabelTextBox.xaml.cs">
       <DependentUpon>AdminLabelTextBox.xaml</DependentUpon>
@@ -135,6 +138,10 @@
     <Compile Include="VehicleStore\VehicleCache.cs" />
     <Compile Include="VehicleStore\VehicleUrlImport.cs" />
     <Compile Include="VehicleTask.cs" />
+    <Page Include="Controls\AdditionalContentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AdminLabelTextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

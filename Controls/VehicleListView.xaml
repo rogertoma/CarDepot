@@ -9,6 +9,7 @@
         <ListView x:Name="LstSearchResults" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" ButtonBase.Click="GridViewColumnHeaderClickedHandler">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Id" Width="80" DisplayMemberBinding="{Binding VehicleId}"/>
                     <GridViewColumn Header="Year" Width="80" DisplayMemberBinding="{Binding Year}"/>
                     <GridViewColumn Header="Make" Width="80" DisplayMemberBinding="{Binding Make}"/>
                     <GridViewColumn Header="Model" Width ="80" DisplayMemberBinding="{Binding Model}"/>

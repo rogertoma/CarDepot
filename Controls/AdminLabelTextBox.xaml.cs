@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarDepot.Resources;
 
 namespace CarDepot.Controls
 {
@@ -52,6 +53,29 @@ namespace CarDepot.Controls
         {
             set { PropertyLabel.MinWidth = value; }
             get { return PropertyLabel.MinWidth; }
+        }
+
+        public bool ApplyDefaultGApSize
+        {
+            get
+            {
+                if (PropertyLabel.MinWidth == UISettings.ADMINLABELTEXTBOX_GAPSIZE)
+                    return true;
+                else
+                {
+                    return false;
+                }
+
+            }
+            set
+            {
+                if (value)
+                    PropertyLabel.MinWidth = UISettings.ADMINLABELTEXTBOX_GAPSIZE;
+                else
+                {
+                    PropertyLabel.MinWidth = 0;
+                }
+            }
         }
 
         public void LoadPanel(IAdminObject item)
