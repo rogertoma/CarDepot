@@ -19,6 +19,7 @@ namespace CarDepot.Resources
         public static string VehicleSoldPath = @"C:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
         public static string VehicleImageFolder = @"\Images";
         public static string AdditionalFilesFolder = @"\Files";
+        public static string TempFolder = @"C:\Data\Temp";
 
         public static int MultiValueKeyIndex = 0;
         public static int MultiValueValueIndex = 1;
