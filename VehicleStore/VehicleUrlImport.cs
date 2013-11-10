@@ -24,36 +24,44 @@ namespace CarDepot.VehicleStore
 
         public VehicleUrlImport(string url)
         {
-            String link = url;
-            //String link = "http://www.rogersmotors.ca/used/Toyota/2009-Toyota-Rav4-48db1cd20a0a010900163769627f5f05.htm";
-            Regex hostPattern = new Regex(@"[a-z][a-z0-9+\-.]*://([a-z0-9\-._~%]+|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])", RegexOptions.IgnoreCase);
-            Match host = hostPattern.Match(link);
-
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(link);
-            HttpWebResponse res = (HttpWebResponse)req.GetResponse();
-            StreamReader inStream = new StreamReader(res.GetResponseStream());
-
-            string page = inStream.ReadToEnd();
-            inStream.Close();
-            res.Close();
-
-            string brochurePattern = "(/ebrochure.htm.*)(?=[\"])";
-            Match brochureLink = Regex.Match(page, brochurePattern);
-            Regex rxImage = new Regex(@"(?<=<a\s?href=.{1})(.*\.jpg)");
-            MatchCollection matches = rxImage.Matches(page);
-
-            int count = 0;
-            foreach (Match m in matches)
+            Regex validURL = new Regex(@"\A(https?|ftp|file)://.+\z");
+            if (validURL.IsMatch(url))
             {
-                Uri path = new Uri(m.ToString());
-                WebClient downloadClient = new WebClient();
-                downloadClient.DownloadFile(path, "Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg");
-                //downloadClient.DownloadFileAsync(path, "Image"+DateTime.Now.ToFileTimeUtc().ToString()+".jpg");
-                count++;
-            }
+                //String link = "http://www.rogersmotors.ca/used/Toyota/2009-Toyota-Rav4-48db1cd20a0a010900163769627f5f05.htm";
+                Regex hostPattern = new Regex(@"[a-z][a-z0-9+\-.]*://([a-z0-9\-._~%]+|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])", RegexOptions.IgnoreCase);
+                Match host = hostPattern.Match(url);
 
-            //textBox1.AppendText(" " + count.ToString() + " images downloaded");
-            getBrochure(host + brochureLink.ToString());
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                HttpWebResponse res = (HttpWebResponse)req.GetResponse();
+                StreamReader inStream = new StreamReader(res.GetResponseStream());
+
+                string page = inStream.ReadToEnd();
+                inStream.Close();
+                res.Close();
+
+                string brochurePattern = "(/ebrochure.htm.*)(?=[\"])";
+                Match brochureLink = Regex.Match(page, brochurePattern);
+                Regex rxImage = new Regex(@"(?<=<a\s?href=.{1})(.*\.jpg)");
+                MatchCollection matches = rxImage.Matches(page);
+
+                int count = 0;
+                foreach (Match m in matches)
+                {
+                    Uri path = new Uri(m.ToString());
+                    WebClient downloadClient = new WebClient();
+                    //File.GetAttributes(
+                    //downloadClient.DownloadFile(path, "\\CarDepot\\bin\\Debug\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg"); 
+                    downloadClient.DownloadFile(path, "Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg");
+                    count++;
+                }
+
+                getBrochure(host + brochureLink.ToString());
+            }
+            else
+            {
+                MessageBox.Show("You did not enter a valid URL","Uh Oh!",MessageBoxButton.OK);
+                return;
+            }
         }
         private void getBrochure(string brochureLink)
         {
