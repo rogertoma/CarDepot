@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+             mc:Ignorable="d" d:DesignWidth="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,11 +17,11 @@
         <ListView x:Name="FileList" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="FileName" Width="80"/>
+                    <GridViewColumn Header="FileName" Width="300"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Delete" Margin="0,0,10,0" Width="75" Height="40" Grid.Row="1" Grid.Column="1"/>
+        <Button Content="Delete" Margin="0,0,10,0" Width="75" Height="40" Grid.Row="1" Grid.Column="1" Click="Button_Click"/>
         <Button x:Name="BtnBrowse" Content="Browse" Width="75" Height="40" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" Click="BtnBrowse_Click"/>
     </Grid>
 </UserControl>

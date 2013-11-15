@@ -28,6 +28,7 @@ namespace CarDepot.Controls
         public event ListChangedEventHandler ListChanged;
 
         private IAdminObject _item = null;
+        List<string[]> files = new List<string[]>();
 
         public PropertyId PropertyId { set; get; }
 
@@ -53,10 +54,10 @@ namespace CarDepot.Controls
             {
                 MoveToAdditionalFilesFolder(fileName);
             }
-            List<string> files = new List<string>();
+            
             foreach (var item in FileList.Items)
             {
-                files.Add(item.ToString());
+                files.Add(new string[] { PropertyId.File.ToString(), item.ToString() });
             }
 
             _item.SetValue(PropertyId, files);
@@ -81,13 +82,34 @@ namespace CarDepot.Controls
             }
 
             File.Copy(origionalFilePath, filePath, true);
-            FileList.Items.Add(filePath);
+            FileList.Items.Add(origionalFile.Name);
             //return filePath;
         }
 
         public void LoadPanel(IAdminObject item)
         {
             _item = item;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (FileList.SelectedItem == null) 
+                return;
+
+            string selectedFile = FileList.SelectedItem.ToString();
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                if (files[i][1].Contains(selectedFile))
+                {
+                    files.RemoveAt(i);
+                    //File.Delete(new FileInfo(_item.ObjectId).Directory.FullName + Settings.AdditionalFilesFolder + "\\" + selectedFile);
+                    FileList.Items.RemoveAt(FileList.SelectedIndex);
+                    break;
+                }
+            }
+
+            _item.SetValue(PropertyId, files);
         }
     }
 }

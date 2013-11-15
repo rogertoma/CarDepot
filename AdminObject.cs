@@ -19,6 +19,7 @@ namespace CarDepot
     {
         private string objectId;
         private XDocument xdoc;
+        private string _fileVersion = "0";
 
         public AdminObject()
             : base()
@@ -43,8 +44,8 @@ namespace CarDepot
 
         public string FileVersion
         {
-            set;
-            get;
+            set { _fileVersion = value; }
+            get { return _fileVersion; }
         }
 
         public string Id
@@ -157,7 +158,12 @@ namespace CarDepot
             XElement element = elements.FirstOrDefault() as XElement;
 
             if (element == null)
+            {
+                element = new XElement(PropertyId.FileVersion.ToString());
+                element.Value = FileVersion;
+                xdoc.Root.Add(element);             
                 return true;
+            }
 
             if (FileVersion.Trim() == element.Value.Trim())
             {

@@ -14,6 +14,8 @@ namespace CarDepot
             {
                 case PropertyId.Images:
                 case PropertyId.Tasks:
+                case PropertyId.AssociatedFiles:
+                case PropertyId.CustomerAssociatedVehicles:
                     return true;
                 default:
                     return false;
@@ -45,7 +47,8 @@ namespace CarDepot
         HomeAddress,
         BusinessAddress,
         CustomerAssociatedVehicles,
-        CustomerAssociatedFiles,
+        AssociatedFiles,
+        File,
 
         //Car PropertyId's
         Year,
