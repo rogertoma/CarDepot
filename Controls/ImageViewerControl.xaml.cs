@@ -70,33 +70,6 @@ namespace CarDepot.Controls
             imageTimer.Start();
         }
 
-        private string MoveToImageFolder(string origionalFilePath)
-        {
-            string filePath = new FileInfo(_item.ObjectId).Directory.FullName + Settings.VehicleImageFolder + "\\";
-            if (!Directory.Exists(filePath))
-                Directory.CreateDirectory(filePath);
-
-            string[] allImages = Directory.GetFiles(filePath);
-
-            int fileNumber = 0;
-            foreach (string image in allImages)
-            {
-                int num;
-                FileInfo file = new FileInfo(image);
-                int.TryParse(file.Name.Replace(file.Extension, ""), out num);
-
-                if (num > fileNumber)
-                    fileNumber = num;
-            }
-            fileNumber++;
-
-            filePath = filePath + fileNumber + new FileInfo(origionalFilePath).Extension;
-
-            File.Copy(origionalFilePath, filePath);
-
-            return filePath;
-        }
-
         private bool IsImage(string filePath)
         {
             try
@@ -188,7 +161,7 @@ namespace CarDepot.Controls
                 if (!IsImage(fileDroped))
                     continue;
 
-                string newPath = MoveToImageFolder(fileDroped);
+                string newPath = Settings.MoveToItemImageFolder(_item,fileDroped);
                 _images.Add(new string[] { PropertyId.VehicleImage.ToString(), newPath });
 
                 //TODO: should be outside for loop

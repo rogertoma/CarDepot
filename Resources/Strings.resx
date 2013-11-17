@@ -174,4 +174,16 @@
   <data name="VEHICLEADMINOBJECT_CREATENEWVEHICLE_ERROR" xml:space="preserve">
     <value>Error creating a new vehicle.  Please contact the system administrator.  File structure is not correctly set up.</value>
   </data>
+  <data name="VEHICLEINFOPAGE_IMPORTURL_DATA" xml:space="preserve">
+    <value>Enter URL</value>
+  </data>
+  <data name="VEHICLEINFOPAGE_IMPORTURL_PROMPT" xml:space="preserve">
+    <value>Enter URL to import vehicle Information</value>
+  </data>
+  <data name="VEHICLEINFOPAGE_IMPORTURL_TITLE" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="VEHICLEINFOPAGE_INVALID_URL" xml:space="preserve">
+    <value>Please enter a valid URL</value>
+  </data>
 </root>

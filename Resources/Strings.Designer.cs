@@ -278,5 +278,48 @@ namespace CarDepot.Resources
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLEINFOPAGE_IMPORTURL_PROMPT.
+        /// </summary>
+        internal static string VEHICLEINFOPAGE_IMPORTURL_PROMPT
+        {
+            get
+            {
+                return ResourceManager.GetString("VEHICLEINFOPAGE_IMPORTURL_PROMPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLEINFOPAGE_IMPORTURL_TITLE.
+        /// </summary>
+        internal static string VEHICLEINFOPAGE_IMPORTURL_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("VEHICLEINFOPAGE_IMPORTURL_TITLE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLEINFOPAGE_IMPORTURL_DATA.
+        /// </summary>
+        internal static string VEHICLEINFOPAGE_IMPORTURL_DATA
+        {
+            get
+            {
+                return ResourceManager.GetString("VEHICLEINFOPAGE_IMPORTURL_DATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLEINFOPAGE_INVALID_URL.
+        /// </summary>
+        internal static string VEHICLEINFOPAGE_INVALID_URL
+        {
+            get
+            {
+                return ResourceManager.GetString("VEHICLEINFOPAGE_INVALID_URL", resourceCulture);
+            }
+        }
     }
 }

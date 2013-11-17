@@ -15,18 +15,40 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
 using System.IO;
+using CarDepot.Resources;
 
 namespace CarDepot.VehicleStore
 {
+    public enum VehicleImportStatus
+    {
+        PASS,
+        FAIL
+    }
+
     internal class VehicleUrlImport
     {
-        private Dictionary<PropertyId, string> dataMap = new Dictionary<PropertyId, string>();
+        VehicleAdminObject _vehicle = null;
+        private Dictionary<PropertyId, Object> dataMap = new Dictionary<PropertyId, Object>();
+        private List<string[]> imagePaths;
+        VehicleImportStatus result = VehicleImportStatus.FAIL;
 
-        public VehicleUrlImport(string url)
+        public VehicleImportStatus ImportStatus
         {
+            get { return result; }
+        }
+
+        public VehicleUrlImport(VehicleAdminObject vehicle,string url)
+        {
+            loadURL(vehicle, url);
+        }
+
+        private void loadURL(VehicleAdminObject vehicle, string url)
+        {
+            _vehicle = vehicle;
             Regex validURL = new Regex(@"\A(https?|ftp|file)://.+\z");
             if (validURL.IsMatch(url))
             {
+                imagePaths = new List<string[]>();
                 //String link = "http://www.rogersmotors.ca/used/Toyota/2009-Toyota-Rav4-48db1cd20a0a010900163769627f5f05.htm";
                 Regex hostPattern = new Regex(@"[a-z][a-z0-9+\-.]*://([a-z0-9\-._~%]+|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])", RegexOptions.IgnoreCase);
                 Match host = hostPattern.Match(url);
@@ -49,24 +71,21 @@ namespace CarDepot.VehicleStore
                 {
                     Uri path = new Uri(m.ToString());
                     WebClient downloadClient = new WebClient();
-                    //File.GetAttributes(
-                    //downloadClient.DownloadFile(path, "\\CarDepot\\bin\\Debug\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg"); 
-                    downloadClient.DownloadFile(path, "Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg");
+                    string outputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
+
+                    downloadClient.DownloadFile(path, outputFile);
+                    outputFile = Settings.MoveToItemImageFolder(vehicle, outputFile);
+                    imagePaths.Add(new string[] { PropertyId.VehicleImage.ToString(), outputFile });
+                    //downloadClient.DownloadFile(path, "Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg");
                     count++;
                 }
-
                 getBrochure(host + brochureLink.ToString());
-            }
-            else
-            {
-                MessageBox.Show("You did not enter a valid URL","Uh Oh!",MessageBoxButton.OK);
-                return;
+                result = VehicleImportStatus.PASS;
             }
         }
+
         private void getBrochure(string brochureLink)
         {
-            //Dictionary<String, String> carInfo = new Dictionary<string, string>();
-
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(brochureLink);
             HttpWebResponse res = (HttpWebResponse)req.GetResponse();
             StreamReader inStream = new StreamReader(res.GetResponseStream());
@@ -79,7 +98,6 @@ namespace CarDepot.VehicleStore
             string makePattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4})\\s)(\\w+)(?=\\s.*</div>)";
             string modelPattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4})\\s(\\w+)\\s)(\\w+)(?=\\s.*</div>)";
             string trimPattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4}\\s(\\w+)\\s(\\w+)\\s))(.*)(?=</div>)";
-            //get image path
 
             Regex stockNumberPattern = new Regex(@"(?<=<span>Stock Number:</span>)[^<]+(?=<br />)");
             Regex bodyPattern = new Regex(@"(?<=<span>Bodystyle:</span>)[^<]+(?=<br />)");
@@ -107,22 +125,20 @@ namespace CarDepot.VehicleStore
             dataMap.Add(PropertyId.Trim, trim.ToString().Trim());
             dataMap.Add(PropertyId.StockNumber, stockNumber.ToString().Trim());
             dataMap.Add(PropertyId.Bodystyle, body.ToString().Trim());
-            //dataMap.Add(PropertyId.Door, door.ToString());
             dataMap.Add(PropertyId.Transmission, transmission.ToString().Trim());
             dataMap.Add(PropertyId.Engine, engine.ToString().Trim());
             dataMap.Add(PropertyId.Mileage, mileage.ToString().Trim());
             dataMap.Add(PropertyId.ListPrice, listPrice.ToString().Trim());
-            //textBox1.AppendText(" " + trim.ToString() + " " + model.ToString() + " " + make.ToString() + " " + year.ToString() + " " + stockNumber.ToString() + " " + body.ToString() + " " + door.ToString() + " " + transmission.ToString() + " " + engine.ToString() + " " + mileage.ToString() + " " + listPrice.ToString());
+            dataMap.Add(PropertyId.Images, imagePaths);
         }
-        
-        public string GetDataFromPropertyId(PropertyId id)
-        {
-            if (dataMap.ContainsKey(id))
-            {
-                return dataMap[id];
-            }
 
-            return "";
+        public void ApplyVehicleValues() 
+        {
+            foreach (var vehicleData in dataMap)
+            {
+                _vehicle.SetValue(vehicleData.Key, vehicleData.Value);
+            }
+            _vehicle.Images = imagePaths;
         }
     }
 }

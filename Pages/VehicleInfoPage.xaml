@@ -18,7 +18,7 @@
         <TabControl HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <TabItem Header="General Info">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <VehicleControls:BasicVehicleInfoControl x:Name="BasicVehicleControlPropertyPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <VehicleControls:BasicVehicleInfoControl x:Name="BasicVehicleControlPropertyPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Loaded="BasicVehicleControlPropertyPanel_Loaded"/>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Tasks">

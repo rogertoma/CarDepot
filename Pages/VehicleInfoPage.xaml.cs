@@ -142,38 +142,33 @@ namespace CarDepot
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             VehicleCache cache = _vehicle.Cache as VehicleCache;
-            cache.Remove(_vehicle);
-            _vehicle = new VehicleAdminObject(_vehicle.ObjectId);
-            cache.Add(_vehicle);
+            if (cache != null)
+            {
+                cache.Remove(_vehicle);
+                _vehicle = new VehicleAdminObject(_vehicle.ObjectId);
+                cache.Add(_vehicle);
+            }
             LoadPanel(_vehicle);
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
-            string result = Microsoft.VisualBasic.Interaction.InputBox("Prompt here", "Title here", "Default data", -1, -1);
-            VehicleUrlImport urlImport = new VehicleUrlImport(result);
+            string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_IMPORTURL_PROMPT, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, Strings.VEHICLEINFOPAGE_IMPORTURL_DATA, -1, -1);
+            VehicleUrlImport urlImport = new VehicleUrlImport(_vehicle,result);
+            if (urlImport.ImportStatus == VehicleImportStatus.PASS)
+            {
+                urlImport.ApplyVehicleValues();
+            }
+            else
+            {
+                //MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_INVALID_URL,MessageBoxButton.OK);
+                MessageBox.Show(Strings.VEHICLEINFOPAGE_INVALID_URL, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, MessageBoxButton.OK);
+            }
 
             if (urlImport == null)
                 return;
 
-            BasicVehicleInfoControl infoControl = null;
-
-            foreach (var propertyPanel in propertyPanels)
-            {
-                infoControl = propertyPanel as BasicVehicleInfoControl;
-                if (infoControl != null)
-                    break;
-            }
-
-            if (infoControl == null)
-                return;
-
-            List<AdminLabelTextbox> adminLabelTextboxes = infoControl.GetAdminLabelTextbox();
-
-            foreach (var adminLabelTextbox in adminLabelTextboxes)
-            {
-                adminLabelTextbox.TextBoxText = urlImport.GetDataFromPropertyId(adminLabelTextbox.PropertyId);
-            }
+            btnRefresh_Click(null, null);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -189,6 +184,11 @@ namespace CarDepot
             string name = directory.Parent.FullName;
             Directory.Delete(name, true);
             this.Close();
+        }
+
+        private void BasicVehicleControlPropertyPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

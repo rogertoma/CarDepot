@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,33 @@ namespace CarDepot.Resources
 
         public static int MultiValueKeyIndex = 0;
         public static int MultiValueValueIndex = 1;
+
+        public static string MoveToItemImageFolder(IAdminObject item, string origionalFilePath)
+        {
+            string filePath = new FileInfo(item.ObjectId).Directory.FullName + Settings.VehicleImageFolder + "\\";
+            if (!Directory.Exists(filePath))
+                Directory.CreateDirectory(filePath);
+
+            string[] allImages = Directory.GetFiles(filePath);
+
+            int fileNumber = 0;
+            foreach (string image in allImages)
+            {
+                int num;
+                FileInfo file = new FileInfo(image);
+                int.TryParse(file.Name.Replace(file.Extension, ""), out num);
+
+                if (num > fileNumber)
+                    fileNumber = num;
+            }
+            fileNumber++;
+
+            filePath = filePath + fileNumber + new FileInfo(origionalFilePath).Extension;
+
+            File.Copy(origionalFilePath, filePath);
+
+            return filePath;
+        }
     }
 
     static class LookAndFeel
