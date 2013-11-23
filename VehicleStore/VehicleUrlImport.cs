@@ -60,13 +60,16 @@ namespace CarDepot.VehicleStore
                 string page = inStream.ReadToEnd();
                 inStream.Close();
                 res.Close();
+                string colorPattern = "(?<=<dt><span>Ext. Colour</span></dt><dd><span>)(.*)(?=</span></dd>)";
+                Match color = Regex.Match(page, colorPattern);
+                dataMap.Add(PropertyId.ExtColor, color.ToString().Trim());
 
                 string brochurePattern = "(/ebrochure.htm.*)(?=[\"])";
                 Match brochureLink = Regex.Match(page, brochurePattern);
                 Regex rxImage = new Regex(@"(?<=<a\s?href=.{1})(.*\.jpg)");
                 MatchCollection matches = rxImage.Matches(page);
 
-                int count = 0;
+                int count = 0; 
                 foreach (Match m in matches)
                 {
                     Uri path = new Uri(m.ToString());
