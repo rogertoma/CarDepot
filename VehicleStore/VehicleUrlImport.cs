@@ -30,13 +30,6 @@ namespace CarDepot.VehicleStore
 
     internal class VehicleUrlImport
     {
-       
-        
-        //Excel.Application oXL;
-        //Excel._Workbook oWB;
-        //Excel._Worksheet oSheet;
-        //Excel.Range oRng;
-
         VehicleAdminObject _vehicle = null;
         private Dictionary<PropertyId, Object> dataMap = new Dictionary<PropertyId, Object>();
         private List<string[]> imagePaths;
@@ -101,18 +94,17 @@ namespace CarDepot.VehicleStore
                 foreach (PropertyId p in dataMap.Keys)
                 {
                     int i = 0;
-                    while ( i <2 ) 
+                    while ( i < 1) 
                     {
-                        ws.Cells[i, j] = new Cell(p.ToString());
+                        ws.Cells[i, j] = new Cell("Test");
                         i++;
-                        ws.Cells[i, j] = new Cell(dataMap[p]);
+                        ws.Cells[i, j] = new Cell("Test");
                     }
                     j++;
                 }
+                ws.Cells.ColumnWidth[0, 1] = 3000;
                 wb.Worksheets.Add(ws);
                 wb.Save(file);
-                Workbook book = Workbook.Load(file);
-                Worksheet sheet = book.Worksheets[0];
             }
         }
 
