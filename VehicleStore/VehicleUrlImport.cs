@@ -89,6 +89,13 @@ namespace CarDepot.VehicleStore
                 string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
                 Workbook wb = new Workbook();
                 Worksheet ws = new Worksheet("Sheet 1");
+                
+                // to avoid corrupt excel file message. Fill 100 or more cells.
+                for (int i = 0; i < 100; i++)
+                {
+                    ws.Cells[i, 0] = new Cell("");
+                }
+                
                 int j = 0;
                 foreach (PropertyId p in dataMap.Keys)
                 {
