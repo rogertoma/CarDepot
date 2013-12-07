@@ -82,7 +82,6 @@ namespace CarDepot.VehicleStore
                     downloadClient.DownloadFile(path, outputFile);
                     outputFile = Settings.MoveToItemImageFolder(vehicle, outputFile);
                     imagePaths.Add(new string[] { PropertyId.VehicleImage.ToString(), outputFile });
-                    //downloadClient.DownloadFile(path, "Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg");
                     count++;
                 }
                 getBrochure(host + brochureLink.ToString());
@@ -93,16 +92,19 @@ namespace CarDepot.VehicleStore
                 int j = 0;
                 foreach (PropertyId p in dataMap.Keys)
                 {
-                    int i = 0;
-                    while ( i < 1) 
+                    if (!p.Equals(PropertyId.Images))
                     {
-                        ws.Cells[i, j] = new Cell("Test");
-                        i++;
-                        ws.Cells[i, j] = new Cell("Test");
+                        int i = 0;
+                        while (i < 1)
+                        {
+                            ws.Cells.ColumnWidth[(ushort)i, (ushort)j] = 5000;
+                            ws.Cells[i, j] = new Cell(p.ToString());
+                            i++;
+                            ws.Cells[i, j] = new Cell(dataMap[p]);
+                        }
+                        j++;
                     }
-                    j++;
                 }
-                ws.Cells.ColumnWidth[0, 1] = 3000;
                 wb.Worksheets.Add(ws);
                 wb.Save(file);
             }

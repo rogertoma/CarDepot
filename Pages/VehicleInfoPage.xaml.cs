@@ -154,6 +154,10 @@ namespace CarDepot
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
             string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_IMPORTURL_PROMPT, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, Strings.VEHICLEINFOPAGE_IMPORTURL_DATA, -1, -1);
+            if (result == "")
+            {
+                return;
+            }
             VehicleUrlImport urlImport = new VehicleUrlImport(_vehicle,result);
             if (urlImport.ImportStatus == VehicleImportStatus.PASS)
             {
@@ -161,12 +165,8 @@ namespace CarDepot
             }
             else
             {
-                //MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_INVALID_URL,MessageBoxButton.OK);
                 MessageBox.Show(Strings.VEHICLEINFOPAGE_INVALID_URL, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, MessageBoxButton.OK);
             }
-
-            if (urlImport == null)
-                return;
 
             btnRefresh_Click(null, null);
         }
