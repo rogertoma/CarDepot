@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 using System.Net;
 using System.IO;
 using CarDepot.Resources;
-using ExcelLibrary.CompoundDocumentFormat;
-using ExcelLibrary.SpreadSheet;
-
 
 namespace CarDepot.VehicleStore
 {
@@ -34,12 +31,11 @@ namespace CarDepot.VehicleStore
         private Dictionary<PropertyId, Object> dataMap = new Dictionary<PropertyId, Object>();
         private List<string[]> imagePaths;
         VehicleImportStatus result = VehicleImportStatus.FAIL;
-
+        
         public VehicleImportStatus ImportStatus
         {
             get { return result; }
         }
-
         public VehicleUrlImport(VehicleAdminObject vehicle,string url)
         {
             loadURL(vehicle, url);
@@ -52,7 +48,6 @@ namespace CarDepot.VehicleStore
             if (validURL.IsMatch(url))
             {
                 imagePaths = new List<string[]>();
-                //String link = "http://www.rogersmotors.ca/used/Toyota/2009-Toyota-Rav4-48db1cd20a0a010900163769627f5f05.htm";
                 Regex hostPattern = new Regex(@"[a-z][a-z0-9+\-.]*://([a-z0-9\-._~%]+|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])", RegexOptions.IgnoreCase);
                 Match host = hostPattern.Match(url);
 
@@ -63,57 +58,52 @@ namespace CarDepot.VehicleStore
                 string page = inStream.ReadToEnd();
                 inStream.Close();
                 res.Close();
-                string colorPattern = "(?<=<dt><span>Ext. Colour</span></dt><dd><span>)(.*)(?=</span></dd>)";
-                Match color = Regex.Match(page, colorPattern);
-                dataMap.Add(PropertyId.ExtColor, color.ToString().Trim());
 
                 string brochurePattern = "(/ebrochure.htm.*)(?=[\"])";
-                Match brochureLink = Regex.Match(page, brochurePattern);
                 Regex rxImage = new Regex(@"(?<=<a\s?href=.{1})(.*\.jpg)");
-                MatchCollection matches = rxImage.Matches(page);
+                Regex enginePattern = new Regex(@"(?<=<dt><span>Engine</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                Regex bodyPattern = new Regex(@"(?<=<dt><span>Bodystyle</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                Regex fuelPattern = new Regex(@"(?<=<dt><span>Fuel Type</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                Regex colorPattern = new Regex(@"(?<=<dt><span>Ext. Colour</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                Regex transmissionPattern = new Regex(@"(?<=<dt><span>Transmission</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                Regex interiorColorPattern = new Regex(@"(?<=<dt><span>Int. Colour</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                string mileagePattern = "(?<=<span>Kilometres</span></dt><dd class=\"mileageValue\"><span>)(.*)(?=</span></dd>)";
+                Regex stockNumberPattern = new Regex(@"(?<=<dt><span>Stock Number</span></dt><dd><span>)(.*)(?=</span></dd>)");
 
-                int count = 0; 
+                Match brochureLink = Regex.Match(page, brochurePattern);
+                MatchCollection matches = rxImage.Matches(page);
+                Match engine = enginePattern.Match(page);
+                Match body = bodyPattern.Match(page);
+                Match fuel = fuelPattern.Match(page);
+                Match color = colorPattern.Match(page);
+                Match transmission = transmissionPattern.Match(page);
+                Match interiorColor = interiorColorPattern.Match(page);
+                Match mileage = Regex.Match(page, mileagePattern);
+                Match stockNumber = stockNumberPattern.Match(page);
+
                 foreach (Match m in matches)
                 {
                     Uri path = new Uri(m.ToString());
                     WebClient downloadClient = new WebClient();
                     string outputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
-
                     downloadClient.DownloadFile(path, outputFile);
                     outputFile = Settings.MoveToItemImageFolder(vehicle, outputFile);
                     imagePaths.Add(new string[] { PropertyId.VehicleImage.ToString(), outputFile });
-                    count++;
                 }
+
+                dataMap.Add(PropertyId.Fueltype, fuel.ToString().Trim());
+                dataMap.Add(PropertyId.ExtColor, color.ToString().Trim());
+                dataMap.Add(PropertyId.IntColor, interiorColor.ToString().Trim());
+                dataMap.Add(PropertyId.Bodystyle, body.ToString().Trim());
+                dataMap.Add(PropertyId.Transmission, transmission.ToString().Trim());
+                dataMap.Add(PropertyId.Engine, engine.ToString().Trim());
+                dataMap.Add(PropertyId.Mileage, mileage.ToString().Trim());
+                dataMap.Add(PropertyId.Images, imagePaths);
+                dataMap.Add(PropertyId.StockNumber, stockNumber.ToString().Trim());
+
                 getBrochure(host + brochureLink.ToString());
                 result = VehicleImportStatus.PASS;
-                string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
-                Workbook wb = new Workbook();
-                Worksheet ws = new Worksheet("Sheet 1");
-                
-                // to avoid corrupt excel file message. Fill 100 or more cells.
-                for (int i = 0; i < 100; i++)
-                {
-                    ws.Cells[i, 0] = new Cell("");
-                }
-                
-                int j = 0;
-                foreach (PropertyId p in dataMap.Keys)
-                {
-                    if (!p.Equals(PropertyId.Images))
-                    {
-                        int i = 0;
-                        while (i < 1)
-                        {
-                            ws.Cells.ColumnWidth[(ushort)i, (ushort)j] = 5000;
-                            ws.Cells[i, j] = new Cell(p.ToString());
-                            i++;
-                            ws.Cells[i, j] = new Cell(dataMap[p]);
-                        }
-                        j++;
-                    }
-                }
-                wb.Worksheets.Add(ws);
-                wb.Save(file);
+                ExportVehicleInfo exp = new ExportVehicleInfo(dataMap);
             }
         }
 
@@ -131,38 +121,21 @@ namespace CarDepot.VehicleStore
             string makePattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4})\\s)(\\w+)(?=\\s.*</div>)";
             string modelPattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4})\\s(\\w+)\\s)(\\w+)(?=\\s.*</div>)";
             string trimPattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4}\\s(\\w+)\\s(\\w+)\\s))(.*)(?=</div>)";
-
-            Regex stockNumberPattern = new Regex(@"(?<=<span>Stock Number:</span>)[^<]+(?=<br />)");
-            Regex bodyPattern = new Regex(@"(?<=<span>Bodystyle:</span>)[^<]+(?=<br />)");
-            Regex doorPattern = new Regex(@"(?<=<span>Doors:</span>)[^<]+(?=<br />)");
-            Regex transmissionPattern = new Regex(@"(?<=<span>Transmission:</span>)[^<]+(?=<br />)");
-            Regex enginePattern = new Regex(@"(?<=<span>Engine:</span>)[^<]+(?=<br />)");
-            Regex mileagePattern = new Regex(@"(?<=<span>Kilometres:</span>)[^<]+(?=<br />)");
+            //Regex doorPattern = new Regex(@"(?<=<span>Doors:</span>)[^<]+(?=<br />)");
             Regex pricePattern = new Regex(@"(?<=Internet Price:)[^<]+(?=<br/>)");
 
             Match year = Regex.Match(brochure, yearPattern);
             Match make = Regex.Match(brochure, makePattern);
             Match model = Regex.Match(brochure, modelPattern);
             Match trim = Regex.Match(brochure, trimPattern);
-            Match stockNumber = stockNumberPattern.Match(brochure);
-            Match body = bodyPattern.Match(brochure);
-            Match door = doorPattern.Match(brochure);
-            Match transmission = transmissionPattern.Match(brochure);
-            Match engine = enginePattern.Match(brochure);
-            Match mileage = mileagePattern.Match(brochure);
+            //Match door = doorPattern.Match(brochure);
             Match listPrice = pricePattern.Match(brochure);
 
             dataMap.Add(PropertyId.Year, year.ToString().Trim());
             dataMap.Add(PropertyId.Make, make.ToString().Trim());
             dataMap.Add(PropertyId.Model, model.ToString().Trim());
             dataMap.Add(PropertyId.Trim, trim.ToString().Trim());
-            dataMap.Add(PropertyId.StockNumber, stockNumber.ToString().Trim());
-            dataMap.Add(PropertyId.Bodystyle, body.ToString().Trim());
-            dataMap.Add(PropertyId.Transmission, transmission.ToString().Trim());
-            dataMap.Add(PropertyId.Engine, engine.ToString().Trim());
-            dataMap.Add(PropertyId.Mileage, mileage.ToString().Trim());
             dataMap.Add(PropertyId.ListPrice, listPrice.ToString().Trim());
-            dataMap.Add(PropertyId.Images, imagePaths);
         }
 
         public void ApplyVehicleValues() 
