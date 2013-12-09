@@ -103,7 +103,6 @@ namespace CarDepot.VehicleStore
 
                 getBrochure(host + brochureLink.ToString());
                 result = VehicleImportStatus.PASS;
-                ExportVehicleInfo exp = new ExportVehicleInfo(dataMap);
             }
         }
 

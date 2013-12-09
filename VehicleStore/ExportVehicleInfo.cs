@@ -23,11 +23,33 @@ namespace CarDepot.VehicleStore
 {
     class ExportVehicleInfo
     {
-        public ExportVehicleInfo(Dictionary<PropertyId, Object> vehicle)
+        private List<PropertyId> vehicleProperties = new List<PropertyId>();
+        public ExportVehicleInfo(VehicleAdminObject vehicle)
         {
+            addProperties();
             createExcelFile(vehicle);
         }
-        private void createExcelFile(Dictionary<PropertyId, Object> currentVehicle)
+        private void addProperties()
+        {
+            vehicleProperties.Add(PropertyId.Make);
+            vehicleProperties.Add(PropertyId.Model);
+            vehicleProperties.Add(PropertyId.Year);
+            vehicleProperties.Add(PropertyId.Mileage);
+            vehicleProperties.Add(PropertyId.ListPrice);
+            vehicleProperties.Add(PropertyId.SalePrice);
+            vehicleProperties.Add(PropertyId.Transmission);
+            vehicleProperties.Add(PropertyId.DriveTrain);
+            vehicleProperties.Add(PropertyId.Engine);
+            vehicleProperties.Add(PropertyId.Fueltype);
+            vehicleProperties.Add(PropertyId.Trim);
+            vehicleProperties.Add(PropertyId.ExtColor);
+            vehicleProperties.Add(PropertyId.IntColor);
+            vehicleProperties.Add(PropertyId.Bodystyle);
+            vehicleProperties.Add(PropertyId.StockNumber);
+            vehicleProperties.Add(PropertyId.VinNumber);
+            vehicleProperties.Add(PropertyId.ModelCode);
+        }
+        private void createExcelFile(VehicleAdminObject currentVehicle)
         {
             string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
             Workbook wb = new Workbook();
@@ -36,19 +58,17 @@ namespace CarDepot.VehicleStore
             
             int j = 0;
             int maxCol, maxRow = 0;
-            foreach (PropertyId p in currentVehicle.Keys)
+            foreach (PropertyId p in vehicleProperties)
             {
-                if (!p.Equals(PropertyId.Images))
-                {
                     int i = -1;
                     do
                     {
                         ws.Cells[++i, j] = new Cell(p.ToString());
                         if (p.Equals(PropertyId.ListPrice))
                         {
-                            if (currentVehicle[p].ToString() != null)
+                            if (currentVehicle.GetValue(p) != null)
                             {
-                                decimal price = System.Convert.ToDecimal(currentVehicle[p].ToString().Substring(1, currentVehicle[p].ToString().Length - 1));
+                                decimal price = System.Convert.ToDecimal(currentVehicle.GetValue(p).Substring(1, currentVehicle.GetValue(p).Length - 1));
                                 ws.Cells[++i, j] = new Cell(price, "#,##0.00");
                             }
                             else
@@ -58,13 +78,13 @@ namespace CarDepot.VehicleStore
                         }
                         else
                         {
-                            ws.Cells[++i, j] = new Cell(currentVehicle[p]);
+                            ws.Cells[++i, j] = new Cell(currentVehicle.GetValue(p));
                         }
-                        ws.Cells.ColumnWidth[(ushort)j] = ws.Cells.ColumnWidth.Default;
+                        //ws.Cells.ColumnWidth[(ushort)j] = ws.Cells.ColumnWidth.Default;
+                        ws.Cells.ColumnWidth[(ushort)j] = 5000;
                     } while (i < 1);
                     maxRow = i;
                     j++;
-                }
             }
             maxCol = j;
             // to avoid corrupt excel file message. Create more cells till we have a total of 100.
