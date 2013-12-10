@@ -83,6 +83,7 @@ namespace CarDepot
 
             propertyPanels.Add(BasicVehicleControlPropertyPanel);
             propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
+            propertyPanels.Add(PurchaseInfoControlPropertyPanel);
 
             LoadPanel(_vehicle);
         }
@@ -94,11 +95,6 @@ namespace CarDepot
                 propertyPanel.LoadPanel(item);
                 //propertyPanel.UpdatePanel(item);
             }
-        }
-
-        private void Window_Closed_1(object sender, EventArgs e)
-        {
-            
         }
 
         private void VehicleInfoWindow_OnClosing(object sender, CancelEventArgs e)

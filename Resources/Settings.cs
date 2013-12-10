@@ -70,4 +70,15 @@ namespace CarDepot.Resources
         public static double ADMINLABELTEXTBOX_GAPSIZE = 130;
         public static double ADMINTEXTBOX_MINSIZE_WHEN_NO_TEXT = 70;
     }
+
+    static class Utilities
+    {
+        public static bool StringToDouble(string input, out double result)
+        {
+            double newValue = 0;
+            input = input.Replace("$", "");
+            input = input.Replace(",", "");
+            return double.TryParse(input, out result);
+        }
+    }
 }

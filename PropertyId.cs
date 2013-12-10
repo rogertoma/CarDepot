@@ -71,6 +71,12 @@ namespace CarDepot
         VinNumber,
         ListPrice,
         SalePrice,
+        PurchasePrice,
+        PurchaseHst,
+        PurchaseTotal,
+        PurchaseCheckNumber,
+        PurchaseDate,
+        Vendor,
 
         //Task PropertyId's
         Task,

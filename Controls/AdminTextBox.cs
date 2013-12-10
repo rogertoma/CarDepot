@@ -15,7 +15,7 @@ namespace CarDepot.Controls
         public AdminTextBox()
         {
             Background = System.Windows.Media.Brushes.Transparent;
-            BorderThickness = new Thickness(0);
+            BorderThickness = new Thickness(1);
             MouseEnter += AdminTextBox_MouseEnter;
             MouseLeave += AdminTextBox_MouseLeave;
             GotFocus += AdminTextBox_GotFocus;
@@ -38,7 +38,7 @@ namespace CarDepot.Controls
             }
 
             Background = System.Windows.Media.Brushes.Transparent;
-            BorderThickness = new Thickness(0);
+            //BorderThickness = new Thickness(0);
 
             _hasFocus = false;
         }
@@ -67,7 +67,7 @@ namespace CarDepot.Controls
         void AdminTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             Background = System.Windows.Media.Brushes.WhiteSmoke;
-            BorderThickness = new Thickness(1);
+            //BorderThickness = new Thickness(1);
             _hasFocus = true;
         }
 
@@ -75,14 +75,14 @@ namespace CarDepot.Controls
         {
             if (_hasFocus)
                 return;
-            BorderThickness = new Thickness(0);
+            //BorderThickness = new Thickness(0);
         }
 
         void AdminTextBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (_hasFocus)
                 return;
-            BorderThickness = new Thickness(1);
+            //BorderThickness = new Thickness(1);
         }
 
         public bool IsEditable

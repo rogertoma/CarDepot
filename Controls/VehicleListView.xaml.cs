@@ -24,6 +24,7 @@ namespace CarDepot.Controls
     {
         private VehicleTileControl mouseTile = null;
         private VehicleCache cache = null;
+        private List<VehicleInfoWindow> openedWindows = new List<VehicleInfoWindow>();
 
         public VehicleListView()
         {
@@ -145,6 +146,7 @@ namespace CarDepot.Controls
             {
                 VehicleInfoWindow window = new VehicleInfoWindow(vehicle);
                 window.Show();
+                openedWindows.Add(window);
             }
         }
 
@@ -211,6 +213,16 @@ namespace CarDepot.Controls
 
                 lastHeaderClicked = headerClicked;
                 lastDirection = direction;
+            }
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            foreach (VehicleInfoWindow vehicleInfoWindow in openedWindows)
+            {
+                VehicleInfoWindow window = vehicleInfoWindow;
+                window.Close();
+                window = null;
             }
         }
     }

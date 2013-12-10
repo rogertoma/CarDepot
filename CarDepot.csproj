@@ -68,6 +68,7 @@
     <Compile Include="Controls\AdditionalContentControl.xaml.cs">
       <DependentUpon>AdditionalContentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AdminDatePicker.cs" />
     <Compile Include="Controls\AdminLabel.cs" />
     <Compile Include="Controls\AdminLabelTextBox.xaml.cs">
       <DependentUpon>AdminLabelTextBox.xaml</DependentUpon>
@@ -83,6 +84,9 @@
     </Compile>
     <Compile Include="Controls\SearchControls\SearchVehicleControl.xaml.cs">
       <DependentUpon>SearchVehicleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VehicleControls\PurchaseInfoControl.xaml.cs">
+      <DependentUpon>PurchaseInfoControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VehicleListView.xaml.cs">
       <DependentUpon>VehicleListView.xaml</DependentUpon>
@@ -159,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SearchControls\SearchVehicleControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VehicleControls\PurchaseInfoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
