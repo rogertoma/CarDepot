@@ -36,5 +36,17 @@ namespace CarDepot.Controls.SearchControls
             LstSearchResults.SetContent(cache);
         }
 
+        private void BtnGenerateReport_Click(object sender, RoutedEventArgs e)
+        {
+            VehicleCache vehicleList = LstSearchResults.Cache;
+            if (vehicleList == null)
+            {
+                MessageBox.Show("First search to populate list before you can gnerate report");
+                return;
+            }
+
+            ExportVehicleInfo exp = new ExportVehicleInfo(vehicleList);
+        }
+
     }
 }

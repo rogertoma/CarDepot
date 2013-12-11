@@ -158,7 +158,6 @@ namespace CarDepot
             if (urlImport.ImportStatus == VehicleImportStatus.PASS)
             {
                 urlImport.ApplyVehicleValues();
-                ExportVehicleInfo exp = new ExportVehicleInfo(_vehicle);
             }
             else
             {

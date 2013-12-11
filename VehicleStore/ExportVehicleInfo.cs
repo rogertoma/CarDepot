@@ -24,10 +24,10 @@ namespace CarDepot.VehicleStore
     class ExportVehicleInfo
     {
         private List<PropertyId> vehicleProperties = new List<PropertyId>();
-        public ExportVehicleInfo(VehicleAdminObject vehicle)
+        public ExportVehicleInfo(VehicleCache vehicles)
         {
             addProperties();
-            createExcelFile(vehicle);
+            createExcelFile(vehicles[0]);
         }
         private void addProperties()
         {

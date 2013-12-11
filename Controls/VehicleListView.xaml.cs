@@ -26,6 +26,11 @@ namespace CarDepot.Controls
         private VehicleCache cache = null;
         private List<VehicleInfoWindow> openedWindows = new List<VehicleInfoWindow>();
 
+        public VehicleCache Cache
+        {
+            get { return cache; }
+        }
+
         public VehicleListView()
         {
             InitializeComponent();

@@ -31,7 +31,7 @@
         <DatePicker MinWidth="120" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" />
         <DatePicker MinWidth="120" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" />
         <!--Button Section-->
-        <Button Margin="0,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="4">
+        <Button Name="BtnGenerateReport" Margin="0,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="4" Click="BtnGenerateReport_Click">
             <TextBlock Text="Generate Report" TextWrapping="Wrap" TextAlignment="Center" Height="35" Width="70"/>
         </Button>
         <Button Name="BtnSearch" Content="Search" Height="39" Width="70" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="5" Click="BtnSearch_Click"/>
