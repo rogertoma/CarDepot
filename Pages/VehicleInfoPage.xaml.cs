@@ -84,6 +84,7 @@ namespace CarDepot
             propertyPanels.Add(BasicVehicleControlPropertyPanel);
             propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
             propertyPanels.Add(PurchaseInfoControlPropertyPanel);
+            propertyPanels.Add(SaleInfoControlPropertyPanel);
 
             LoadPanel(_vehicle);
         }

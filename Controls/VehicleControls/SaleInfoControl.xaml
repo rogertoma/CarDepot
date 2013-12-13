@@ -1,0 +1,31 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:CarDepot.Controls" x:Class="CarDepot.Controls.VehicleControls.SaleInfoControl" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Width="512">
+    <Grid x:Name="SaleInfoGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Sale Info" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+        <Label Content="Sale Date" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminDatePicker PropertyId="SaleDate" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="125"/>
+        
+        <Label Content="Sale Price" Grid.Row="2" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox PropertyId="SalePrice" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Sale HST" Grid.Row="3" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox PropertyId="SaleHst" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+    </Grid>
+</UserControl>

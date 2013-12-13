@@ -88,6 +88,9 @@
     <Compile Include="Controls\VehicleControls\PurchaseInfoControl.xaml.cs">
       <DependentUpon>PurchaseInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VehicleControls\SaleInfoControl.xaml.cs">
+      <DependentUpon>SaleInfoControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VehicleListView.xaml.cs">
       <DependentUpon>VehicleListView.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\VehicleControls\PurchaseInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VehicleControls\SaleInfoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
