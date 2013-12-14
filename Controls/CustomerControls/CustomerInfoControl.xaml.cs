@@ -27,6 +27,10 @@ namespace CarDepot.Controls.CustomerControls
 
         public void LoadPanel(IAdminObject item)
         {
+            var customer = item as CustomerAdminObject;
+            if (customer == null)
+                return;
+
             LoadAllChildren(ContactCardGrid, item);
         }
 

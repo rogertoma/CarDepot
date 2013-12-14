@@ -72,6 +72,7 @@ namespace CarDepot
         ListPrice,
         SaleDate,
         SalePrice,
+        SaleCustomerId,
         SaleHst,
         PurchasePrice,
         PurchaseHst,

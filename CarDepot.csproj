@@ -144,6 +144,7 @@
     <Compile Include="VehicleAdminObject.cs" />
     <Compile Include="VehicleStore\ActiveVehicleCache.cs" />
     <Compile Include="VehicleStore\CacheManager.cs" />
+    <Compile Include="VehicleStore\CustomerCache.cs" />
     <Compile Include="VehicleStore\ExportVehicleInfo.cs" />
     <Compile Include="VehicleStore\UserCache.cs" />
     <Compile Include="VehicleStore\VehicleCache.cs" />

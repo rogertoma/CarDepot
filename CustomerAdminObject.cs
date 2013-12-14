@@ -22,61 +22,6 @@ namespace CarDepot
 
         public override IAdminItemCache Cache { get; set; }
 
-        #region ExposedPropertiesForListResults
-
-        public string Year
-        {
-            get { return GetValue(PropertyId.Year); }
-            set { ApplyValue(PropertyId.Year, value); }
-        }
-        public string Make
-        {
-            get { return GetValue(PropertyId.Make); }
-            set { ApplyValue(PropertyId.Make, value); }
-        }
-        public string Model
-        {
-            get { return GetValue(PropertyId.Model); }
-            set { ApplyValue(PropertyId.Model, value); }
-        }
-        public string ListPrice
-        {
-            get { return GetValue(PropertyId.ListPrice); }
-            set { ApplyValue(PropertyId.ListPrice, value); }
-        }
-        public string DriveTrain
-        {
-            get { return GetValue(PropertyId.DriveTrain); }
-            set { ApplyValue(PropertyId.DriveTrain, value); }
-        }
-        public string Transmission
-        {
-            get { return GetValue(PropertyId.Transmission); }
-            set { ApplyValue(PropertyId.Transmission, value); }
-        }
-        public string Mileage
-        {
-            get { return GetValue(PropertyId.Mileage); }
-            set { ApplyValue(PropertyId.Mileage, value); }
-        }
-        public string Engine
-        {
-            get { return GetValue(PropertyId.Engine); }
-            set { ApplyValue(PropertyId.Engine, value); }
-        }
-        public string ExtColor
-        {
-            get { return GetValue(PropertyId.ExtColor); }
-            set { ApplyValue(PropertyId.ExtColor, value); }
-        }
-        public string StockNumber
-        {
-            get { return GetValue(PropertyId.StockNumber); }
-            set { ApplyValue(PropertyId.StockNumber, value); }
-        }
-
-        #endregion
-
         public CustomerAdminObject() 
             : base() 
         {
@@ -154,6 +99,8 @@ namespace CarDepot
         {
             switch (id)
             {
+                case PropertyId.Id:
+                    return Id;
                 default:
                     if (_basicInfo.ContainsKey(id))
                     {

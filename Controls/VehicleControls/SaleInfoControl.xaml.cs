@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -43,6 +44,18 @@ namespace CarDepot.Controls.VehicleControls
                 Panel isPanel = child as Panel;
                 if (isPanel != null)
                     LoadAllChildren(isPanel, item);
+            }
+        }
+
+        private void TxtCustomerId_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Dictionary<CustomerCacheSearchKey, string> searchParam = new Dictionary<CustomerCacheSearchKey, string>();
+            searchParam.Add(CustomerCacheSearchKey.Id, TxtCustomerId.Text);
+            CustomerCache cache = new CustomerCache(searchParam);
+
+            if (cache.Count > 0)
+            {
+                customerInfoControl.LoadPanel(cache[0]);
             }
         }
     }
