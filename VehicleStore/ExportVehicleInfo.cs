@@ -27,7 +27,11 @@ namespace CarDepot.VehicleStore
         public ExportVehicleInfo(VehicleCache vehicles)
         {
             addProperties();
-            createExcelFile(vehicles[0]);
+            foreach (var v in vehicles) 
+            {
+                createExcelFile(v);
+            }
+            //createExcelFile(vehicles[0]);
         }
         private void addProperties()
         {
@@ -53,7 +57,7 @@ namespace CarDepot.VehicleStore
         {
             string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
             Workbook wb = new Workbook();
-            wb.Worksheets.Add(new Worksheet("Sheet 1"));
+            wb.Worksheets.Add(new Worksheet(currentVehicle.GetValue(PropertyId.Trim)));
             Worksheet ws = wb.Worksheets.First();
             
             int j = 0;
@@ -66,10 +70,13 @@ namespace CarDepot.VehicleStore
                         ws.Cells[++i, j] = new Cell(p.ToString());
                         if (p.Equals(PropertyId.ListPrice))
                         {
-                            if (currentVehicle.GetValue(p) != null)
+                            if (currentVehicle.GetValue(p) != null || (currentVehicle.GetValue(p).CompareTo("") != 0))
                             {
-                                decimal price = System.Convert.ToDecimal(currentVehicle.GetValue(p).Substring(1, currentVehicle.GetValue(p).Length - 1));
-                                ws.Cells[++i, j] = new Cell(price, "#,##0.00");
+                                //decimal price = System.Convert.ToDecimal(currentVehicle.GetValue(p).Substring(1, currentVehicle.GetValue(p).Length - 1));
+                                double price;
+                                CarDepot.Resources.Utilities.StringToDouble(currentVehicle.GetValue(p), out price);
+                                ws.Cells[++i, j] = new Cell(price);
+                                //ws.Cells[++i, j] = new Cell(price, "#,##0.00");
                             }
                             else
                             {

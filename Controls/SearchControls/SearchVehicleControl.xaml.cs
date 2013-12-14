@@ -41,7 +41,7 @@ namespace CarDepot.Controls.SearchControls
             VehicleCache vehicleList = LstSearchResults.Cache;
             if (vehicleList == null)
             {
-                MessageBox.Show("First search to populate list before you can gnerate report");
+                MessageBox.Show("The report is empty! Search first in order to generate a report.");
                 return;
             }
 
