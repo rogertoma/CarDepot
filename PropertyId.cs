@@ -80,6 +80,7 @@ namespace CarDepot
         PurchaseCheckNumber,
         PurchaseDate,
         Vendor,
+        Profit,
 
         //Task PropertyId's
         Task,

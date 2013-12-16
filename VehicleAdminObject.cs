@@ -80,7 +80,11 @@ namespace CarDepot
             get { return GetValue(PropertyId.StockNumber); }
             set { ApplyValue(PropertyId.StockNumber, value); }
         }
-
+        public string Profit
+        {
+            get { return GetValue(PropertyId.Profit); }
+            set { ApplyValue(PropertyId.Profit, value); }
+        }
         #endregion
 
         public VehicleAdminObject() 
