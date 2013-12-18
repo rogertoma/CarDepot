@@ -25,6 +25,8 @@ namespace CarDepot.Resources
         public static int MultiValueKeyIndex = 0;
         public static int MultiValueValueIndex = 1;
 
+        public static double HST = 0.13;
+
         public static string MoveToItemImageFolder(IAdminObject item, string origionalFilePath)
         {
             string filePath = new FileInfo(item.ObjectId).Directory.FullName + Settings.VehicleImageFolder + "\\";
