@@ -46,16 +46,9 @@ namespace CarDepot.VehicleStore
             vehicleSaleProperties.Add(PropertyId.VinNumber);
             vehicleSaleProperties.Add(PropertyId.SalePrice);
             vehicleSaleProperties.Add(PropertyId.SaleHst);
-            vehicleSaleProperties.Add(PropertyId.MinistryLicense);
-            vehicleSaleProperties.Add(PropertyId.SaleTotal);
-            vehicleSaleProperties.Add(PropertyId.CustomerDeposit);
-            vehicleSaleProperties.Add(PropertyId.CustomerPayments);
-            vehicleSaleProperties.Add(PropertyId.DealerReserve);
-            vehicleSaleProperties.Add(PropertyId.FinancialFeeHst);
-            vehicleSaleProperties.Add(PropertyId.NetDealerReserve);
-            vehicleSaleProperties.Add(PropertyId.TotalIncomeLessMinistryLicense);
-            vehicleSaleProperties.Add(PropertyId.TotalHst);
-            vehicleSaleProperties.Add(PropertyId.NetIncomeLessMinistryLicense);
+            vehicleSaleProperties.Add(PropertyId.SaleFees);
+            vehicleSaleProperties.Add(PropertyId.SaleTotalDue);
+            vehicleSaleProperties.Add(PropertyId.SaleCustomerPayment);
             vehicleSaleProperties.Add(PropertyId.PurchaseTotal);
             vehicleSaleProperties.Add(PropertyId.SalePrice);
             vehicleSaleProperties.Add(PropertyId.Profit);
@@ -112,31 +105,30 @@ namespace CarDepot.VehicleStore
             return;
         }
 
+        private string createDateKey(VehicleAdminObject currVehicle, PropertyId p)
+        {
+            string monthAndYearKey = string.Empty;
+            string dateString = currVehicle.GetValue(p);
+            DateTime d = DateTime.Parse(dateString);
+            monthAndYearKey = d.Month + "-" + d.Year;
+            return monthAndYearKey;
+        }
+
         private void bucketSortVehicles(VehicleCache vehicles)
         { 
             foreach (var currVehicle in vehicles)
             {
-                string monthAndYearString = string.Empty;
                 if (isSold(currVehicle))
                 {
-                    string s = currVehicle.GetValue(PropertyId.SaleDate);
-                    DateTime d = DateTime.Parse(s);
-                    monthAndYearString = d.Month + "-" + d.Year;
-                    updateSoldVehicleList(currVehicle, monthAndYearString);
+                    updateSoldVehicleList(currVehicle, createDateKey(currVehicle, PropertyId.SaleDate));
                 }
-                else if(isPurchased(currVehicle))
+                if(isPurchased(currVehicle))
                 {
-                    string s = currVehicle.GetValue(PropertyId.PurchaseDate);
-                    DateTime d = DateTime.Parse(s);
-                    monthAndYearString = d.Month + "-" + d.Year;
-                    updatePurchasedVehicleList(currVehicle, monthAndYearString);
-                }
-                else 
-                {
-                    continue;
+                    updatePurchasedVehicleList(currVehicle, createDateKey(currVehicle, PropertyId.PurchaseDate));
                 }
             }
             //TODO: Sort Data structure; tough since the keys are strings
+            return;
         }
 
         private double calcPurchaseTotal(VehicleAdminObject currVehicle)
@@ -150,62 +142,15 @@ namespace CarDepot.VehicleStore
 
         private double calcSaleTotal(VehicleAdminObject currVehicle)
         {
-            double ministryLicense;
+            double saleFees;
             double salePrice;
             double saleHst;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.MinistryLicense), out ministryLicense);
+            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFees), out saleFees);
             CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePrice), out salePrice);
             CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleHst), out saleHst);
-            return ministryLicense + salePrice + saleHst;
+            return saleFees + salePrice + saleHst;
         }
-        private double calcCustomerPayments(VehicleAdminObject currVehicle)
-        {
-            double totalSaleAmount;
-            double customerDeposit;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTotal), out totalSaleAmount);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.CustomerDeposit), out customerDeposit);
-            return totalSaleAmount - customerDeposit;
-        }
-        private double calcFinancialFeeHst(VehicleAdminObject currVehicle)
-        {
-            double dealerReserve;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.DealerReserve), out dealerReserve);
-            return dealerReserve / (1.13 * 0.13);
-        }
-        private double calcNetDealerReserve(VehicleAdminObject currVehicle)
-        {
-            double financialFeeHst;
-            double dealerReserve;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.DealerReserve), out dealerReserve);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.FinancialFeeHst), out financialFeeHst);
-            return dealerReserve - financialFeeHst;
-        }
-        private double calctotalIncomeLessMinistryLicense(VehicleAdminObject currVehicle)
-        {
-            double totalSaleAmount;
-            double dealerReserve;
-            double ministryLicense;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.DealerReserve), out dealerReserve);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTotal), out totalSaleAmount);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.MinistryLicense), out ministryLicense);
-            return totalSaleAmount + dealerReserve - ministryLicense;
-        }
-        private double calcTotalHst(VehicleAdminObject currVehicle)
-        {
-            double financialFeeHst;
-            double purchaseHst;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.FinancialFeeHst), out financialFeeHst);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchaseHst), out purchaseHst);
-            return financialFeeHst + purchaseHst;
-        }
-        private double calcnetIncomeLessMinistryLicense(VehicleAdminObject currVehicle)
-        {
-            double totalHst;
-            double totalIncomeLessMinistryLicense;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalHst), out totalHst);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalIncomeLessMinistryLicense), out totalIncomeLessMinistryLicense);
-            return totalIncomeLessMinistryLicense - totalHst;
-        }
+
         private double calcProfit(VehicleAdminObject currVehicle)
         {
             double salePrice;
@@ -214,115 +159,100 @@ namespace CarDepot.VehicleStore
             CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchaseTotal), out purchaseTotal);
             return salePrice - purchaseTotal;
         }
-        private void populateSoldSheet(Worksheet currSheet, VehicleAdminObject currVehicle, string monthAndYearSold, int currRow) 
+        
+        private bool isValidValue(VehicleAdminObject currVehicle, PropertyId p)
+        {
+            return (currVehicle.GetValue(p) != null && !currVehicle.GetValue(p).Equals(string.Empty));
+        }
+        
+        private void applyValueToCell(VehicleAdminObject currVehicle, PropertyId p, Worksheet currSheet, int currRow, int currColumn)
+        {
+            if (isValidValue(currVehicle, p))
+            {
+                double value;
+                CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(p), out value);
+                currSheet.Cells[currRow, currColumn] = new Cell(value, "#,##0.00");
+            }
+            else
+            {
+                currSheet.Cells[currRow, currColumn] = new Cell(0, "0.00");
+                currVehicle.ApplyValue(p, "0.00");
+            }
+            return;
+        }
+
+        private void populateSoldSheet(Worksheet currSheet, VehicleAdminObject currVehicle, int currRow) 
         {
             int column = 0;
             foreach (PropertyId p in vehicleSaleProperties)
             {
-                if (p.Equals(PropertyId.ListPrice) || p.Equals(PropertyId.SalePrice) || p.Equals(PropertyId.SaleHst) 
-                    || p.Equals(PropertyId.MinistryLicense) || p.Equals(PropertyId.CustomerDeposit) || p.Equals(PropertyId.DealerReserve))
+                switch (p)
                 {
-                    if (currVehicle.GetValue(p) != null && !currVehicle.GetValue(p).Equals(string.Empty))
-                    {
-                        double value;
-                        CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(p), out value);
-                        currSheet.Cells[currRow, column] = new Cell(value, "#,##0.00");
-                    }
-                    else
-                    {
-                        currSheet.Cells[currRow, column] = new Cell(0, "0.00");
-                        currVehicle.ApplyValue(p, "0.00");
-                    }
+                    case PropertyId.ListPrice:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.SalePrice:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.SaleHst:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.SaleCustomerPayment:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.SaleFees:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.SaleTotalDue:
+                        double saleTotal = calcSaleTotal(currVehicle);
+                        currSheet.Cells[currRow, column] = new Cell(saleTotal, "#,##0.00");
+                        currVehicle.ApplyValue(PropertyId.SaleTotalDue,saleTotal.ToString());
+                        break;
+                    case PropertyId.Profit:
+                        double profit = calcProfit(currVehicle);
+                        currSheet.Cells[currRow, column] = new Cell(profit, "#,##0.00");
+                        currVehicle.ApplyValue(PropertyId.Profit, profit.ToString());
+                        break;
+                    case PropertyId.PurchaseTotal:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    default:
+                        currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
+                        break;
                 }
-                else if (p.Equals(PropertyId.SaleTotal))
-                {
-                    double totalSale = calcSaleTotal(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(totalSale, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.SaleTotal,totalSale.ToString());
-                }
-                else if (p.Equals(PropertyId.CustomerPayments))
-                {
-                    double customerPayments = calcCustomerPayments(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(customerPayments, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.CustomerPayments, customerPayments.ToString());
-                }
-                else if (p.Equals(PropertyId.FinancialFeeHst))
-                {
-                    double financialFeeHst = calcFinancialFeeHst(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(financialFeeHst, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.FinancialFeeHst, financialFeeHst.ToString());
-                }
-                else if (p.Equals(PropertyId.NetDealerReserve))
-                {
-                    double netDealerReserve = calcNetDealerReserve(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(netDealerReserve, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.NetDealerReserve, netDealerReserve.ToString());
-                }
-                else if (p.Equals(PropertyId.TotalIncomeLessMinistryLicense))
-                {
-                    double totalIncomeLessMinistryLicense = calctotalIncomeLessMinistryLicense(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(totalIncomeLessMinistryLicense, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.TotalIncomeLessMinistryLicense, totalIncomeLessMinistryLicense.ToString());
-                }
-                else if (p.Equals(PropertyId.TotalHst))
-                {
-                    double totalHst = calcTotalHst(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(totalHst, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.TotalHst, totalHst.ToString());
-                }
-                else if (p.Equals(PropertyId.NetIncomeLessMinistryLicense))
-                {
-                    double netIncomeLessMinistryLicense = calcnetIncomeLessMinistryLicense(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(netIncomeLessMinistryLicense, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.NetIncomeLessMinistryLicense, netIncomeLessMinistryLicense.ToString());
-                }
-                else if (p.Equals(PropertyId.Profit))
-                {
-                    double profit = calcProfit(currVehicle);
-                    currSheet.Cells[currRow, column] = new Cell(profit, "#,##0.00");
-                    currVehicle.ApplyValue(PropertyId.Profit, profit.ToString());                   
-                }
-                else
-                {
-                    currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
-                }
-                currSheet.Cells.ColumnWidth[(ushort)column] = 2500;
-                column++;      
+                column++;
             }
+            currSheet.Cells.ColumnWidth[(ushort)column] = 3500;
         }
         
-        private void populatePurchasedSheet(Worksheet currSheet, VehicleAdminObject currVehicle, string monthAndYearPurchased, int currRow) 
+        private void populatePurchasedSheet(Worksheet currSheet, VehicleAdminObject currVehicle, int currRow) 
         {
             int column = 0;
             foreach (PropertyId p in vehiclePurchaseProperties)
             {
-                if (p.Equals(PropertyId.ListPrice) || p.Equals(PropertyId.PurchasePrice) || p.Equals(PropertyId.PurchaseHst))
+                switch (p)
                 {
-                    if (currVehicle.GetValue(p) != null && !currVehicle.GetValue(p).Equals(string.Empty))
-                    {
-                        double value;
-                        CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(p), out value);
-                        currSheet.Cells[currRow, column] = new Cell(value, "#,##0.00");
-                    }
-                    else
-                    {
-                        currSheet.Cells[currRow, column] = new Cell(0, "0.00");
-                        currVehicle.ApplyValue(p, "0.00");
-                    }
+                    case PropertyId.ListPrice:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.PurchasePrice:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.PurchaseHst:
+                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
+                        break;
+                    case PropertyId.PurchaseTotal:
+                        double purchaseTotal = calcPurchaseTotal(currVehicle);
+                        currVehicle.ApplyValue(PropertyId.PurchaseTotal, purchaseTotal.ToString());
+                        currSheet.Cells[currRow, column] = new Cell(purchaseTotal, "#,##0.00");
+                        break;
+                    default:
+                        currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
+                        break;
                 }
-                else if (p.Equals(PropertyId.PurchaseTotal))
-                {
-                    double purchaseTotal = calcPurchaseTotal(currVehicle);
-                    currVehicle.ApplyValue(PropertyId.PurchaseTotal, purchaseTotal.ToString());
-                    currSheet.Cells[currRow, column] = new Cell(purchaseTotal, "#,##0.00");
-                }
-                else
-                {
-                    currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
-                }
-                currSheet.Cells.ColumnWidth[(ushort)column] = 2500;
                 column++;
             }
+            currSheet.Cells.ColumnWidth[(ushort)column] = 3500;
         }
 
         private void createSoldSheet(Workbook wb, string monthAndYearSold)
@@ -337,7 +267,7 @@ namespace CarDepot.VehicleStore
             row = 1;
             foreach(VehicleAdminObject v in soldVehicles[monthAndYearSold])
             {
-                populateSoldSheet(currentSheet, v, monthAndYearSold, row);
+                populateSoldSheet(currentSheet, v, row);
                 row++;
             }
         }
@@ -354,7 +284,7 @@ namespace CarDepot.VehicleStore
             row = 1;
             foreach (VehicleAdminObject v in purchasedVehicles[monthAndYearPurchased])
             {
-                populatePurchasedSheet(currentSheet, v, monthAndYearPurchased, row);
+                populatePurchasedSheet(currentSheet, v, row);
                 row++;
             }
         }
@@ -381,3 +311,155 @@ namespace CarDepot.VehicleStore
         }
     }
 }
+
+//vehicleSaleProperties.Add(PropertyId.CustomerDeposit);
+//vehicleSaleProperties.Add(PropertyId.DealerReserve);
+//vehicleSaleProperties.Add(PropertyId.FinancialFeeHst);
+//vehicleSaleProperties.Add(PropertyId.NetDealerReserve);
+//vehicleSaleProperties.Add(PropertyId.TotalIncomeLessMinistryLicense);
+//vehicleSaleProperties.Add(PropertyId.TotalHst);
+//vehicleSaleProperties.Add(PropertyId.NetIncomeLessMinistryLicense);
+                //if (p.Equals(PropertyId.ListPrice) || p.Equals(PropertyId.PurchasePrice) || p.Equals(PropertyId.PurchaseHst))
+                //{
+                //    if (currVehicle.GetValue(p) != null && !currVehicle.GetValue(p).Equals(string.Empty))
+                //    {
+                //        double value;
+                //        CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(p), out value);
+                //        currSheet.Cells[currRow, column] = new Cell(value, "#,##0.00");
+                //    }
+                //    else
+                //    {
+                //        currSheet.Cells[currRow, column] = new Cell(0, "0.00");
+                //        currVehicle.ApplyValue(p, "0.00");
+                //    }
+                //}
+                //else if (p.Equals(PropertyId.PurchaseTotal))
+                //{
+                //    double purchaseTotal = calcPurchaseTotal(currVehicle);
+                //    currVehicle.ApplyValue(PropertyId.PurchaseTotal, purchaseTotal.ToString());
+                //    currSheet.Cells[currRow, column] = new Cell(purchaseTotal, "#,##0.00");
+                //}
+                //else
+                //{
+                //    currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
+                //}
+                //currSheet.Cells.ColumnWidth[(ushort)column] = 2500;
+                //column++;
+//private double calcCustomerPayments(VehicleAdminObject currVehicle)
+//{
+//    double totalSaleAmount;
+//    double customerDeposit;
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTotal), out totalSaleAmount);
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.CustomerDeposit), out customerDeposit);
+//    return totalSaleAmount - customerDeposit;
+//}
+//private double calcFinancialFeeHst(VehicleAdminObject currVehicle)
+//{
+//    double dealerReserve;
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.DealerReserve), out dealerReserve);
+//    return dealerReserve / (1.13 * 0.13);
+//}
+//private double calcNetDealerReserve(VehicleAdminObject currVehicle)
+//{
+//    double financialFeeHst;
+//    double dealerReserve;
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.DealerReserve), out dealerReserve);
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.FinancialFeeHst), out financialFeeHst);
+//    return dealerReserve - financialFeeHst;
+//}
+//private double calctotalIncomeLessMinistryLicense(VehicleAdminObject currVehicle)
+//{
+//    double totalSaleAmount;
+//    double dealerReserve;
+//    double ministryLicense;
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.DealerReserve), out dealerReserve);
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTotal), out totalSaleAmount);
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.MinistryLicense), out ministryLicense);
+//    return totalSaleAmount + dealerReserve - ministryLicense;
+//}
+//private double calcTotalHst(VehicleAdminObject currVehicle)
+//{
+//    double financialFeeHst;
+//    double purchaseHst;
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.FinancialFeeHst), out financialFeeHst);
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchaseHst), out purchaseHst);
+//    return financialFeeHst + purchaseHst;
+//}
+//private double calcnetIncomeLessMinistryLicense(VehicleAdminObject currVehicle)
+//{
+//    double totalHst;
+//    double totalIncomeLessMinistryLicense;
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalHst), out totalHst);
+//    CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalIncomeLessMinistryLicense), out totalIncomeLessMinistryLicense);
+//    return totalIncomeLessMinistryLicense - totalHst;
+//}
+//if (p.Equals(PropertyId.ListPrice) || p.Equals(PropertyId.SalePrice) || p.Equals(PropertyId.SaleHst) 
+//    || p.Equals(PropertyId.MinistryLicense) || p.Equals(PropertyId.CustomerDeposit) || p.Equals(PropertyId.DealerReserve))
+//{
+//    if (currVehicle.GetValue(p) != null && !currVehicle.GetValue(p).Equals(string.Empty))
+//    {
+//        double value;
+//        CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(p), out value);
+//        currSheet.Cells[currRow, column] = new Cell(value, "#,##0.00");
+//    }
+//    else
+//    {
+//        currSheet.Cells[currRow, column] = new Cell(0, "0.00");
+//        currVehicle.ApplyValue(p, "0.00");
+//    }
+//}
+//else if (p.Equals(PropertyId.SaleTotal))
+//{
+//    double totalSale = calcSaleTotal(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(totalSale, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.SaleTotal,totalSale.ToString());
+//}
+//else if (p.Equals(PropertyId.CustomerPayments))
+//{
+//    double customerPayments = calcCustomerPayments(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(customerPayments, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.CustomerPayments, customerPayments.ToString());
+//}
+//else if (p.Equals(PropertyId.FinancialFeeHst))
+//{
+//    double financialFeeHst = calcFinancialFeeHst(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(financialFeeHst, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.FinancialFeeHst, financialFeeHst.ToString());
+//}
+//else if (p.Equals(PropertyId.NetDealerReserve))
+//{
+//    double netDealerReserve = calcNetDealerReserve(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(netDealerReserve, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.NetDealerReserve, netDealerReserve.ToString());
+//}
+//else if (p.Equals(PropertyId.TotalIncomeLessMinistryLicense))
+//{
+//    double totalIncomeLessMinistryLicense = calctotalIncomeLessMinistryLicense(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(totalIncomeLessMinistryLicense, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.TotalIncomeLessMinistryLicense, totalIncomeLessMinistryLicense.ToString());
+//}
+//else if (p.Equals(PropertyId.TotalHst))
+//{
+//    double totalHst = calcTotalHst(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(totalHst, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.TotalHst, totalHst.ToString());
+//}
+//else if (p.Equals(PropertyId.NetIncomeLessMinistryLicense))
+//{
+//    double netIncomeLessMinistryLicense = calcnetIncomeLessMinistryLicense(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(netIncomeLessMinistryLicense, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.NetIncomeLessMinistryLicense, netIncomeLessMinistryLicense.ToString());
+//}
+//else if (p.Equals(PropertyId.Profit))
+//{
+//    double profit = calcProfit(currVehicle);
+//    currSheet.Cells[currRow, column] = new Cell(profit, "#,##0.00");
+//    currVehicle.ApplyValue(PropertyId.Profit, profit.ToString());                   
+//}
+//else
+//{
+//    currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
+//}
+//currSheet.Cells.ColumnWidth[(ushort)column] = 2500;
+//column++;      
+//}

@@ -74,8 +74,8 @@ namespace CarDepot
         SalePrice,
         SaleCustomerId,
         SaleHst,
-        SaleFees,
-        SaleTotalDue,
+        SaleFees,               // aka ministry license
+        SaleTotalDue,           // salefees + saleHST + salePrice
         SaleCustomerPayment,
         PurchasePrice,
         PurchaseHst,
@@ -83,7 +83,7 @@ namespace CarDepot
         PurchaseCheckNumber,
         PurchaseDate,
         Vendor,
-        Profit,
+        Profit,                 // salePrice - PurchaseTotal
 
         //Task PropertyId's
         Task,
