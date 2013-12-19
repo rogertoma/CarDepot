@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarDepot.Resources;
 using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.VehicleControls
@@ -24,6 +25,8 @@ namespace CarDepot.Controls.VehicleControls
         public SaleInfoControl()
         {
             InitializeComponent();
+            LblBalanceDue.Visibility = Visibility.Collapsed;
+            LblBalanceDueTitle.Visibility = Visibility.Collapsed;
         }
 
         public void LoadPanel(IAdminObject item)
@@ -56,6 +59,50 @@ namespace CarDepot.Controls.VehicleControls
             if (cache.Count > 0)
             {
                 customerInfoControl.LoadPanel(cache[0]);
+            }
+        }
+
+        private void TxtSalePrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double result;
+            Utilities.StringToDouble(TxtSalePrice.Text, out result);
+
+            double hst = result * Settings.HST;
+            TxtSaleHst.Text = "$" + hst.ToString("F");
+
+        }
+
+        private void TxtSaleHst_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double salePrice, hst, fees;
+            Utilities.StringToDouble(TxtSalePrice.Text, out salePrice);
+            Utilities.StringToDouble(TxtSaleHst.Text, out hst);
+            Utilities.StringToDouble(TxtTotalFees.Text, out fees);
+
+            double totalCost = salePrice + hst + fees;
+            TxtTotalDue.Text = "$" + totalCost.ToString("F");
+        }
+
+        private void TxtTotalDue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double totalDue = 0;
+            Utilities.StringToDouble(TxtTotalDue.Text, out totalDue);
+
+            if (totalDue != 0)
+            {
+                LblBalanceDue.Visibility = Visibility.Visible;
+                LblBalanceDueTitle.Visibility = Visibility.Visible;
+
+                double customerPayment = 0;
+                Utilities.StringToDouble(TxtCustomerPayment.Text, out customerPayment);
+                totalDue -= customerPayment;
+                LblBalanceDue.Content = "$" + totalDue.ToString("F");
+            
+            }
+            else
+            {
+                LblBalanceDue.Visibility = Visibility.Collapsed;
+                LblBalanceDueTitle.Visibility = Visibility.Collapsed;
             }
         }
     }

@@ -22,7 +22,10 @@ namespace CarDepot.Controls
 
         void AdminDatePicker_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            string selectedDate = ((DateTime)SelectedDate).ToString("d");
+            string selectedDate = "";
+            if (SelectedDate != null)
+                selectedDate = ((DateTime) SelectedDate).ToString("d");
+
             _item.SetValue(PropertyId, selectedDate);
         }
 
@@ -35,14 +38,16 @@ namespace CarDepot.Controls
         {
             _item = item;
 
-            if (item == null || item.GetValue(PropertyId) == null)
-            {
-                SelectedDate = DateTime.Today;
-            }
-            else
-            {
-                SelectedDate = DateTime.Parse(item.GetValue(PropertyId));
-            }
+            //if (item == null || item.GetValue(PropertyId) == null)
+            //{
+            //    SelectedDate = DateTime.Today;
+            //}
+            //else
+            //{
+            string date = item.GetValue(PropertyId);
+            if (!string.IsNullOrEmpty(date))
+                SelectedDate = DateTime.Parse(date);
+            //}
         }
 
     }
