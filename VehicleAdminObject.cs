@@ -85,8 +85,57 @@ namespace CarDepot
             get { return GetValue(PropertyId.Profit); }
             set { ApplyValue(PropertyId.Profit, value); }
         }
+        public string MinistryLicense
+        {
+            get { return GetValue(PropertyId.MinistryLicense); }
+            set { ApplyValue(PropertyId.MinistryLicense, value); }
+        }
+        public string SaleTotal
+        {
+            get { return GetValue(PropertyId.SaleTotal); }
+            set { ApplyValue(PropertyId.SaleTotal, value); }
+        }
+        public string CustomerDeposit
+        {
+            get { return GetValue(PropertyId.CustomerDeposit); }
+            set { ApplyValue(PropertyId.CustomerDeposit, value); }
+        }
+        public string CustomerPayments
+        { 
+            get { return GetValue(PropertyId.CustomerPayments); } 
+            set { ApplyValue(PropertyId.CustomerPayments, value); }
+        }
+        public string DealerReserve
+        {
+            get { return GetValue(PropertyId.DealerReserve); }
+            set { ApplyValue(PropertyId.DealerReserve, value); }
+        }
+        public string FinancialFeeHst
+        {
+            get { return GetValue(PropertyId.FinancialFeeHst); }
+            set { ApplyValue(PropertyId.FinancialFeeHst, value); }
+        }
+        public string NetDealerReserve
+        {
+            get { return GetValue(PropertyId.NetDealerReserve); }
+            set { ApplyValue(PropertyId.NetDealerReserve, value); }
+        }
+        public string TotalIncomeLessMinistryLicense
+        {
+            get { return GetValue(PropertyId.TotalIncomeLessMinistryLicense); }
+            set { ApplyValue(PropertyId.TotalIncomeLessMinistryLicense, value); }
+        }
+        public string TotalHst
+        {
+            get { return GetValue(PropertyId.TotalHst); }
+            set { ApplyValue(PropertyId.TotalHst, value); }
+        }
+        public string NetIncomeLessMinistryLicense
+        {
+            get { return GetValue(PropertyId.NetIncomeLessMinistryLicense); }
+            set { ApplyValue(PropertyId.NetIncomeLessMinistryLicense, value); }
+        }
         #endregion
-
         public VehicleAdminObject() 
             : base() 
         {
