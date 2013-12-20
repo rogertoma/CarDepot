@@ -192,10 +192,11 @@ namespace CarDepot
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog ();
+            
+            PrintCar brochure = new PrintCar(_vehicle);
+            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog();
             if (dialog.ShowDialog() == true)
             {
-                PrintCar brochure = new PrintCar(_vehicle);
                 brochure.Print();
             }
             return;

@@ -20,15 +20,19 @@ namespace CarDepot.VehicleStore
             : base()
         {
             currVehicle = vehicle;
+            //PrintDocument doc = new PrintDocument();
+            //doc.PrinterSettings.PrinterName = null;
+            //doc.Print();
         }
 
         protected override void OnPrintPage(System.Drawing.Printing.PrintPageEventArgs e)
         {
             base.OnPrintPage(e);
+            
             using (Font font = new Font("Arial", 12))
             {
                 // Margin settings
-                float x = e.page.Left;
+                float x = e.MarginBounds.Left;
                 float y = e.MarginBounds.Top;
 
                 // Determine the height of a line (based on the font used).
@@ -36,14 +40,13 @@ namespace CarDepot.VehicleStore
                 foreach (PropertyId id in currVehicle.BasicInfo.Keys)
                 {
                     e.Graphics.DrawString(currVehicle.BasicInfo[id], font, Brushes.Black, x, y);
-                    
                     // Move down the equivalent spacing of one line.
                     y += lineHeight;
                 }
                 y += lineHeight;
                 
                 // Draw an image.
-                e.Graphics.DrawImage(Image.FromFile(currVehicle.GetMultiValue(PropertyId.Images)[0][1]), x, y)
+                e.Graphics.DrawImage(Image.FromFile(currVehicle.GetMultiValue(PropertyId.Images)[0][1]), x, y);
             }
             //int printHeight;
             //int printWidth;
