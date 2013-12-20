@@ -85,10 +85,11 @@ namespace CarDepot.VehicleStore
                 {
                     Uri path = new Uri(m.ToString());
                     WebClient downloadClient = new WebClient();
-                    string outputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
-                    downloadClient.DownloadFile(path, outputFile);
-                    outputFile = Settings.MoveToItemImageFolder(vehicle, outputFile);
+                    string tempOutputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
+                    downloadClient.DownloadFile(path, tempOutputFile);
+                    string outputFile = Settings.MoveToItemImageFolder(vehicle, tempOutputFile);
                     imagePaths.Add(new string[] { PropertyId.VehicleImage.ToString(), outputFile });
+                    File.Delete(tempOutputFile);
                 }
 
                 dataMap.Add(PropertyId.Fueltype, fuel.ToString().Trim());
