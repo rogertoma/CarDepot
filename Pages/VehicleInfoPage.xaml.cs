@@ -19,6 +19,8 @@ using CarDepot.Controls;
 using CarDepot.Controls.VehicleControls;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using System.Drawing;
+using System.Drawing.Printing;
 using MessageBox = System.Windows.MessageBox;
 
 namespace CarDepot
@@ -186,6 +188,17 @@ namespace CarDepot
         private void BasicVehicleControlPropertyPanel_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog ();
+            if (dialog.ShowDialog() == true)
+            {
+                PrintCar brochure = new PrintCar(_vehicle);
+                brochure.Print();
+            }
+            return;
         }
     }
 }
