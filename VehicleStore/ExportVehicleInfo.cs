@@ -23,46 +23,43 @@ namespace CarDepot.VehicleStore
 {
     class ExportVehicleInfo
     {
-        private List<PropertyId> vehicleSaleProperties = new List<PropertyId>();
-        private List<PropertyId> vehiclePurchaseProperties = new List<PropertyId>();
+        #region private class datastructures
+        private List<PropertyId> vehicleSaleProperties = new List<PropertyId>() {             
+            PropertyId.SaleDate,
+            PropertyId.Year,
+            PropertyId.Make,
+            PropertyId.Model,
+            PropertyId.VinNumber,
+            PropertyId.SalePrice,
+            PropertyId.SaleHst,
+            PropertyId.SaleFees,
+            PropertyId.SaleTotalDue,
+            PropertyId.SaleCustomerPayment,
+            PropertyId.PurchaseTotal,
+            PropertyId.SalePrice,
+            PropertyId.Profit
+        };
+        private List<PropertyId> vehiclePurchaseProperties = new List<PropertyId>() {             
+            PropertyId.PurchaseDate,
+            PropertyId.Vendor,
+            PropertyId.Year,
+            PropertyId.Make,
+            PropertyId.Model,
+            PropertyId.VinNumber,
+            PropertyId.PurchasePrice,
+            PropertyId.PurchaseHst,
+            PropertyId.PurchaseTotal
+        };
         private Dictionary<string, List<VehicleAdminObject>> soldVehicles = new Dictionary<string, List<VehicleAdminObject>>();
         private Dictionary<string, List<VehicleAdminObject>> purchasedVehicles = new Dictionary<string, List<VehicleAdminObject>>();
-
+        #endregion
+        
         public ExportVehicleInfo(VehicleCache vehicles)
         {       
-            addProperties();
             bucketSortVehicles(vehicles);
             string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
             Workbook wb = new Workbook();
             createExcelFile(wb, file);
-        }
-        
-        private void addProperties()
-        {
-            vehicleSaleProperties.Add(PropertyId.SaleDate);
-            vehicleSaleProperties.Add(PropertyId.Year);
-            vehicleSaleProperties.Add(PropertyId.Make);
-            vehicleSaleProperties.Add(PropertyId.Model);
-            vehicleSaleProperties.Add(PropertyId.VinNumber);
-            vehicleSaleProperties.Add(PropertyId.SalePrice);
-            vehicleSaleProperties.Add(PropertyId.SaleHst);
-            vehicleSaleProperties.Add(PropertyId.SaleFees);
-            vehicleSaleProperties.Add(PropertyId.SaleTotalDue);
-            vehicleSaleProperties.Add(PropertyId.SaleCustomerPayment);
-            vehicleSaleProperties.Add(PropertyId.PurchaseTotal);
-            vehicleSaleProperties.Add(PropertyId.SalePrice);
-            vehicleSaleProperties.Add(PropertyId.Profit);
-
-            vehiclePurchaseProperties.Add(PropertyId.PurchaseDate);
-            vehiclePurchaseProperties.Add(PropertyId.Vendor);
-            vehiclePurchaseProperties.Add(PropertyId.Year);
-            vehiclePurchaseProperties.Add(PropertyId.Make);
-            vehiclePurchaseProperties.Add(PropertyId.Model);
-            vehiclePurchaseProperties.Add(PropertyId.VinNumber);
-            vehiclePurchaseProperties.Add(PropertyId.PurchasePrice);
-            vehiclePurchaseProperties.Add(PropertyId.PurchaseHst);
-            vehiclePurchaseProperties.Add(PropertyId.PurchaseTotal);
-            return;
         }
 
         private bool isSold(VehicleAdminObject v)
