@@ -33,7 +33,7 @@
             </TabItem>
         </TabControl>
         <Button Content="Delete" Width="75" Height="40" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Background="Red" Click="Button_Click"/>
-        <Button x:Name="BtnPrint" Content ="Print" Width ="75" Height ="40" Grid.Row="1" Grid.Column = "1" Margin="10,9.5,0,0" Background="Orange" Click="btnPrint_Click" VerticalAlignment="Top"/>
+        <Button x:Name="BtnPrint" Content ="Print" Width ="75" Height ="40" Grid.Row="1" Grid.Column = "1" Margin="10,10,0,0" Background="Orange" Click="btnPrint_Click" VerticalAlignment="Top"/>
         <Button x:Name="BtnImport" Content="Import" Width="75" Height="40" Grid.Row="1" Grid.Column="3" Margin="10,10,0,0" Background="Cyan" Click="BtnImport_Click"/>
         <Button x:Name="BtnRefresh" Content="Refresh" Width="75" Height="40" Grid.Row="1" Grid.Column="4" Margin="10,10,0,0" Background="Yellow" Click="btnRefresh_Click"/>
         <Button x:Name="BtnSave" Content="Save" Width="75" Height="40" Grid.Row="1" Grid.Column="5" Margin="10,10,0,0" Background="GreenYellow" Click="btnSave_Click" />
