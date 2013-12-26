@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using Microsoft.Win32;
 
 namespace CarDepot.Controls.SearchControls
 {
@@ -39,13 +40,32 @@ namespace CarDepot.Controls.SearchControls
         private void BtnGenerateReport_Click(object sender, RoutedEventArgs e)
         {
             VehicleCache vehicleList = LstSearchResults.Cache;
+
             if (vehicleList == null)
             {
                 MessageBox.Show("The report is empty! Search first in order to generate a report.");
                 return;
             }
-
-            ExportVehicleInfo exp = new ExportVehicleInfo(vehicleList);
+            else
+            {
+                SaveFileDialog saveDialog;
+                saveDialog = new SaveFileDialog();
+                
+                saveDialog.FileName = "Document";
+                saveDialog.DefaultExt = ".xls";                 // Default file extension
+                saveDialog.Filter = "Excel File (.xls)|*.xls";  // Filter files by extension 
+                // Show save file dialog box
+                Nullable<bool> result = saveDialog.ShowDialog();
+                // Process save file dialog box results 
+                if (result == true)
+                {
+                    // Save document 
+                    string filename = saveDialog.FileName;
+                    ExportVehicleInfo exp = new ExportVehicleInfo(vehicleList, filename);
+                    // Auto-open
+                    System.Diagnostics.Process.Start(filename);
+                }
+            }
         }
 
     }

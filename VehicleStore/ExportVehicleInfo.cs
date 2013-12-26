@@ -54,12 +54,13 @@ namespace CarDepot.VehicleStore
         private Dictionary<string, List<VehicleAdminObject>> purchasedVehicles = new Dictionary<string, List<VehicleAdminObject>>();
         #endregion
         
-        public ExportVehicleInfo(VehicleCache vehicles)
+        public ExportVehicleInfo(VehicleCache vehicles, string fileName)
         {       
             bucketSortVehicles(vehicles);
-            string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
+            //string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
+            string currFileName = fileName;
             Workbook wb = new Workbook();
-            createExcelFile(wb, file);
+            createExcelFile(wb, currFileName);
         }
 
         private bool isSold(VehicleAdminObject v)
@@ -286,7 +287,7 @@ namespace CarDepot.VehicleStore
             }
         }
 
-        private void createExcelFile(Workbook wb, string file)
+        private void createExcelFile(Workbook wb, string currFileName)
         {
             foreach (string monthYear in purchasedVehicles.Keys)
             {
@@ -304,7 +305,7 @@ namespace CarDepot.VehicleStore
             {
                 ws.Cells[i, 0] = new Cell(string.Empty);
             }
-            wb.Save(file);
+            wb.Save(currFileName);
         }
     }
 }
