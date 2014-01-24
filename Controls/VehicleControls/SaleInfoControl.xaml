@@ -14,6 +14,16 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -32,23 +42,33 @@
             <TextBlock Text="Update Customer Info" TextWrapping="Wrap" TextAlignment="Center" Height="35" Width="84"/>
         </Button>
 
-        <CustomerControls:CustomerInfoControl x:Name="customerInfoControl" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <CustomerControls:CustomerInfoControl x:Name="customerInfoControl" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="15" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Label Content="Sale Info" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" />
         <Label Content="Sale Date" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
         <Controls:AdminDatePicker PropertyId="SaleDate" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="125"/>
 
         <Label Content="Sale Price" Grid.Row="2" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <Controls:AdminTextBox x:Name="TxtSalePrice" PropertyId="SalePrice" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtSalePrice_TextChanged"/>
-        <Label Content="Sale HST" Grid.Row="3" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <Controls:AdminTextBox x:Name="TxtSaleHst" PropertyId="SaleHst" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtSaleHst_TextChanged"/>
-        <Label Content="Sale Fees" Grid.Row="4" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <Controls:AdminTextBox x:Name="TxtTotalFees" PropertyId="SaleFees" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtSaleHst_TextChanged"/>
-        <Label Content="Total Due" Grid.Row="5" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <Controls:AdminTextBox x:Name="TxtTotalDue" PropertyId="SaleTotalDue" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtTotalDue_TextChanged"/>
-        <Label Content="Customer Payment" Grid.Row="6" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <Controls:AdminTextBox x:Name="TxtCustomerPayment" PropertyId="SaleCustomerPayment" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtTotalDue_TextChanged"/>
-        <Label x:Name="LblBalanceDueTitle" Content="Balance Due" Grid.Row="7" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <Label x:Name="LblBalanceDue" Content="0" Grid.Row="7" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtSalePrice" PropertyId="SalePrice" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>        
+        <Label Content="Warranty Provider" Grid.Row="3" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtWarrantyProvider" PropertyId="SaleWarrantyProvider" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Warranty Cost" Grid.Row="4" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtWarrantyCost" PropertyId="SaleWarrantyCost" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>
+        <Label Content="Trade In Cost" Grid.Row="5" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtTradeInCost" PropertyId="SaleTradeInCost" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>
+        <Label Content="Finance Cost" Grid.Row="6" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtFinanceCost" PropertyId="SaleFinanceCost" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>        
+        <Label Content="Licensing Cost" Grid.Row="7" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtLicensingFee" PropertyId="SaleLicenseFee" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>
+        <Label Content="Lien Registration Cost" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtLienRegistrationFee" PropertyId="SaleLienRegistrationFee" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>
+        <Label Content="Sale HST" Grid.Row="9" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtSaleHst" PropertyId="SaleHst" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Total Due" Grid.Row="10" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtTotalDue" PropertyId="SaleTotalDue" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtTotalDue_TextChanged"/>
+        <Label Content="Customer Payment" Grid.Row="11" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="TxtCustomerPayment" PropertyId="SaleCustomerPayment" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtTotalDue_TextChanged"/>
+        <Label x:Name="LblBalanceDueTitle" Content="Balance Due" Grid.Row="12" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <Label x:Name="LblBalanceDue" Content="0" Grid.Row="12" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
     </Grid>
 </UserControl>

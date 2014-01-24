@@ -32,7 +32,7 @@ namespace CarDepot.VehicleStore
             PropertyId.VinNumber,
             PropertyId.SalePrice,
             PropertyId.SaleHst,
-            PropertyId.SaleFees,
+
             PropertyId.SaleTotalDue,
             PropertyId.SaleCustomerPayment,
             PropertyId.PurchaseTotal,
@@ -140,13 +140,12 @@ namespace CarDepot.VehicleStore
 
         private double calcSaleTotal(VehicleAdminObject currVehicle)
         {
-            double saleFees;
             double salePrice;
             double saleHst;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFees), out saleFees);
+            //CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFees), out saleFees);
             CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePrice), out salePrice);
             CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleHst), out saleHst);
-            return saleFees + salePrice + saleHst;
+            return salePrice + saleHst;
         }
 
         private double calcProfit(VehicleAdminObject currVehicle)
@@ -198,9 +197,9 @@ namespace CarDepot.VehicleStore
                     case PropertyId.SaleCustomerPayment:
                         applyValueToCell(currVehicle, p, currSheet, currRow, column);
                         break;
-                    case PropertyId.SaleFees:
+/*                    case PropertyId.SaleFees:
                         applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
+                        break;*/
                     case PropertyId.SaleTotalDue:
                         double saleTotal = calcSaleTotal(currVehicle);
                         currSheet.Cells[currRow, column] = new Cell(saleTotal, "#,##0.00");

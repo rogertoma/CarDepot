@@ -62,7 +62,7 @@ namespace CarDepot.Controls.VehicleControls
             }
         }
 
-        private void TxtSalePrice_TextChanged(object sender, TextChangedEventArgs e)
+/*        private void TxtSalePrice_TextChanged(object sender, TextChangedEventArgs e)
         {
             double result;
             Utilities.StringToDouble(TxtSalePrice.Text, out result);
@@ -70,16 +70,40 @@ namespace CarDepot.Controls.VehicleControls
             double hst = result * Settings.HST;
             TxtSaleHst.Text = "$" + hst.ToString("F");
 
-        }
+        }*/
+/*
 
-        private void TxtSaleHst_TextChanged(object sender, TextChangedEventArgs e)
+        private void CalculateHST_TextChanged(object sender, TextChangedEventArgs e)
         {
-            double salePrice, hst, fees;
-            Utilities.StringToDouble(TxtSalePrice.Text, out salePrice);
-            Utilities.StringToDouble(TxtSaleHst.Text, out hst);
-            Utilities.StringToDouble(TxtTotalFees.Text, out fees);
+            double salePrice, warranty, financeFee, tradeIn;
 
-            double totalCost = salePrice + hst + fees;
+            Utilities.StringToDouble(TxtSalePrice.Text, out salePrice);
+            Utilities.StringToDouble(TxtWarrantyCost.Text, out warranty);
+            Utilities.StringToDouble(TxtFinanceCost.Text, out financeFee);
+            Utilities.StringToDouble(TxtTradeInCost.Text, out tradeIn);
+
+            double totalHst = (salePrice + warranty + financeFee + tradeIn) * Settings.HST;
+            TxtSaleHst.Text = "$" + totalHst.ToString("F");
+        }
+*/
+
+        private void CalculateTotal_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double salePrice, warranty, financeFee, tradeIn, hst, licenseFee, lienRegistrationFee;
+
+            Utilities.StringToDouble(TxtSalePrice.Text, out salePrice);
+            Utilities.StringToDouble(TxtWarrantyCost.Text, out warranty);
+            Utilities.StringToDouble(TxtFinanceCost.Text, out financeFee);
+            Utilities.StringToDouble(TxtTradeInCost.Text, out tradeIn);
+
+            Utilities.StringToDouble(TxtSaleHst.Text, out hst);
+            Utilities.StringToDouble(TxtLicensingFee.Text, out licenseFee);
+            Utilities.StringToDouble(TxtLienRegistrationFee.Text, out lienRegistrationFee);
+
+            double totalHst = (salePrice + warranty + financeFee - tradeIn)*Settings.HST;
+            TxtSaleHst.Text = "$" + totalHst.ToString("F");
+
+            double totalCost = salePrice + warranty + financeFee - tradeIn + totalHst + licenseFee + lienRegistrationFee;
             TxtTotalDue.Text = "$" + totalCost.ToString("F");
         }
 
@@ -105,5 +129,7 @@ namespace CarDepot.Controls.VehicleControls
                 LblBalanceDueTitle.Visibility = Visibility.Collapsed;
             }
         }
+
+
     }
 }

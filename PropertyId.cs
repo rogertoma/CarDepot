@@ -74,7 +74,13 @@ namespace CarDepot
         SalePrice,
         SaleCustomerId,
         SaleHst,
-        SaleFees,               // aka ministry license
+        SaleWarrantyCost,
+        SaleWarrantyProvider,
+        SaleLicenseFee,
+        SaleLienRegistrationFee,
+        SaleFinanceCost,
+        SaleTradeInCost,
+        //SaleFees,               // aka ministry license
         SaleTotalDue,           // salefees + saleHST + salePrice
         SaleCustomerPayment,
         PurchasePrice,
