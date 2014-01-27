@@ -47,25 +47,36 @@ namespace CarDepot.Controls.VehicleControls
             }
         }
 
-        private void TxtPurchasePrice_TextChanged(object sender, TextChangedEventArgs e)
+        private void CalculateHst_TextChanged(object sender, TextChangedEventArgs e)
         {
-            double result;
-            if (Utilities.StringToDouble(TxtPurchasePrice.Text, out result))
-            {
-                double hst = result*0.13;
-                TxtPurchaseHst.Text = "$" + hst.ToString("F");
-            }
+            double purchasePrice = 0;
+            double buyerFee = 0;
+            double otherCost = 0;
+
+            Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice);
+            Utilities.StringToDouble(TxtBuyerFee.Text, out buyerFee);
+            Utilities.StringToDouble(TxtOtherCosts.Text, out otherCost);
+
+            double hst = (purchasePrice + buyerFee + otherCost) * Settings.HST;
+
+            TxtPurchaseHst.Text = "$" + hst.ToString("F");
         }
 
         private void TxtPurchaseHst_TextChanged(object sender, TextChangedEventArgs e)
         {
-            double purchasePrice, hst;
-            if (Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice) &&
-                Utilities.StringToDouble(TxtPurchaseHst.Text, out hst))
-            {
-                double totalCost = purchasePrice + hst;
-                TxtPurchaseTotal.Text = "$" + totalCost.ToString("F");
-            }
+            double purchasePrice = 0;
+            double buyerFee = 0;
+            double otherCost = 0;
+            double hst = 0;
+
+            Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice);
+            Utilities.StringToDouble(TxtBuyerFee.Text, out buyerFee);
+            Utilities.StringToDouble(TxtOtherCosts.Text, out otherCost);
+            Utilities.StringToDouble(TxtPurchaseHst.Text, out hst);
+
+            double totalCost = purchasePrice + buyerFee + otherCost + hst;
+            TxtPurchaseTotal.Text = "$" + totalCost.ToString("F");
+
         }
 
     }
