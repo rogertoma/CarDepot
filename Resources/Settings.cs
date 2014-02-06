@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Resources
 {
@@ -81,6 +82,20 @@ namespace CarDepot.Resources
             input = input.Replace("$", "");
             input = input.Replace(",", "");
             return double.TryParse(input, out result);
+        }
+
+        public static void LoadVehicleInfoWindow(VehicleAdminObject vehicle)
+        {
+            if (vehicle == null)
+            {
+                throw new NullReferenceException("Load vehicle info window requires non null vehicle");
+            }
+            else
+            {
+                VehicleInfoWindow window = new VehicleInfoWindow(vehicle);
+                window.Show();
+                CacheManager.ActiveUser.AddPage(window);
+            }
         }
     }
 }

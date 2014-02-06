@@ -168,6 +168,9 @@
   <data name="PAGE_VEHICLESEARCHPAGE_TITLE" xml:space="preserve">
     <value>Search Vehicles</value>
   </data>
+  <data name="PAGE_VEHICLETASKSEARCHPAGE_TITLE" xml:space="preserve">
+    <value>Search Tasks</value>
+  </data>
   <data name="SYSTEMADMINACCOUNTNAME" xml:space="preserve">
     <value>SystemAdminAccount</value>
   </data>

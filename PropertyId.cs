@@ -107,6 +107,7 @@ namespace CarDepot
         TaskCategory,
         TaskCreatedDate,
         TaskDueDate,
-        TaskMinutes
+        TaskMinutes,
+        TaskVehicleId
     }
 }

@@ -19,6 +19,7 @@ namespace CarDepot
     [PropertyId(PropertyId.TaskCreatedDate)]
     [PropertyId(PropertyId.TaskDueDate)]
     [PropertyId(PropertyId.TaskMinutes)]
+    [PropertyId(PropertyId.TaskVehicleId)]
     public class VehicleTask
     {
         private Dictionary<PropertyId, string> _basicInfo = new Dictionary<PropertyId, string>();
@@ -55,6 +56,11 @@ namespace CarDepot
         {
             get { return GetPropertyIdValue(PropertyId.TaskName); } 
             set { ApplyValue(PropertyId.TaskName, value); }
+        }
+        public string TaskVehicleId
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskVehicleId); }
+            set { ApplyValue(PropertyId.TaskVehicleId, value); }
         }
         public string Status
         {

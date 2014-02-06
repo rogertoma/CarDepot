@@ -246,6 +246,17 @@ namespace CarDepot.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to PAGE_VEHICLETASKSEARCHPAGE_TITLE.
+        /// </summary>
+        internal static string PAGE_VEHICLETASKSEARCHPAGE_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGE_VEHICLETASKSEARCHPAGE_TITLE", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to PAGE_VEHICLESEARCHPAGE_TITLE.
         /// </summary>
         internal static string PAGES_VEHICLEINFOPAGE_CONFIRMDELETE

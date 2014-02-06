@@ -281,6 +281,7 @@ namespace CarDepot.Controls.VehicleControls
         private void UpdateTaskBasedOnUi(VehicleTask task)
         {
             task.Id = txtTaskId.Text;
+            task.TaskVehicleId = _vehicle.Id;
 
             if (cmbStatus.SelectedIndex == -1)
             {

@@ -33,7 +33,10 @@ namespace CarDepot.Controls.SearchControls
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            cache = new VehicleCache(Settings.VehiclePath, null);
+            Dictionary<VehicleCacheSearchKey, string> searchParam = new Dictionary<VehicleCacheSearchKey, string>();
+            searchParam.Add(VehicleCacheSearchKey.FromDate, dpFrom.SelectedDate.ToString());
+            searchParam.Add(VehicleCacheSearchKey.ToDate, dpTo.SelectedDate.ToString());
+            cache = new VehicleCache(Settings.VehiclePath, searchParam);
             LstSearchResults.SetContent(cache);
         }
 

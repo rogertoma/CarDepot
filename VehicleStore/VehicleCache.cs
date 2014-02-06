@@ -19,6 +19,11 @@ namespace CarDepot.VehicleStore
         ToDate
     }
 
+    public enum VehicleCacheTaskSearchKey
+    {
+        AssignedTo
+    }
+
     public class VehicleCache : List<VehicleAdminObject>, IAdminItemCache
     {
         private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
@@ -38,6 +43,23 @@ namespace CarDepot.VehicleStore
         public VehicleCache(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam):this(vehiclePath)
         {
 
+        }
+
+        public VehicleCache(string vehiclePath, Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
+        {
+            string[] vehicles = Directory.GetDirectories(vehiclePath);
+            foreach (var vehicle in vehicles)
+            {
+                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                {
+                    VehicleAdminObject temp = new VehicleAdminObject(file);
+                    if (temp.VehicleTasks.Any(vehicleTask => vehicleTask.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo]))
+                    {
+                        temp.Cache = this;
+                        this.Add(temp);
+                    }
+                }
+            }
         }
 
         private void LoadVehicle(string file)

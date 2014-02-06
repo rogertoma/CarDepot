@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarDepot.Resources;
 using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls
@@ -24,11 +25,14 @@ namespace CarDepot.Controls
     {
         private VehicleTileControl mouseTile = null;
         private VehicleCache cache = null;
-        private List<VehicleInfoWindow> openedWindows = new List<VehicleInfoWindow>();
+
+        public delegate void ListSelectionChangedEventHandler(object sender, RoutedEventArgs e);
+        public event ListSelectionChangedEventHandler ListSelectionChanged;
 
         public VehicleCache Cache
         {
             get { return cache; }
+            set { cache = value; }
         }
 
         public VehicleListView()
@@ -141,29 +145,15 @@ namespace CarDepot.Controls
             }
         }
 
-        private void LoadVehicleInfoWindow(VehicleAdminObject vehicle)
-        {
-            if (vehicle == null)
-            {
-                throw new NullReferenceException("Load vehicle info window requires non null vehicle");
-            }
-            else
-            {
-                VehicleInfoWindow window = new VehicleInfoWindow(vehicle);
-                window.Show();
-                openedWindows.Add(window);
-            }
-        }
-
         void item_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                LoadVehicleInfoWindow(((ListViewItem)sender).Content as VehicleAdminObject);
+                Utilities.LoadVehicleInfoWindow(((ListViewItem)sender).Content as VehicleAdminObject);
         }
 
         void item_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            LoadVehicleInfoWindow(((ListViewItem)sender).Content as VehicleAdminObject);
+            Utilities.LoadVehicleInfoWindow(((ListViewItem)sender).Content as VehicleAdminObject);
         }
 
         private GridViewColumnHeader lastHeaderClicked = null;
@@ -221,14 +211,10 @@ namespace CarDepot.Controls
             }
         }
 
-        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        private void LstSearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach (VehicleInfoWindow vehicleInfoWindow in openedWindows)
-            {
-                VehicleInfoWindow window = vehicleInfoWindow;
-                window.Close();
-                window = null;
-            }
+            if (ListSelectionChanged != null)
+                ListSelectionChanged(sender, e);
         }
     }
 }

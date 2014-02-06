@@ -111,6 +111,12 @@
     <Compile Include="Pages\CustomerInfoPage.xaml.cs">
       <DependentUpon>CustomerInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SearchControls\TasksSearchControl.xaml.cs">
+      <DependentUpon>TasksSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TasksSearchPage.xaml.cs">
+      <DependentUpon>TasksSearchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\VehicleSearchPage.xaml.cs">
       <DependentUpon>VehicleSearchPage.xaml</DependentUpon>
     </Compile>
@@ -200,6 +206,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\CustomerInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SearchControls\TasksSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TasksSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,12 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:SearchControls="clr-namespace:CarDepot.Controls.SearchControls"
+             xmlns:VehicleControls="clr-namespace:CarDepot.Controls.VehicleControls" xmlns:local="clr-namespace:CarDepot.Pages" x:Class="CarDepot.Pages.TasksSearchPage"
+             mc:Ignorable="d" MinHeight="300" MinWidth="500" Height="Auto" Width="Auto">
+    <Grid>
+        <SearchControls:TasksSearchControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
+    </Grid>
+</UserControl>

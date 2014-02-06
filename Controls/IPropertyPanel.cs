@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarDepot.Controls
 {
-    interface IPropertyPanel
+    public interface IPropertyPanel
     {
         void LoadPanel( IAdminObject item );
     }

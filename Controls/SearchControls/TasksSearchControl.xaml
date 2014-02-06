@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="CarDepot.Controls.SearchControls.TasksSearchControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:CarDepot.Controls"
+             mc:Ignorable="d" MinHeight="300" MinWidth="500" Height="Auto" Width="Auto">
+    <Grid MinHeight="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Tasks" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Assigned To:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cmbAssignedTo" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+        <Button Grid.Row="2" Name="btnSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
+        <controls:VehicleListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="lstVehicles" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ListSelectionChanged="lstVehicles_SelectionChanged"/>
+        <ListView x:Name="lstTasks" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionChanged="lstTasks_SelectionChanged" MouseDoubleClick="lstTasks_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Task" Width="250" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="AssignedTo" Width ="80" DisplayMemberBinding="{Binding AssignedTo}"/>
+                    <GridViewColumn Header="Category" Width ="80" DisplayMemberBinding="{Binding Category}"/>
+                    <GridViewColumn Header="Cost" Width="80" DisplayMemberBinding="{Binding Cost}"/>
+                    <GridViewColumn Header="MinToComplete" Width="100" DisplayMemberBinding="{Binding Minutes}"/>
+                    <GridViewColumn Header="CreatedDate" Width="80" DisplayMemberBinding="{Binding CreatedDate}"/>
+                    <GridViewColumn Header="DueDate" Width="80" DisplayMemberBinding="{Binding DueDate}"/>
+                    <GridViewColumn Header="CreatedBy" Width="80" DisplayMemberBinding="{Binding CreatedBy}"/>
+                    <GridViewColumn Header="CompletedBy" Width="80" DisplayMemberBinding="{Binding ClosedBy}"/>
+                    <GridViewColumn Header="Comments" DisplayMemberBinding="{Binding Comments}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>
