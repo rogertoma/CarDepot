@@ -50,8 +50,8 @@ namespace CarDepot.VehicleStore
             PropertyId.PurchaseHst,
             PropertyId.PurchaseTotal
         };
-        private Dictionary<string, List<VehicleAdminObject>> soldVehicles = new Dictionary<string, List<VehicleAdminObject>>();
-        private Dictionary<string, List<VehicleAdminObject>> purchasedVehicles = new Dictionary<string, List<VehicleAdminObject>>();
+        private SortedDictionary<string, List<VehicleAdminObject>> soldVehicles = new SortedDictionary<string,List<VehicleAdminObject>>();
+        private SortedDictionary<string, List<VehicleAdminObject>> purchasedVehicles = new SortedDictionary<string, List<VehicleAdminObject>>();
         #endregion
         
         public ExportVehicleInfo(VehicleCache vehicles, string fileName)
@@ -217,9 +217,9 @@ namespace CarDepot.VehicleStore
                         currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
                         break;
                 }
+                currSheet.Cells.ColumnWidth[(ushort)column] = 5000;
                 column++;
-            }
-            currSheet.Cells.ColumnWidth[(ushort)column] = 3500;
+            } 
         }
         
         private void populatePurchasedSheet(Worksheet currSheet, VehicleAdminObject currVehicle, int currRow) 
@@ -247,9 +247,9 @@ namespace CarDepot.VehicleStore
                         currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
                         break;
                 }
+                currSheet.Cells.ColumnWidth[(ushort)column] = 5000;
                 column++;
             }
-            currSheet.Cells.ColumnWidth[(ushort)column] = 3500;
         }
 
         private void createSoldSheet(Workbook wb, string monthAndYearSold)
@@ -296,7 +296,6 @@ namespace CarDepot.VehicleStore
             {
                 createSoldSheet(wb, monthYear);
             }
-
             int lastSheetNum = wb.Worksheets.Count + 1;
             wb.Worksheets.Add(new Worksheet("Sheet " + lastSheetNum.ToString()));
             Worksheet ws = wb.Worksheets[wb.Worksheets.Count - 1];
