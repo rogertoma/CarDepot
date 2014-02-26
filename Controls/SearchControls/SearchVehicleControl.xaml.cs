@@ -68,6 +68,10 @@ namespace CarDepot.Controls.SearchControls
                     // Auto-open
                     System.Diagnostics.Process.Start(filename);
                 }
+                else
+                {
+                    return;
+                }
             }
         }
 

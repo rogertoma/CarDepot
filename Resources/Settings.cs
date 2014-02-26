@@ -78,7 +78,11 @@ namespace CarDepot.Resources
     {
         public static bool StringToDouble(string input, out double result)
         {
-            double newValue = 0;
+
+            if (input == null)
+            {
+                input = string.Empty;
+            }
             input = input.Replace("$", "");
             input = input.Replace(",", "");
             return double.TryParse(input, out result);

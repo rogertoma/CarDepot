@@ -82,7 +82,7 @@ namespace CarDepot
         SaleTradeInCost,
         SaleDealerReserve,
         //SaleFees,               // aka ministry license
-        SaleTotalDue,           // salefees + saleHST + salePrice
+        SaleTotalDue,             // salefees + saleHST + salePrice
         SaleCustomerPayment,
         PurchasePrice,
         PurchaseBuyerFee,
@@ -109,6 +109,17 @@ namespace CarDepot
         TaskCreatedDate,
         TaskDueDate,
         TaskMinutes,
-        TaskVehicleId
+        TaskVehicleId,
+
+        //Excel specific
+        NetDifference,
+        NetDifferenceHST,
+        CarHST,
+        PaymentType,
+        SaleDealerReserveHST,
+        TotalHST,
+        TotalIncome,
+        NetIncome,
+        TotalFee
     }
 }
