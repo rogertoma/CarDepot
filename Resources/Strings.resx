@@ -153,6 +153,9 @@
   <data name="PAGES_VEHICLEINFOPAGE_ERROR" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="PAGES_VEHICLEINFOPAGE_MISSINGINFO_CONFIRMDELETE" xml:space="preserve">
+    <value>In order to save this vehicle you must enter a year, make, model and click Save.  Would you like to delete this Vehicle?</value>
+  </data>
   <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_UNABLETOSAVE" xml:space="preserve">
     <value>We were unable to save the vehicle updates.  It appears someone has made a change before you.  Please refresh this page to get the latest data.</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="PAGES_VEHICLEINFOWINDOW_BASICINFO_TAB_TITLE" xml:space="preserve">
     <value>General Vehicle Information</value>
+  </data>
+  <data name="PAGE_CUSTOMERSEARCHPAGE_TITLE" xml:space="preserve">
+    <value>Customer Search</value>
   </data>
   <data name="PAGE_VEHICLESEARCHPAGE_TITLE" xml:space="preserve">
     <value>Search Vehicles</value>

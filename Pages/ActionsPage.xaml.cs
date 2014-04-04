@@ -93,5 +93,24 @@ namespace CarDepot.Controls.GeneralControls
             tabItem.Focus();
         }
 
+        private void BtnSearchCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerSearchPage page = new CustomerSearchPage();
+            page.HorizontalAlignment = HorizontalAlignment.Stretch;
+            page.VerticalAlignment = VerticalAlignment.Stretch;
+
+            if (mainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = page.PageTitle;
+            tabItem.Content = page;
+            mainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+        }
+
     }
 }

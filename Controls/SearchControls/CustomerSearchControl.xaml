@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="CarDepot.Controls.SearchControls.CustomerSearchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="345">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Search Criteria-->
+        <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Customer Search" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="First Name" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtFirstName" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Width="120"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Last Name" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtLastName" Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Width="120"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Phone Number" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox x:Name="txtPhoneNumber" Grid.Row="3" Grid.Column="1" Margin="10,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Width="120"/>
+        <Button Grid.Row="4" Name="btnSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
+
+        <!--Search Results-->
+        <ListView x:Name="lstCustomers" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" MouseDoubleClick="lstCustomers_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="FirstName" Width="120" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="LastName" Width="120" DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Header="MobilePhone" Width ="120" DisplayMemberBinding="{Binding MobilePhone}"/>
+                    <GridViewColumn Header="HomePhone" Width ="120" DisplayMemberBinding="{Binding HomePhone}"/>
+                    <GridViewColumn Header="BusinessPhone" Width="120" DisplayMemberBinding="{Binding BusinessPhone}"/>
+                    <GridViewColumn Header="HomeAddress" Width="120" DisplayMemberBinding="{Binding HomeAddress}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

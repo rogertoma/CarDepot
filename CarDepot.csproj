@@ -82,6 +82,9 @@
     <Compile Include="Controls\CustomerControls\CustomerInfoControl.xaml.cs">
       <DependentUpon>CustomerInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SearchControls\CustomerSearchControl.xaml.cs">
+      <DependentUpon>CustomerSearchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SearchControls\SearchVehicleControl.xaml.cs">
       <DependentUpon>SearchVehicleControl.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,9 @@
     </Compile>
     <Compile Include="Controls\SearchControls\TasksSearchControl.xaml.cs">
       <DependentUpon>TasksSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CustomerSearchPage.xaml.cs">
+      <DependentUpon>CustomerSearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TasksSearchPage.xaml.cs">
       <DependentUpon>TasksSearchPage.xaml</DependentUpon>
@@ -173,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SearchControls\CustomerSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SearchControls\SearchVehicleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SearchControls\TasksSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CustomerSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

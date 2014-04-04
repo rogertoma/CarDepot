@@ -22,6 +22,43 @@ namespace CarDepot
 
         public override IAdminItemCache Cache { get; set; }
 
+        #region ExposedPropertiesForListResults
+
+        public string FirstName
+        {
+            get { return GetValue(PropertyId.FirstName); }
+            set { ApplyValue(PropertyId.FirstName, value); }
+        }
+
+        public string LastName
+        {
+            get { return GetValue(PropertyId.LastName); }
+            set { ApplyValue(PropertyId.LastName, value); }
+        }
+
+        public string MobilePhone
+        {
+            get { return GetValue(PropertyId.MobilePhone); }
+            set { ApplyValue(PropertyId.MobilePhone, value); }
+        }
+
+        public string BusinessPhone
+        {
+            get { return GetValue(PropertyId.BusinessPhone); }
+            set { ApplyValue(PropertyId.BusinessPhone, value); }
+        }
+        public string HomePhone
+        {
+            get { return GetValue(PropertyId.HomePhone); }
+            set { ApplyValue(PropertyId.HomePhone, value); }
+        }
+        public string HomeAddress
+        {
+            get { return GetValue(PropertyId.HomeAddress); }
+            set { ApplyValue(PropertyId.HomeAddress, value); }
+        }
+        #endregion
+
         public CustomerAdminObject() 
             : base() 
         {

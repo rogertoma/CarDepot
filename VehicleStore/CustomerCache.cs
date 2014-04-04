@@ -14,6 +14,9 @@ namespace CarDepot.VehicleStore
     public enum CustomerCacheSearchKey
     {
         Id,
+        FirstName,
+        LastName,
+        PhoneNumber
     }
 
     class CustomerCache : List<CustomerAdminObject>, IAdminItemCache
@@ -55,13 +58,61 @@ namespace CarDepot.VehicleStore
             CustomerAdminObject customer = new CustomerAdminObject(filePath);
             customer.Cache = this;
 
+            bool meetsAllRequirements = true;
+
             foreach (var param in searchParam)
             {
-                PropertyId id = (PropertyId)Enum.Parse(typeof(PropertyId), param.Key.ToString());
-                if (customer.GetValue(id) == param.Value)
-                    this.Add(customer);
+                if (String.IsNullOrEmpty(param.Value) || String.IsNullOrWhiteSpace(param.Value))
+                {
+                    continue;
+                }
+
+                if (param.Key == CustomerCacheSearchKey.PhoneNumber)
+                {
+                    string searchNumber = StripPhoneNumber(param.Value);
+                    if (!(StripPhoneNumber(customer.GetValue(PropertyId.MobilePhone)) == searchNumber ||
+                        StripPhoneNumber(customer.GetValue(PropertyId.BusinessPhone)) == searchNumber ||
+                        StripPhoneNumber(customer.GetValue(PropertyId.HomePhone)) == searchNumber))
+                    {
+                        meetsAllRequirements = false;
+                        break;
+                    }
+                }
+                else
+                {
+                    PropertyId id = (PropertyId)Enum.Parse(typeof(PropertyId), param.Key.ToString());
+                    if (customer.GetValue(id).Trim().ToLower() != param.Value.Trim().ToLower())
+                    {
+                        meetsAllRequirements = false;
+                        break;
+                    }
+                }
             }
 
+            if (meetsAllRequirements)
+            {
+                this.Add(customer);
+            }
+        }
+
+        private string StripPhoneNumber(string number)
+        {
+            string result = "";
+
+            if (number == null)
+                return result;
+   
+            foreach (char character in number.ToCharArray())
+            {
+                int digit;
+                bool parseSuccessful = int.TryParse(character.ToString(), out digit);
+                if (parseSuccessful)
+                {
+                    result += digit;
+                }
+            }
+
+            return result;
         }
 
         private void Initialize()
@@ -92,7 +143,12 @@ namespace CarDepot.VehicleStore
 
         public bool ContainsKey(string objectId)
         {
-            throw new NotImplementedException();
+            var customers = from customer in this where customer.ObjectId == objectId select customer;
+
+            if (customers.FirstOrDefault() == null)
+                return false;
+
+            return true;
         }
 
         public void ExitReadLock()
@@ -103,7 +159,10 @@ namespace CarDepot.VehicleStore
         public bool InitialRefreshPerformed { get; private set; }
         public void ModifyItem(IAdminObject item)
         {
-            throw new NotImplementedException();
+            if (ItemUpdate != null)
+            {
+                ItemUpdate.Invoke(this, new AdminItemCache.UpdateEventArgs(item.ObjectId, AdminItemCache.UpdateType.ModifyItem));
+            }
         }
 
         public void Refresh()

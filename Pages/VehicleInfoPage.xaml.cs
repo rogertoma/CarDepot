@@ -31,6 +31,7 @@ namespace CarDepot
     public partial class VehicleInfoWindow : Window, IPropertyPanel
     {
         private VehicleAdminObject _vehicle;
+        bool isDeleted = false;
         List<IPropertyPanel> propertyPanels = new List<IPropertyPanel>();
 
         public VehicleInfoWindow() : this (null)
@@ -100,8 +101,49 @@ namespace CarDepot
             }
         }
 
+        private bool VerifyMinimumRequirements()
+        {
+            string property;
+            property = _vehicle.GetValue(PropertyId.Year);
+            if (property == null || string.IsNullOrEmpty(property) || string.IsNullOrWhiteSpace(property))
+                return false;
+
+            property = _vehicle.GetValue(PropertyId.Make);
+            if (property == null || string.IsNullOrEmpty(property) || string.IsNullOrWhiteSpace(property))
+                return false;
+
+            property = _vehicle.GetValue(PropertyId.Model);
+            if (property == null || string.IsNullOrEmpty(property) || string.IsNullOrWhiteSpace(property))
+                return false;
+
+            return true;
+        }
+
         private void VehicleInfoWindow_OnClosing(object sender, CancelEventArgs e)
         {
+            MessageBoxResult result;
+            if (isDeleted)
+            {
+                return;
+            }
+
+            bool requirementsMet = VerifyMinimumRequirements();
+            if (!requirementsMet)
+            {
+                result = MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_MISSINGINFO_CONFIRMDELETE,
+                Strings.PAGES_VEHICLEINFOPAGE_ERROR, MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    DeleteVehicle();
+                }
+                return;
+            }
+
             VehicleAdminObject origionalVehicle = new VehicleAdminObject(_vehicle.ObjectId);
 
             bool same = _vehicle.Equals(origionalVehicle);
@@ -109,8 +151,15 @@ namespace CarDepot
             if (same)
                 return;
 
-            MessageBoxResult result = MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING,
-                Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE, MessageBoxButton.YesNoCancel);
+            if (_vehicle.FileVersion == "0")
+            {
+                result = MessageBoxResult.Yes;
+            }
+            else
+            {
+                result = MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING,
+                    Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE, MessageBoxButton.YesNoCancel);
+            }
 
             if (result == MessageBoxResult.Yes)
             {
@@ -178,11 +227,17 @@ namespace CarDepot
             if (result == MessageBoxResult.No)
                 return;
 
+            DeleteVehicle();
+            this.Close();
+        }
+
+        private void DeleteVehicle()
+        {
             string id = _vehicle.ObjectId;
             DirectoryInfo directory = new DirectoryInfo(_vehicle.ObjectId);
             string name = directory.Parent.FullName;
             Directory.Delete(name, true);
-            this.Close();
+            isDeleted = true;
         }
 
         private void BasicVehicleControlPropertyPanel_Loaded(object sender, RoutedEventArgs e)

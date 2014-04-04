@@ -332,5 +332,28 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("VEHICLEINFOPAGE_INVALID_URL", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_VEHICLEINFOPAGE_MISSINGINFO_CONFIRMDELETE.
+        /// </summary>
+        internal static string PAGES_VEHICLEINFOPAGE_MISSINGINFO_CONFIRMDELETE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_VEHICLEINFOPAGE_MISSINGINFO_CONFIRMDELETE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGE_CUSTOMERSEARCHPAGE_TITLE.
+        /// </summary>
+        internal static string PAGE_CUSTOMERSEARCHPAGE_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGE_CUSTOMERSEARCHPAGE_TITLE", resourceCulture);
+            }
+        }
+        
     }
 }
