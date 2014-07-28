@@ -452,7 +452,6 @@ namespace CarDepot.VehicleStore
             catch (Exception e)
             {
                 MessageBox.Show("Looks like this file is already open! Try a different file name or close the open spreadsheet.");
-                return;
             }
         }
     }
