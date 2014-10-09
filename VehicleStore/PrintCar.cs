@@ -48,62 +48,61 @@ namespace CarDepot.VehicleStore
         
         private void printBrochure(Object sender, PrintPageEventArgs e)
         {
-            // Margin settings of paper
-            float leftMargin = e.MarginBounds.Left;
-            float topMargin = e.MarginBounds.Top;
-            float xPos = leftMargin;
-            float yPos = topMargin;
+            #region background
+            float backgroundXPos = 50;
+            float backgroundYPos = 50;
+            Image background = Image.FromFile(Settings.Resouces + @"\poster.png");
+            e.Graphics.DrawImage(background, backgroundXPos, backgroundXPos);
 
-            #region Print the header of the brochure
-            using (Font font = new Font("Ariel", 20))
+            #endregion
+
+            #region printing car info
+
+            int carInfoXPos = 175;
+
+            using (Font font = new Font("Calibri (Body)", 20))
             {
-                // Determine the height of a line (based on the font used).
-                float lineHeight = font.GetHeight(e.Graphics);
-                // Print the Year
-                e.Graphics.DrawString(currVehicle.Year, font, Brushes.Black, xPos, yPos);
-                // Move cursor over and print the Make
-                xPos += (e.Graphics.MeasureString(currVehicle.Year, font).Width);
-                e.Graphics.DrawString(currVehicle.Make, font, Brushes.Black, xPos, yPos);
-                // Move cursor over and print the Model
-                xPos += (e.Graphics.MeasureString(currVehicle.Make, font).Width);
-                e.Graphics.DrawString(currVehicle.Model, font, Brushes.Black, xPos, yPos);
-                // Move cursor over and print the List Price
-                xPos += (e.Graphics.MeasureString(currVehicle.Model,font).Width);
-                e.Graphics.DrawString(currVehicle.ListPrice, font, Brushes.Black, xPos, yPos);
-                // Reset the x position to the left Margin
-                xPos = leftMargin;
-                // Move the cursor down the height of one line
-                yPos += lineHeight;
+                e.Graphics.DrawString(currVehicle.Year, font, Brushes.Black, backgroundXPos + carInfoXPos, backgroundYPos + 160);
+                e.Graphics.DrawString(currVehicle.Make, font, Brushes.Black, backgroundXPos + carInfoXPos, backgroundYPos + 200);
+                e.Graphics.DrawString(currVehicle.Model, font, Brushes.Black, backgroundXPos + carInfoXPos, backgroundYPos + 240);
+                e.Graphics.DrawString(currVehicle.Transmission, font, Brushes.Black, backgroundXPos + carInfoXPos, backgroundYPos + 282);
+                e.Graphics.DrawString(currVehicle.Mileage, font, Brushes.Black, backgroundXPos + carInfoXPos, backgroundYPos + 323);
             }
-            #endregion
-            
-            #region Print the image
-            Image carImage = Image.FromFile(currVehicle.GetMultiValue(PropertyId.Images)[0][1]);
-            // Scale raw image to fit within margins
-            float printImageWidth = e.MarginBounds.Right - leftMargin;
-            float printImageHeight = carImage.Height / 2;
-            // Draw an image.
-            e.Graphics.DrawImage(carImage, xPos, yPos, printImageWidth, printImageHeight);
-            yPos += printImageHeight;
-            #endregion
-            
-            #region Print the rest of the car information
-            using (Font font = new Font("Arial", 12))
-            {
-                float lineHeight = font.GetHeight(e.Graphics);
-                yPos += lineHeight;
 
-                foreach (PropertyId id in propertiesToPrint)
+            #endregion
+
+            #region Price
+
+            using (Font font = new Font("Calibri (Body)", 36, FontStyle.Bold))
+            {
+                string listPrice = currVehicle.ListPrice;
+                if (!listPrice.Contains("$"))
                 {
-                    string infoToPrint = currVehicle.GetValue(id);
-                    if (infoToPrint != null && !infoToPrint.Equals(string.Empty))
-                    {
-                        e.Graphics.DrawString(infoToPrint, font, Brushes.Black, xPos, yPos);
-                        yPos += lineHeight;
-                    }
+                    listPrice = @"$" + listPrice;
                 }
+                e.Graphics.DrawString(listPrice, font, Brushes.Black, backgroundXPos + 505, backgroundYPos + 150);
             }
+
             #endregion
+
+            //#region BiWeeklyRate
+
+            //string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_PRINT_BIWEEKLYRATE, Strings.INFORMATION);
+            //if (!string.IsNullOrEmpty(result))
+            //{
+            //    using (Font font = new Font("Calibri (Body)", 16, FontStyle.Bold))
+            //    {
+            //        string listPrice = currVehicle.ListPrice;
+            //        if (!listPrice.Contains("$"))
+            //        {
+            //            listPrice = @"$" + listPrice;
+            //        }
+            //        e.Graphics.DrawString(listPrice, font, Brushes.Black, backgroundXPos + 505, backgroundYPos + 150);
+            //    }
+            //}
+
+            //#region
+
         }
     }
 }

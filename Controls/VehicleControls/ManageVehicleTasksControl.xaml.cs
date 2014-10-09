@@ -91,6 +91,13 @@ namespace CarDepot.Controls.VehicleControls
                 cmbCategory.Items.Add(lblRow);
             }
 
+            //Initialize cmbCreatedBy combobox
+            foreach (UserAdminObject user in CacheManager.UserCache)
+            {
+                Label lblRow = new Label { Content = user.Name };
+                cmbCreatedBy.Items.Add(lblRow);
+            }
+
             //Initialize cmbCompletedBy ComboBox
             Label emptyRow = new Label { Content = "" };
             cmbCompletedBy.Items.Add(emptyRow);

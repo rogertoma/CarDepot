@@ -46,6 +46,11 @@ namespace CarDepot.Controls
             InitializeList();
         }
 
+        public void Clear()
+        {
+            LstSearchResults.Items.Clear();
+        }
+
         private void InitializeList()
         {
             cache.ItemUpdate += cache_ItemUpdate;

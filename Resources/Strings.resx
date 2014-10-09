@@ -138,6 +138,9 @@
   <data name="FILTER_ALL_XML" xml:space="preserve">
     <value>*.xml</value>
   </data>
+  <data name="INFORMATION" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="PAGES_ACTIVEVEHICLE_TAB_TITLE" xml:space="preserve">
     <value>Vehicle's on lot</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE" xml:space="preserve">
     <value>Save and Close</value>
+  </data>
+  <data name="PAGES_VEHICLEINFOPAGE_UNABLETODELETE" xml:space="preserve">
+    <value>Unable to delete vehicle object, you do not have the latest version.  Please refresh and reattempt delete.</value>
   </data>
   <data name="PAGES_VEHICLEINFOWINDOW_BASICINFO_TAB_TITLE" xml:space="preserve">
     <value>General Vehicle Information</value>
@@ -194,5 +200,8 @@
   </data>
   <data name="VEHICLEINFOPAGE_INVALID_URL" xml:space="preserve">
     <value>Please enter a valid URL</value>
+  </data>
+  <data name="VEHICLEINFOPAGE_PRINT_BIWEEKLYRATE" xml:space="preserve">
+    <value>Please enter the financing bi-weekly rate for this vehicle, if not available press cancel. (Note: text will be printed as you input it)</value>
   </data>
 </root>

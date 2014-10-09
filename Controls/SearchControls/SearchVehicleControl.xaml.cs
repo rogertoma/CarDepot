@@ -33,9 +33,21 @@ namespace CarDepot.Controls.SearchControls
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
+            LstSearchResults.Clear();
+
             Dictionary<VehicleCacheSearchKey, string> searchParam = new Dictionary<VehicleCacheSearchKey, string>();
             searchParam.Add(VehicleCacheSearchKey.FromDate, dpFrom.SelectedDate.ToString());
             searchParam.Add(VehicleCacheSearchKey.ToDate, dpTo.SelectedDate.ToString());
+            if (cbSold.IsChecked == true)
+            {
+                searchParam.Add(VehicleCacheSearchKey.IsSold, null);
+            }
+            
+            if (cbAvailable.IsChecked == true)
+            {
+                searchParam.Add(VehicleCacheSearchKey.IsAvailable, null);
+            }
+
             cache = new VehicleCache(Settings.VehiclePath, searchParam);
             LstSearchResults.SetContent(cache);
         }

@@ -31,7 +31,7 @@ namespace CarDepot
     public partial class VehicleInfoWindow : Window, IPropertyPanel
     {
         private VehicleAdminObject _vehicle;
-        bool isDeleted = false;
+        //bool isDeleted = false;
         List<IPropertyPanel> propertyPanels = new List<IPropertyPanel>();
 
         public VehicleInfoWindow() : this (null)
@@ -74,7 +74,11 @@ namespace CarDepot
 
             File.WriteAllText(fileName, Settings.VehicleInfoDefaultFileText);
 
-            return new VehicleAdminObject(fileName);
+            VehicleAdminObject vehicle = new VehicleAdminObject(fileName);
+            vehicle.SetValue(PropertyId.PurchaseDate, ((DateTime)DateTime.Now).ToString("d"));
+            vehicle.Save(null);
+
+            return vehicle;
 
             //TODO: add this vehicle to some cache.
         }
@@ -122,7 +126,7 @@ namespace CarDepot
         private void VehicleInfoWindow_OnClosing(object sender, CancelEventArgs e)
         {
             MessageBoxResult result;
-            if (isDeleted)
+            if (_vehicle.GetValue(PropertyId.IsDeleted) == true.ToString()) 
             {
                 return;
             }
@@ -227,17 +231,47 @@ namespace CarDepot
             if (result == MessageBoxResult.No)
                 return;
 
-            DeleteVehicle();
-            this.Close();
+            _vehicle.SetValue(PropertyId.IsDeleted, true);
+            bool successfulSave = _vehicle.Save(this);
+            if (successfulSave)
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_UNABLETODELETE,
+                    Strings.ERROR, MessageBoxButton.OK);
+            }
+
+            //this.Close();
         }
 
         private void DeleteVehicle()
         {
-            string id = _vehicle.ObjectId;
-            DirectoryInfo directory = new DirectoryInfo(_vehicle.ObjectId);
-            string name = directory.Parent.FullName;
-            Directory.Delete(name, true);
-            isDeleted = true;
+            _vehicle.SetValue(PropertyId.IsDeleted, true);
+            bool successfulSave = _vehicle.Save(this);
+            if (successfulSave)
+            {
+                try
+                {
+                    this.Close();
+                }
+                catch (Exception e) { }
+            }
+            else
+            {
+                MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_UNABLETODELETE,
+                    Strings.ERROR, MessageBoxButton.OK);
+            }
+
+            //this.Close();
+            //_vehicle.SetValue(PropertyId.IsDeleted, true);
+            //_vehicle.Save();
+            //string id = _vehicle.ObjectId;
+            //DirectoryInfo directory = new DirectoryInfo(_vehicle.ObjectId);
+            //string name = directory.Parent.FullName;
+            //Directory.Delete(name, true);
+            //isDeleted = true;
         }
 
         private void BasicVehicleControlPropertyPanel_Loaded(object sender, RoutedEventArgs e)

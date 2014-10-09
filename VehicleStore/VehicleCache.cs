@@ -40,9 +40,27 @@ namespace CarDepot.VehicleStore
             }
         }
 
-        public VehicleCache(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam):this(vehiclePath)
+        public VehicleCache(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)//:this(vehiclePath)
         {
+            string[] vehicles = Directory.GetDirectories(vehiclePath);
+            foreach (var vehicle in vehicles)
+            {
+                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                {
+                    VehicleAdminObject vehicleAdminObject = new VehicleAdminObject(file);
+                    if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
+                    {
+                        continue;
+                    }
 
+                    if (VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
+                    {
+                        vehicleAdminObject.Cache = this;
+                        this.Add(vehicleAdminObject);
+                    }
+
+                }
+            }
         }
 
         public VehicleCache(string vehiclePath, Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
@@ -60,6 +78,65 @@ namespace CarDepot.VehicleStore
                     }
                 }
             }
+        }
+
+        private bool VehicleMeetsSearchParam(VehicleAdminObject vehicle, Dictionary<VehicleCacheSearchKey, string> searchParam)
+        {
+            DateTime fromDate, toDate, date;
+            if (searchParam.ContainsKey(VehicleCacheSearchKey.FromDate) && !String.IsNullOrEmpty(searchParam[VehicleCacheSearchKey.FromDate]))
+            {
+                fromDate = DateTime.Parse(searchParam[VehicleCacheSearchKey.FromDate]);
+            }
+            else
+            {
+                fromDate = new DateTime(1000, 01, 01);
+            }
+
+            if (searchParam.ContainsKey(VehicleCacheSearchKey.ToDate) && !String.IsNullOrEmpty(searchParam[VehicleCacheSearchKey.ToDate]))
+            {
+                toDate = DateTime.Parse(searchParam[VehicleCacheSearchKey.ToDate]);
+            }
+            else
+            {
+                toDate = DateTime.Now;
+            }
+
+
+            foreach (VehicleCacheSearchKey searchKey in searchParam.Keys)
+            {
+                switch (searchKey)
+                {
+                    case VehicleCacheSearchKey.IsAvailable:
+                        string pDate = vehicle.GetValue(PropertyId.PurchaseDate);
+                        if (String.IsNullOrEmpty(pDate))
+                        {
+                            return false;
+                        }
+                        date = DateTime.Parse(pDate);
+
+                        if (date < fromDate || date > toDate)
+                        {
+                            return false;
+                        }
+                        break;
+
+                    case VehicleCacheSearchKey.IsSold:
+                        string sDate = vehicle.GetValue(PropertyId.SaleDate);
+                        if (String.IsNullOrEmpty(sDate))
+                        {
+                            return false;
+                        }
+                        date = DateTime.Parse(sDate);
+
+                        if (date < fromDate || date > toDate)
+                        {
+                            return false;
+                        }
+                        break;
+                }
+            }
+
+            return true;
         }
 
         private void LoadVehicle(string file)

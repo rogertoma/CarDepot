@@ -14,6 +14,7 @@ namespace CarDepot.Resources
         public static string UserAccountsPath = @"C:\Data\Users";
         public static string VehiclePath = @"C:\Data\Vehicles";
         public static string CustomerPath = @"C:\Data\Customers";
+        public static string Resouces = @"C:\Data\Resources";
         public static string CustomerInfoFileName = @"info.xml";        
         public static string CustomerInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Customer>\n</Customer>";
         public static string VehicleInfoFileName = @"info.xml";        

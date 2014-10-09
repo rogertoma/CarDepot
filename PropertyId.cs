@@ -29,6 +29,7 @@ namespace CarDepot
         //Global
         FileVersion,
         Id,
+        IsDeleted,
 
         //User PropertyId's
         Name,
