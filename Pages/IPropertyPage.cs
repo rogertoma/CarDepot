@@ -10,7 +10,6 @@ namespace CarDepot.Pages
     interface IPropertyPage
     {
         string PageTitle { get; }
-        void SetTabControlContext(TabControl control);
         bool IsCloseable { get; }
     }
 }

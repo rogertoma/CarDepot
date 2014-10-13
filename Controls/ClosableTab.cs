@@ -10,9 +10,11 @@ using System.Windows.Media;
 
 namespace CarDepot.Controls
 {
-    class ClosableTab:TabItem
+    public class ClosableTab:TabItem
     {
         private CloseableHeaderControl closableTabHeaderControl;
+        public delegate bool TabClosingEventHandler();
+        public event TabClosingEventHandler TabClosing;
 
         public ClosableTab()
         {
@@ -33,6 +35,15 @@ namespace CarDepot.Controls
             {
                 ((CloseableHeaderControl)this.Header).label_TabTitle.Content = value;
             }
+        }
+
+        public Brush BackGroundColor
+        {
+            set
+            {
+                closableTabHeaderControl.Background = value;
+            }
+            get { return closableTabHeaderControl.Background; }
         }
 
         protected override void OnSelected(RoutedEventArgs e)
@@ -74,9 +85,23 @@ namespace CarDepot.Controls
         }
         // Button Close Click - Remove the Tab - (or raise
         // an event indicating a "CloseTab" event has occurred)
-        void button_close_Click(object sender, RoutedEventArgs e)
+        public void button_close_Click(object sender, RoutedEventArgs e)
         {
-            ((TabControl)this.Parent).Items.Remove(this);
+            bool cancel = false;
+            if (TabClosing != null)
+            {
+                cancel = TabClosing();
+            }
+
+            if (cancel)
+            {
+                return;
+            }
+
+            if (this.Parent != null && ((TabControl)this.Parent).Items.Contains(this))
+            {
+                ((TabControl)this.Parent).Items.Remove(this);
+            }
         }
         // Label SizeChanged - When the Size of the Label changes
         // (due to setting the Title) set position of button properly

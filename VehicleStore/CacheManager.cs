@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace CarDepot.VehicleStore
 {
@@ -12,6 +13,7 @@ namespace CarDepot.VehicleStore
         private static UserCache _userCache = null;
         private static ActiveVehicleCache _activeVehicleCache = null;
         private static UserAdminObject _activeUser = null;
+        private static TabControl _mainTabControl = null;
 
         static CacheManager()
         {
@@ -61,6 +63,15 @@ namespace CarDepot.VehicleStore
                 return _activeUser;
             }
             set { _activeUser = value; }
+        }
+
+        public static TabControl MainTabControl
+        {
+            get
+            {
+                return _mainTabControl;
+            }
+            set { _mainTabControl = value; }
         }
     }
 }

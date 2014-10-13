@@ -150,6 +150,21 @@
   <data name="PAGES_ACTIVEVEHICLE_TITLE_LOADING" xml:space="preserve">
     <value>Loading Vehicle's on lot</value>
   </data>
+  <data name="PAGES_CUSTOMERINFOPAGE_CONFIRMDELETE" xml:space="preserve">
+    <value>Are you sure you want to delete this customer?</value>
+  </data>
+  <data name="PAGES_CUSTOMERINFOPAGE_MISSINGINFO_CONFIRMDELETE" xml:space="preserve">
+    <value>In order to save this customer you must enter a first and last name then click save.  Would you like to delete this Customer?</value>
+  </data>
+  <data name="PAGES_CUSTOMERINFOPAGE_ONCLOSING_CONFIRMNOSAVE" xml:space="preserve">
+    <value>Are you sure you want to close this customer card without saving?</value>
+  </data>
+  <data name="PAGES_CUSTOMERINFOPAGE_ONCLOSING_UNABLETOSAVE" xml:space="preserve">
+    <value>We were unable to save the customer updates.  It appears someone has made a change before you.  Please refresh this page to get the latest data.</value>
+  </data>
+  <data name="PAGES_CUSTOMERINFOPAGE_UNABLETODELETE" xml:space="preserve">
+    <value>Unable to delete customer, you do not have the latest version.  Please refresh and reattempt delete.</value>
+  </data>
   <data name="PAGES_VEHICLEINFOPAGE_CONFIRMDELETE" xml:space="preserve">
     <value>Are you sure you want to delete this vehicle?</value>
   </data>
@@ -158,6 +173,9 @@
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_MISSINGINFO_CONFIRMDELETE" xml:space="preserve">
     <value>In order to save this vehicle you must enter a year, make, model and click Save.  Would you like to delete this Vehicle?</value>
+  </data>
+  <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_CONFIRMNOSAVE" xml:space="preserve">
+    <value>Are you sure you want to close this vehicle card without saving?</value>
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_ONCLOSING_UNABLETOSAVE" xml:space="preserve">
     <value>We were unable to save the vehicle updates.  It appears someone has made a change before you.  Please refresh this page to get the latest data.</value>
@@ -169,13 +187,13 @@
     <value>Save and Close</value>
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_UNABLETODELETE" xml:space="preserve">
-    <value>Unable to delete vehicle object, you do not have the latest version.  Please refresh and reattempt delete.</value>
+    <value>Unable to delete vehicle, you do not have the latest version.  Please refresh and reattempt delete.</value>
   </data>
   <data name="PAGES_VEHICLEINFOWINDOW_BASICINFO_TAB_TITLE" xml:space="preserve">
     <value>General Vehicle Information</value>
   </data>
   <data name="PAGE_CUSTOMERSEARCHPAGE_TITLE" xml:space="preserve">
-    <value>Customer Search</value>
+    <value>Search Customers</value>
   </data>
   <data name="PAGE_VEHICLESEARCHPAGE_TITLE" xml:space="preserve">
     <value>Search Vehicles</value>
@@ -203,5 +221,8 @@
   </data>
   <data name="VEHICLEINFOPAGE_PRINT_BIWEEKLYRATE" xml:space="preserve">
     <value>Please enter the financing bi-weekly rate for this vehicle, if not available press cancel. (Note: text will be printed as you input it)</value>
+  </data>
+  <data name="WARNING" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>

@@ -58,6 +58,11 @@ namespace CarDepot.VehicleStore
             CustomerAdminObject customer = new CustomerAdminObject(filePath);
             customer.Cache = this;
 
+            if (customer.GetValue(PropertyId.IsDeleted) == true.ToString())
+            {
+                return;
+            }
+
             bool meetsAllRequirements = true;
 
             foreach (var param in searchParam)

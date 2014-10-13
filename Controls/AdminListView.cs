@@ -29,6 +29,8 @@ namespace CarDepot.Controls
 
         public void LoadPanel(IAdminObject item)
         {
+            this.Items.Clear();
+
             _item = item;
             VehicleAdminObject vehicle = item as VehicleAdminObject;
             if (vehicle == null)

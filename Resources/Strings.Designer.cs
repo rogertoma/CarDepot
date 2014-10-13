@@ -387,6 +387,84 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("VEHICLEINFOPAGE_PRINT_BIWEEKLYRATE", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_CUSTOMERINFOPAGE_CONFIRMDELETE.
+        /// </summary>
+        internal static string PAGES_CUSTOMERINFOPAGE_CONFIRMDELETE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_CUSTOMERINFOPAGE_CONFIRMDELETE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_CUSTOMERINFOPAGE_UNABLETODELETE.
+        /// </summary>
+        internal static string PAGES_CUSTOMERINFOPAGE_UNABLETODELETE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_CUSTOMERINFOPAGE_UNABLETODELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_CUSTOMERINFOPAGE_MISSINGINFO_CONFIRMDELETE.
+        /// </summary>
+        internal static string PAGES_CUSTOMERINFOPAGE_MISSINGINFO_CONFIRMDELETE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_CUSTOMERINFOPAGE_MISSINGINFO_CONFIRMDELETE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_CUSTOMERINFOPAGE_ONCLOSING_UNABLETOSAVE.
+        /// </summary>
+        internal static string PAGES_CUSTOMERINFOPAGE_ONCLOSING_UNABLETOSAVE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_CUSTOMERINFOPAGE_ONCLOSING_UNABLETOSAVE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_VEHICLEINFOPAGE_ONCLOSING_CONFIRMNOSAVE.
+        /// </summary>
+        internal static string PAGES_VEHICLEINFOPAGE_ONCLOSING_CONFIRMNOSAVE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_VEHICLEINFOPAGE_ONCLOSING_CONFIRMNOSAVE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGES_CUSTOMERINFOPAGE_ONCLOSING_CONFIRMNOSAVE.
+        /// </summary>
+        internal static string PAGES_CUSTOMERINFOPAGE_ONCLOSING_CONFIRMNOSAVE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_CUSTOMERINFOPAGE_ONCLOSING_CONFIRMNOSAVE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to WARNING.
+        /// </summary>
+        internal static string WARNING
+        {
+            get
+            {
+                return ResourceManager.GetString("WARNING", resourceCulture);
+            }
+        }
+        
         
     }
 }

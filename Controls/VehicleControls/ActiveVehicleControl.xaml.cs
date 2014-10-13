@@ -66,11 +66,7 @@ namespace CarDepot.Controls.VehicleControls
             VehicleTileControl iconVehicle = sender as VehicleTileControl;
             if (iconVehicle != null)
             {
-                VehicleInfoWindow vehicleInfoWindow = new VehicleInfoWindow(iconVehicle.Vehicle);
-                vehicleInfoWindow.Show();
-                vehicleInfoWindow.Activate();
-                vehicleInfoWindow.Topmost = true;
-                vehicleInfoWindow.Focus();
+                Utilities.LoadVehicleInfoWindow(iconVehicle.Vehicle);
             }
         }
 

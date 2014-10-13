@@ -49,7 +49,7 @@ namespace CarDepot
                 object page = Activator.CreateInstance(elementType);
 
                 PagesTabControl.Items.Add(GetPageTabItem(page as IPropertyPage));
-                ((IPropertyPage)page).SetTabControlContext(PagesTabControl);
+                CacheManager.MainTabControl = PagesTabControl;
             }
         }
 
@@ -97,12 +97,6 @@ namespace CarDepot
         {
             LogonPage logon = new LogonPage();
             logon.Show();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            VehicleInfoWindow page = new VehicleInfoWindow();
-            page.Show();
         }
     }
 }

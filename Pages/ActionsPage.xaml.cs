@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Pages;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.GeneralControls
 {
@@ -22,7 +23,6 @@ namespace CarDepot.Controls.GeneralControls
     /// </summary>
     public partial class ActionsControl : UserControl, IPropertyPage
     {
-        private TabControl mainTabControl = null;
 
         public ActionsControl()
         {
@@ -34,11 +34,6 @@ namespace CarDepot.Controls.GeneralControls
             get { return Strings.CONTROL_ACTIONSCONTROL_TAB_TITLE; }
         }
 
-        public void SetTabControlContext(TabControl control)
-        {
-            mainTabControl = control;
-        }
-
         public bool IsCloseable
         {
             get { return false; }
@@ -47,30 +42,60 @@ namespace CarDepot.Controls.GeneralControls
         private void BtnCreateNewVehicle_Click(object sender, RoutedEventArgs e)
         {
             VehicleInfoWindow page = new VehicleInfoWindow();
-            page.Show();
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
+            page.SetParentTabControl(tabItem);
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = "New Vehicle";
+            tabItem.Content = page;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
         }
 
         private void BtnSearchVehicles_Click(object sender, RoutedEventArgs e)
         {
             VehicleSearchPage page = new VehicleSearchPage();
 
-            if (mainTabControl == null)
+            if (CacheManager.MainTabControl == null)
             {
                 throw new NotImplementedException("MainTabControl == null");
             }
 
             ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.SearchVehicleColor;
             tabItem.Height = LookAndFeel.TabItemHeight;
             tabItem.Title = page.PageTitle;
             tabItem.Content = page;
-            mainTabControl.Items.Add(tabItem);
+            CacheManager.MainTabControl.Items.Add(tabItem);
             tabItem.Focus();
         }
 
         private void BtnCreateNewCustomer_Click(object sender, RoutedEventArgs e)
         {
-            CustomerInfoPage customerInfo = new CustomerInfoPage();
-            customerInfo.Show();
+            CustomerInfoPage page = new CustomerInfoPage();
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.CustomerTabColor;
+            page.SetParentTabControl(tabItem);
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = "New Customer";
+            tabItem.Content = page;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+
+            //CustomerInfoPage customerInfo = new CustomerInfoPage();
+            //customerInfo.Show();
         }
 
         private void BtnSearchTasks_Click(object sender, RoutedEventArgs e)
@@ -80,16 +105,17 @@ namespace CarDepot.Controls.GeneralControls
             page.HorizontalAlignment = HorizontalAlignment.Stretch;
             page.VerticalAlignment = VerticalAlignment.Stretch;
 
-            if (mainTabControl == null)
+            if (CacheManager.MainTabControl == null)
             {
                 throw new NotImplementedException("MainTabControl == null");
             }
 
             ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.SearchTasksColor;
             tabItem.Height = LookAndFeel.TabItemHeight;
             tabItem.Title = page.PageTitle;
             tabItem.Content = page;
-            mainTabControl.Items.Add(tabItem);
+            CacheManager.MainTabControl.Items.Add(tabItem);
             tabItem.Focus();
         }
 
@@ -99,16 +125,17 @@ namespace CarDepot.Controls.GeneralControls
             page.HorizontalAlignment = HorizontalAlignment.Stretch;
             page.VerticalAlignment = VerticalAlignment.Stretch;
 
-            if (mainTabControl == null)
+            if (CacheManager.MainTabControl == null)
             {
                 throw new NotImplementedException("MainTabControl == null");
             }
 
             ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.SearchCustomerColor;
             tabItem.Height = LookAndFeel.TabItemHeight;
             tabItem.Title = page.PageTitle;
             tabItem.Content = page;
-            mainTabControl.Items.Add(tabItem);
+            CacheManager.MainTabControl.Items.Add(tabItem);
             tabItem.Focus();
         }
 

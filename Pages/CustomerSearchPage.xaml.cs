@@ -28,7 +28,7 @@ namespace CarDepot.Pages
 
         public string PageTitle
         {
-            get { return Strings.PAGE_VEHICLETASKSEARCHPAGE_TITLE; }
+            get { return Strings.PAGE_CUSTOMERSEARCHPAGE_TITLE; }
         }
     }
 }

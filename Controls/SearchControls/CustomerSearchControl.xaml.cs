@@ -68,7 +68,23 @@ namespace CarDepot.Controls.SearchControls
                 return;
 
             CustomerInfoPage customerInfo = new CustomerInfoPage(customer);
-            customerInfo.Show();
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.CustomerTabColor;
+            customerInfo.SetParentTabControl(tabItem);
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = "Customer: " + customer.LastName + ", " + customer.FirstName;
+            tabItem.Content = customerInfo;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+
+            //CustomerInfoPage customerInfo = new CustomerInfoPage(customer);
+            //customerInfo.Show();
         }
 
         private void cache_ItemUpdate(object sender, AdminItemCache.UpdateEventArgs e)
@@ -83,7 +99,20 @@ namespace CarDepot.Controls.SearchControls
                 CustomerAdminObject cacheContent =
                     cache.FirstOrDefault(customerAdminObject => customerAdminObject.ObjectId == e.ItemId);
 
-                if (listViewItem != null && cacheContent != null)
+                if (cacheContent != null)
+                {
+                    CustomerCache tempCache = cacheContent.Cache as CustomerCache;
+                    cacheContent = new CustomerAdminObject(cacheContent.ObjectId);
+                    cacheContent.Cache = tempCache;
+
+                    if (cacheContent.GetValue(PropertyId.IsDeleted) == true.ToString())
+                    {
+                        lstCustomers.Items.Remove(listViewItem);
+                        return;
+                    }
+                }
+
+                if (listViewItem != null)
                 {
                     listViewItem.Content = null;
                     listViewItem.Content = cacheContent;

@@ -142,7 +142,20 @@ namespace CarDepot.Controls
                 VehicleAdminObject cacheContent =
                     cache.FirstOrDefault(vehicleAdminObject => vehicleAdminObject.ObjectId == e.ItemId);
 
-                if (listViewItem != null && cacheContent != null)
+                if (cacheContent != null)
+                {
+                    VehicleCache tempCache = cacheContent.Cache as VehicleCache;
+                    cacheContent = new VehicleAdminObject(cacheContent.ObjectId);
+                    cacheContent.Cache = tempCache;
+
+                    if (cacheContent.GetValue(PropertyId.IsDeleted) == true.ToString())
+                    {
+                        LstSearchResults.Items.Remove(listViewItem);
+                        return;
+                    }
+                }
+
+                if (listViewItem != null)
                 {
                     listViewItem.Content = null;
                     listViewItem.Content = cacheContent;

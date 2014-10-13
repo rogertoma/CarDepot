@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -28,8 +27,9 @@ namespace CarDepot
     /// <summary>
     /// Interaction logic for VehicleInfoWindow.xaml
     /// </summary>
-    public partial class VehicleInfoWindow : Window, IPropertyPanel
+    public partial class VehicleInfoWindow : UserControl, IPropertyPanel
     {
+        public ClosableTab _parentTabControl; 
         private VehicleAdminObject _vehicle;
         //bool isDeleted = false;
         List<IPropertyPanel> propertyPanels = new List<IPropertyPanel>();
@@ -37,6 +37,12 @@ namespace CarDepot
         public VehicleInfoWindow() : this (null)
         {
             //InitializeComponent();
+        }
+
+        public void SetParentTabControl(ClosableTab parentTabControl)
+        {
+            _parentTabControl = parentTabControl;
+            _parentTabControl.TabClosing += _parentTabControl_TabClosing;
         }
 
         private void InitializePage()
@@ -122,13 +128,19 @@ namespace CarDepot
 
             return true;
         }
-
-        private void VehicleInfoWindow_OnClosing(object sender, CancelEventArgs e)
+        
+        /// <summary>
+        /// Return bool determines of cancellation of closing should occur
+        /// True means cancel close
+        /// false means continue with close
+        /// </summary>
+        /// <returns></returns>
+        bool _parentTabControl_TabClosing()
         {
             MessageBoxResult result;
             if (_vehicle.GetValue(PropertyId.IsDeleted) == true.ToString()) 
             {
-                return;
+                return false;
             }
 
             bool requirementsMet = VerifyMinimumRequirements();
@@ -139,13 +151,13 @@ namespace CarDepot
 
                 if (result == MessageBoxResult.No)
                 {
-                    e.Cancel = true;
+                    return true;
                 }
                 else
                 {
                     DeleteVehicle();
                 }
-                return;
+                return false;
             }
 
             VehicleAdminObject origionalVehicle = new VehicleAdminObject(_vehicle.ObjectId);
@@ -153,7 +165,7 @@ namespace CarDepot
             bool same = _vehicle.Equals(origionalVehicle);
 
             if (same)
-                return;
+                return false;
 
             if (_vehicle.FileVersion == "0")
             {
@@ -172,13 +184,15 @@ namespace CarDepot
                 {
                     MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_UNABLETOSAVE,
                                     Strings.PAGES_VEHICLEINFOPAGE_ERROR, MessageBoxButton.OK);
-                    e.Cancel = true;
+                    return true;
                 }
             }
             else if (result == MessageBoxResult.Cancel)
             {
-                e.Cancel = true;
+                return true;
             }
+
+            return false;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -199,12 +213,13 @@ namespace CarDepot
                 cache.Remove(_vehicle);
                 _vehicle = new VehicleAdminObject(_vehicle.ObjectId);
                 cache.Add(_vehicle);
+                _vehicle.Cache = cache;
             }
             LoadPanel(_vehicle);
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
-        {
+        { 
             string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_IMPORTURL_PROMPT, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, Strings.VEHICLEINFOPAGE_IMPORTURL_DATA, -1, -1);
             if (result == "")
             {
@@ -223,7 +238,7 @@ namespace CarDepot
             btnRefresh_Click(null, null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_CONFIRMDELETE,
                 Strings.PAGES_VEHICLEINFOPAGE_ONCLOSING_WARNING_TITLE, MessageBoxButton.YesNo);
@@ -235,7 +250,7 @@ namespace CarDepot
             bool successfulSave = _vehicle.Save(this);
             if (successfulSave)
             {
-                this.Close();
+                _parentTabControl.button_close_Click(null, null);
             }
             else
             {
@@ -254,7 +269,7 @@ namespace CarDepot
             {
                 try
                 {
-                    this.Close();
+                    _parentTabControl.button_close_Click(null, null);
                 }
                 catch (Exception e) { }
             }

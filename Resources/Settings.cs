@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using CarDepot.VehicleStore;
+using CarDepot.Controls;
 
 namespace CarDepot.Resources
 {
@@ -60,6 +61,11 @@ namespace CarDepot.Resources
     static class LookAndFeel
     {
         public static int TabItemHeight = 40;
+        public static Brush VehicleTabColor = Brushes.Cyan;
+        public static Brush SearchVehicleColor = Brushes.LightGreen;
+        public static Brush CustomerTabColor = Brushes.LightBlue;
+        public static Brush SearchCustomerColor = Brushes.LightGreen;
+        public static Brush SearchTasksColor = Brushes.LightGreen;
     }
 
     static class DefaultColors
@@ -97,10 +103,40 @@ namespace CarDepot.Resources
             }
             else
             {
+
+                //VehicleSearchPage page = new VehicleSearchPage();
+
+                //if (mainTabControl == null)
+                //{
+                //    throw new NotImplementedException("MainTabControl == null");
+                //}
+
+                //ClosableTab tabItem = new ClosableTab();
+                //tabItem.Height = LookAndFeel.TabItemHeight;
+                //tabItem.Title = page.PageTitle;
+                //tabItem.Content = page;
+                //mainTabControl.Items.Add(tabItem);
+                //tabItem.Focus();
+
                 VehicleInfoWindow window = new VehicleInfoWindow(vehicle);
-                window.Show();
-                CacheManager.ActiveUser.AddPage(window);
+                if (CacheManager.MainTabControl == null)
+                {
+                    throw new NotImplementedException("MainTabControl == null");
+                }
+
+                ClosableTab tabItem = new ClosableTab();
+                tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
+                window.SetParentTabControl(tabItem);
+                tabItem.Height = LookAndFeel.TabItemHeight;
+                tabItem.Title = vehicle.Year + ": " + vehicle.Make + " - " + vehicle.Model;
+                tabItem.Content = window;
+                CacheManager.MainTabControl.Items.Add(tabItem);
+                tabItem.Focus();
+
+                //window.Show();
+                //CacheManager.ActiveUser.AddPage(window);
             }
         }
+
     }
 }
