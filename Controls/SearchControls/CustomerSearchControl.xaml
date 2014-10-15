@@ -30,10 +30,10 @@
         <Button Grid.Row="4" Name="btnSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
 
         <!--Search Results-->
-        <ListView x:Name="lstCustomers" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" MouseDoubleClick="lstCustomers_MouseDoubleClick">
+        <ListView x:Name="lstCustomers" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" MouseDoubleClick="lstCustomers_MouseDoubleClick" ButtonBase.Click="GridViewColumnHeaderClickedHandler">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="FirstName" Width="120" DisplayMemberBinding="{Binding FirstName}"/>
                     <GridViewColumn Header="LastName" Width="120" DisplayMemberBinding="{Binding LastName}"/>
                     <GridViewColumn Header="MobilePhone" Width ="120" DisplayMemberBinding="{Binding MobilePhone}"/>

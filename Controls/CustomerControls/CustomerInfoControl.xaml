@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -34,15 +35,16 @@
         <!--FirstName-->
         <Controls:AdminLabelTextbox PropertyId="FirstName" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <!--LastName-->
-        <Controls:AdminLabelTextbox PropertyId="LastName" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="LastName" HorizontalAlignment="Left" Margin="10,07,0,10" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="JobTitle" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="4" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="MobilePhone" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="5" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="HomePhone" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="6" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="BusinessPhone" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="Fax" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="HomeAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="9" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="BusinessAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="10" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="Comments" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="11" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdditionalContentControl PropertyId="AssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Controls:AdminLabelTextbox PropertyId="EMail" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="Fax" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="9" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="HomeAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="10" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="BusinessAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="11" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="Comments" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="12" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="AssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

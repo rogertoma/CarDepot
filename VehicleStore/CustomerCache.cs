@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using CarDepot.Resources;
-
+using System.ComponentModel;
 
 namespace CarDepot.VehicleStore
 {
@@ -154,6 +154,18 @@ namespace CarDepot.VehicleStore
                 return false;
 
             return true;
+        }
+
+        public void SortCache(PropertyId category, ListSortDirection direction)
+        {
+            List<CustomerAdminObject> sortedList = new List<CustomerAdminObject>();
+
+            sortedList.AddRange(direction == ListSortDirection.Ascending
+                                    ? this.OrderBy(customerAdminObject => customerAdminObject.GetValue(category))
+                                    : this.OrderByDescending(customerAdminObject => customerAdminObject.GetValue(category)));
+
+            this.Clear();
+            this.AddRange(sortedList);
         }
 
         public void ExitReadLock()

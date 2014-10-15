@@ -464,7 +464,16 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("WARNING", resourceCulture);
             }
         }
-        
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROL_IMAGETHUMBNAILCONROL_CONFIRMDELETE.
+        /// </summary>
+        internal static string CONTROL_IMAGETHUMBNAILCONROL_CONFIRMDELETE
+        {
+            get
+            {
+                return ResourceManager.GetString("CONTROL_IMAGETHUMBNAILCONROL_CONFIRMDELETE", resourceCulture);
+            }
+        }
     }
 }

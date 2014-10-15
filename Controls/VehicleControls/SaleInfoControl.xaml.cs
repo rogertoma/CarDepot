@@ -22,6 +22,8 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class SaleInfoControl : UserControl, IPropertyPanel
     {
+        VehicleAdminObject _vehicle = null;
+
         public SaleInfoControl()
         {
             InitializeComponent();
@@ -31,6 +33,10 @@ namespace CarDepot.Controls.VehicleControls
 
         public void LoadPanel(IAdminObject item)
         {
+            _vehicle = null;
+            TxtCustomerId.Text = "";
+            _vehicle = item as VehicleAdminObject;
+
             LoadAllChildren(SaleInfoGrid, item);
         }
 
@@ -56,10 +62,20 @@ namespace CarDepot.Controls.VehicleControls
             searchParam.Add(CustomerCacheSearchKey.Id, TxtCustomerId.Text);
             CustomerCache cache = new CustomerCache(searchParam);
 
+            if (_vehicle != null)
+            {
+                _vehicle.SetValue(PropertyId.SaleCustomerId, TxtCustomerId.Text);
+            }
             if (cache.Count > 0)
             {
                 customerInfoControl.LoadPanel(cache[0]);
+                customerInfoControl.Visibility = System.Windows.Visibility.Visible;
             }
+            else
+            {
+                customerInfoControl.Visibility = System.Windows.Visibility.Hidden;
+            }
+
         }
 
 /*        private void TxtSalePrice_TextChanged(object sender, TextChangedEventArgs e)

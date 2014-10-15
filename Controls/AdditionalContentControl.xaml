@@ -14,14 +14,14 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="FileList" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <ListView x:Name="FileList" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" MouseDoubleClick="FileList_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="FileName" Width="300"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Delete" Margin="0,0,10,0" Width="75" Height="40" Grid.Row="1" Grid.Column="1" Click="Button_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" Margin="0,0,10,0" Width="75" Height="40" Grid.Row="1" Grid.Column="1" Click="Button_Click"/>
         <Button x:Name="BtnBrowse" Content="Browse" Width="75" Height="40" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" Click="BtnBrowse_Click"/>
     </Grid>
 </UserControl>

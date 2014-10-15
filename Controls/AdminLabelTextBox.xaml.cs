@@ -22,6 +22,7 @@ namespace CarDepot.Controls
     public partial class AdminLabelTextbox : UserControl, IPropertyPanel
     {
         private PropertyId _propertyId;
+        private bool _isEditable = true;
 
         public AdminLabelTextbox()
         {
@@ -37,6 +38,19 @@ namespace CarDepot.Controls
                 PropertyValueTextBox.PropertyId = value;
             }
             get { return _propertyId; }
+        }
+
+        public bool IsEditable
+        {
+            set
+            {
+                _isEditable = value;
+                PropertyValueTextBox.IsEditable = value;
+            }
+            get
+            {
+                return _isEditable;
+            }
         }
 
         public new double FontSize

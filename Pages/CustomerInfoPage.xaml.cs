@@ -111,6 +111,8 @@ namespace CarDepot.Pages
                 return true;
             }
 
+            _customer.Cache.ModifyItem(_customer);
+
             return false;
         }
 

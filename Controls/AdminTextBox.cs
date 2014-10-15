@@ -87,7 +87,11 @@ namespace CarDepot.Controls
 
         public bool IsEditable
         {
-            set { _isEditable = value; }
+            set 
+            { 
+                _isEditable = value;
+                this.IsEnabled = _isEditable;
+            }
             get { return _isEditable; }
         }
     }

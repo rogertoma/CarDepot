@@ -24,6 +24,7 @@ namespace CarDepot.Resources
         public static string VehicleImageFolder = @"\Images";
         public static string AdditionalFilesFolder = @"\Files";
         public static string TempFolder = @"C:\Data\Temp";
+        public static string DefaultVehicleImagePath = @"C:\Data\Resources\DefaultVehicleImage.jpg";
 
         public static int MultiValueKeyIndex = 0;
         public static int MultiValueValueIndex = 1;
@@ -117,6 +118,10 @@ namespace CarDepot.Resources
                 //tabItem.Content = page;
                 //mainTabControl.Items.Add(tabItem);
                 //tabItem.Focus();
+
+                IAdminItemCache tempCache = vehicle.Cache;
+                vehicle = new VehicleAdminObject(vehicle.ObjectId);
+                vehicle.Cache = tempCache;
 
                 VehicleInfoWindow window = new VehicleInfoWindow(vehicle);
                 if (CacheManager.MainTabControl == null)

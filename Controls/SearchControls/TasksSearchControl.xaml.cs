@@ -6,6 +6,7 @@ using System.Windows.Media;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
 
+
 namespace CarDepot.Controls.SearchControls
 {
     /// <summary>
@@ -169,7 +170,6 @@ namespace CarDepot.Controls.SearchControls
                 
             }
         }
-
 
     }
 }

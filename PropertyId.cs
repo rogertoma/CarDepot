@@ -43,6 +43,7 @@ namespace CarDepot
         JobTitle,
         BusinessPhone,
         HomePhone,
+        EMail,
         Fax,
         MobilePhone,
         HomeAddress,

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using CarDepot.VehicleStore;
 using CarDepot.Resources;
 using CarDepot.Pages;
+using System.ComponentModel;
 
 namespace CarDepot.Controls.SearchControls
 {
@@ -117,6 +118,52 @@ namespace CarDepot.Controls.SearchControls
                     listViewItem.Content = null;
                     listViewItem.Content = cacheContent;
                 }
+            }
+        }
+
+        private GridViewColumnHeader lastHeaderClicked = null;
+        ListSortDirection lastDirection = ListSortDirection.Ascending;
+
+        private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
+            ListSortDirection direction = ListSortDirection.Ascending;
+
+            if (headerClicked != null)
+            {
+                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
+                {
+
+                    if (headerClicked == lastHeaderClicked)
+                    {
+                        direction = lastDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+                    }
+                }
+
+                string header = headerClicked.Column.Header as string;
+
+
+                PropertyId id = (PropertyId)Enum.Parse(typeof(PropertyId), header);
+                cache.SortCache(id, direction);
+
+                lstCustomers.Items.Clear();
+                foreach (CustomerAdminObject customer in cache)
+                {
+                    ListViewItem item = new ListViewItem();
+                    item.Content = customer;
+                    //item.MouseDoubleClick += item_MouseDoubleClick;
+                    //item.KeyDown += item_KeyDown;
+
+                    lstCustomers.Items.Add(item);
+                }
+
+                if (lastHeaderClicked != null && lastHeaderClicked != headerClicked)
+                {
+                    lastHeaderClicked.Column.HeaderTemplate = null;
+                }
+
+                lastHeaderClicked = headerClicked;
+                lastDirection = direction;
             }
         }
     }

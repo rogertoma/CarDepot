@@ -56,17 +56,18 @@ namespace CarDepot.Controls
 
             _images = item.GetMultiValue(PropertyId);
 
-            if (_images == null)
+            if (_images == null || _images.Count == 0)
             {
                 LoadDefaultImage();
                 return;
             }
 
-            if (_images.Count == 0)
-                return;
-
-            LoadVehicleImageLarge(_images[imageLoadIndex][Settings.MultiValueValueIndex]);
-            LoadVehicleThumbNails();
+            try
+            {
+                LoadVehicleImageLarge(_images[imageLoadIndex][Settings.MultiValueValueIndex]);
+                LoadVehicleThumbNails();
+            }
+            catch {}
             imageTimer.Start();
         }
 
@@ -126,30 +127,42 @@ namespace CarDepot.Controls
                 if (!File.Exists(image[Settings.MultiValueValueIndex]))
                     continue;
 
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.UriSource = new Uri(image[Settings.MultiValueValueIndex]);
-                img.EndInit();
-                Image thumb = new Image();
-                thumb.Source = img;
+                ImageThumbNailControl thumb = new ImageThumbNailControl();
+                thumb.SetImage(image[Settings.MultiValueValueIndex]);
                 thumb.Margin = new Thickness(5);
-                thumb.MouseUp += thumb_MouseUp;
-                thumb.Width = 50;
-                thumb.Height = 50;
-                thumb.Stretch = Stretch.Uniform;
+                thumb.DeleteImage += thumb_DeleteImage;
+                thumb.ImageClicked += thumb_ImageClicked;
+
                 ThumbNailWrapPanel.Children.Add(thumb);
             }
         }
 
-        void thumb_MouseUp(object sender, MouseButtonEventArgs e)
+        void thumb_ImageClicked(string imagePath)
         {
-            LoadVehicleImageLarge(((Image)sender).Source.ToString());
+            LoadVehicleImageLarge(imagePath);
             imageTimer.Stop();
+        }
+
+        void thumb_DeleteImage(string deleteImagePath)
+        {
+            foreach (string[] image in _images)
+            {
+                string imagePath = image[Settings.MultiValueValueIndex];
+
+                if (imagePath.Equals(deleteImagePath))
+                {
+                    _images.Remove(image);
+                    break;
+                }
+            }
+
+            _item.SetValue(PropertyId.Images, _images);
+            LoadPanel(_item);
         }
 
         private void LoadDefaultImage()
         {
-            //TODO: Load default image
+            LoadVehicleImageLarge(Settings.DefaultVehicleImagePath);
             imageTimer.Stop();
         }
 

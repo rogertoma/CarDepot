@@ -60,6 +60,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -81,6 +82,9 @@
     </Compile>
     <Compile Include="Controls\CustomerControls\CustomerInfoControl.xaml.cs">
       <DependentUpon>CustomerInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageThumbNailControl.xaml.cs">
+      <DependentUpon>ImageThumbNailControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SearchControls\CustomerSearchControl.xaml.cs">
       <DependentUpon>CustomerSearchControl.xaml</DependentUpon>
@@ -176,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CustomerControls\CustomerInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageThumbNailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

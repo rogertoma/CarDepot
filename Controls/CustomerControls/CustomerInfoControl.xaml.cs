@@ -20,6 +20,7 @@ namespace CarDepot.Controls.CustomerControls
     /// </summary>
     public partial class CustomerInfoControl : UserControl, IPropertyPanel
     {
+        private bool _isEditable = true;
         public CustomerInfoControl()
         {
             InitializeComponent();
@@ -32,6 +33,34 @@ namespace CarDepot.Controls.CustomerControls
                 return;
 
             LoadAllChildren(ContactCardGrid, item);
+        }
+
+        public bool isEditable
+        {
+            set
+            {
+                _isEditable = value;
+                updateUIToReflectIsEditable();
+            }
+            get
+            {
+                return _isEditable;
+            }
+        }
+
+        private void updateUIToReflectIsEditable()
+        {
+            foreach (var child in ContactCardGrid.Children)
+            {
+                AdminLabelTextbox textBox = child as AdminLabelTextbox;
+                if (textBox != null)
+                {
+                    textBox.IsEditable = _isEditable;
+                }
+            }
+
+            addtionalContentControl.IsEditable = _isEditable;
+
         }
 
         public void LoadAllChildren(Panel panel, IAdminObject item)

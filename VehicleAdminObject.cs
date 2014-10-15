@@ -288,11 +288,31 @@ namespace CarDepot
                 return false;
             }
 
-            if (_images.Select(image => vehicle.Images.Any(otherImg => otherImg[0] == image[0])).Any(subListFound => !subListFound))
+            // images
+            List<string[]> vehicleImages = vehicle.Images.ToList();
+            foreach (string[] image in _images)
+            {
+                bool found = false;
+                foreach (string[] otherVehicleImage in vehicleImages)
+                {
+                    if (otherVehicleImage[Settings.MultiValueValueIndex] == image[Settings.MultiValueValueIndex])
+                    {
+                        found = true;
+                        vehicleImages.Remove(otherVehicleImage);
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    return false;
+                }
+            }
+            if (vehicleImages.Count > 0)
             {
                 return false;
             }
 
+            // basic info
             foreach (var info in _basicInfo)
             {
                 if (!vehicle.BasicInfo.ContainsKey(info.Key))

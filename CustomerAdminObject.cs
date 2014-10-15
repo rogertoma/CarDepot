@@ -19,6 +19,7 @@ namespace CarDepot
     {
         private Dictionary<PropertyId, string> _basicInfo = new Dictionary<PropertyId, string>();
         private List<string[]> _vehicleIds = new List<string[]>();
+        private List<string[]> _associatedFiles = new List<string[]>();
 
         public override IAdminItemCache Cache { get; set; }
 
@@ -83,10 +84,38 @@ namespace CarDepot
             get { return _basicInfo; }
         }
 
+        public List<string[]> AssociatedFiles
+        {
+            set { _associatedFiles = value; }
+            get { return _associatedFiles; }
+        }
+
         public override void ApplyMultiValue(PropertyId id, XElement element)
         {
             switch (id)
             {
+                case PropertyId.AssociatedFiles:
+                    _associatedFiles.Clear();
+                    foreach (XElement descendant in element.Descendants())
+                    {
+                        string[] multiValueItem = new string[2];
+                        multiValueItem[Settings.MultiValueKeyIndex] = descendant.Name.ToString();
+
+                        if (descendant.Value.StartsWith("\\"))
+                        {
+                            var directoryInfo = new FileInfo(ObjectId).Directory;
+                            if (directoryInfo != null)
+                                multiValueItem[Settings.MultiValueValueIndex] =
+                                    directoryInfo.FullName + descendant.Value;
+                        }
+                        else
+                        {
+                            multiValueItem[Settings.MultiValueValueIndex] = descendant.Value;
+                        }
+
+                        _associatedFiles.Add(multiValueItem);
+                    }
+                    break;
                 default:
                     VehicleIds.Clear();
                     foreach (XElement descendant in element.Descendants())
@@ -154,8 +183,11 @@ namespace CarDepot
         {
             switch (id)
             {
+                case PropertyId.AssociatedFiles:
+                    return AssociatedFiles;
                 case PropertyId.CustomerAssociatedVehicles:
                     return VehicleIds;
+
                 default:
                     return null;
             }
@@ -169,6 +201,30 @@ namespace CarDepot
 
             //Tasks, Images, Basic Info
             if (_vehicleIds.Select(vehicleId => customer.VehicleIds.Any(otherImg => otherImg[0] == vehicleId[0])).Any(subListFound => !subListFound))
+            {
+                return false;
+            }
+
+            // AdditionalFiles
+            List<string[]> customerFiles = customer.AssociatedFiles.ToList();
+            foreach (string[] file in _associatedFiles)
+            {
+                bool found = false;
+                foreach (string[] otherCustomerFile in customerFiles)
+                {
+                    if (otherCustomerFile[Settings.MultiValueValueIndex] == file[Settings.MultiValueValueIndex])
+                    {
+                        found = true;
+                        customerFiles.Remove(otherCustomerFile);
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    return false;
+                }
+            }
+            if (customerFiles.Count > 0)
             {
                 return false;
             }

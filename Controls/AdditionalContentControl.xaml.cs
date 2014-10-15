@@ -29,6 +29,7 @@ namespace CarDepot.Controls
 
         private IAdminObject _item = null;
         List<string[]> files = new List<string[]>();
+        private bool _isEditable = true;
 
         public PropertyId PropertyId { set; get; }
 
@@ -37,8 +38,31 @@ namespace CarDepot.Controls
             InitializeComponent();
         }
 
+        public bool IsEditable
+        {
+            set
+            {
+                _isEditable = value;
+                if (_isEditable)
+                {
+                    BtnBrowse.Visibility = System.Windows.Visibility.Visible;
+                    btnDelete.Visibility = System.Windows.Visibility.Visible;
+                }
+                else
+                {
+                    BtnBrowse.Visibility = System.Windows.Visibility.Hidden;
+                    btnDelete.Visibility = System.Windows.Visibility.Hidden;
+                }
+            }
+            get { return _isEditable; }
+        }
+
         private void BtnBrowse_Click(object sender, RoutedEventArgs e)
         {
+            if (_item == null)
+            {
+                return;
+            }
             // Create an instance of the open file dialog box.
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -54,13 +78,21 @@ namespace CarDepot.Controls
             {
                 MoveToAdditionalFilesFolder(fileName);
             }
-            
+
+            files.Clear();
             foreach (var item in FileList.Items)
             {
                 files.Add(new string[] { PropertyId.File.ToString(), item.ToString() });
             }
 
             _item.SetValue(PropertyId, files);
+
+            // If it's a customer we need to update the list here as well.
+            CustomerAdminObject customer = _item as CustomerAdminObject;
+            if (customer != null)
+            {
+                customer.AssociatedFiles = files;
+            }
         }
 
         private void MoveToAdditionalFilesFolder(string origionalFilePath)
@@ -88,7 +120,21 @@ namespace CarDepot.Controls
 
         public void LoadPanel(IAdminObject item)
         {
+            files.Clear();
+            FileList.Items.Clear();
+
             _item = item;
+            List<string[]> items = _item.GetMultiValue(PropertyId);
+            if (items == null)
+            {
+                return;
+            }
+
+            foreach (string[] file in items)
+            {
+                files.Add(file);
+                FileList.Items.Add(file[Settings.MultiValueValueIndex]);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -110,6 +156,26 @@ namespace CarDepot.Controls
             }
 
             _item.SetValue(PropertyId, files);
+            // If it's a customer we need to update the list here as well.
+            CustomerAdminObject customer = _item as CustomerAdminObject;
+            if (customer != null)
+            {
+                customer.AssociatedFiles = files;
+            }
+        }
+
+        private void FileList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string selectedFile = FileList.SelectedItem.ToString();
+            string file = new FileInfo(_item.ObjectId).Directory.FullName + Settings.AdditionalFilesFolder + "\\" + selectedFile;
+            try
+            {
+                System.Diagnostics.Process.Start(file);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
