@@ -94,7 +94,7 @@ namespace CarDepot
         {
             switch (id)
             {
-                case PropertyId.AssociatedFiles:
+                case PropertyId.CustomerAssociatedFiles:
                     _associatedFiles.Clear();
                     foreach (XElement descendant in element.Descendants())
                     {
@@ -183,7 +183,7 @@ namespace CarDepot
         {
             switch (id)
             {
-                case PropertyId.AssociatedFiles:
+                case PropertyId.CustomerAssociatedFiles:
                     return AssociatedFiles;
                 case PropertyId.CustomerAssociatedVehicles:
                     return VehicleIds;

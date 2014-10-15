@@ -24,7 +24,7 @@ namespace CarDepot.Controls
     /// </summary>
     public partial class AdditionalContentControl : UserControl, IPropertyPanel
     {
-        public delegate void ListChangedEventHandler(object sender, EventArgs e);
+        public delegate void ListChangedEventHandler(List<string[]> files);
         public event ListChangedEventHandler ListChanged;
 
         private IAdminObject _item = null;
@@ -88,16 +88,15 @@ namespace CarDepot.Controls
             _item.SetValue(PropertyId, files);
 
             // If it's a customer we need to update the list here as well.
-            CustomerAdminObject customer = _item as CustomerAdminObject;
-            if (customer != null)
+            if (ListChanged != null)
             {
-                customer.AssociatedFiles = files;
+                ListChanged(files);
             }
         }
 
         private void MoveToAdditionalFilesFolder(string origionalFilePath)
         {
-            string filePath = new FileInfo(_item.ObjectId).Directory.FullName + Settings.AdditionalFilesFolder + "\\";
+            string filePath = new FileInfo(_item.ObjectId).Directory.FullName + "\\" + PropertyId + "\\";
             if (!Directory.Exists(filePath))
                 Directory.CreateDirectory(filePath);
 
@@ -167,7 +166,7 @@ namespace CarDepot.Controls
         private void FileList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             string selectedFile = FileList.SelectedItem.ToString();
-            string file = new FileInfo(_item.ObjectId).Directory.FullName + Settings.AdditionalFilesFolder + "\\" + selectedFile;
+            string file = new FileInfo(_item.ObjectId).Directory.FullName + "\\" + PropertyId + "\\" + selectedFile;
             try
             {
                 System.Diagnostics.Process.Start(file);

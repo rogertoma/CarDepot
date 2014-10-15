@@ -45,6 +45,6 @@
         <Controls:AdminLabelTextbox PropertyId="HomeAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="10" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="BusinessAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="11" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="Comments" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="12" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="AssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="CustomerAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

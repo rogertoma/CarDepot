@@ -14,8 +14,10 @@ namespace CarDepot
             {
                 case PropertyId.Images:
                 case PropertyId.Tasks:
-                case PropertyId.AssociatedFiles:
+                case PropertyId.CustomerAssociatedFiles:
+                case PropertyId.PurchaseAssociatedFiles:
                 case PropertyId.CustomerAssociatedVehicles:
+                case PropertyId.SaleAssociatedFiles:
                     return true;
                 default:
                     return false;
@@ -49,7 +51,7 @@ namespace CarDepot
         HomeAddress,
         BusinessAddress,
         CustomerAssociatedVehicles,
-        AssociatedFiles,
+        CustomerAssociatedFiles,
         File,
 
         //Car PropertyId's
@@ -86,6 +88,7 @@ namespace CarDepot
         //SaleFees,               // aka ministry license
         SaleTotalDue,             // salefees + saleHST + salePrice
         SaleCustomerPayment,
+        SaleAssociatedFiles,
         PurchasePrice,
         PurchaseBuyerFee,
         PurchaseOtherCosts,
@@ -93,6 +96,7 @@ namespace CarDepot
         PurchaseTotal,
         PurchaseCheckNumber,
         PurchaseDate,
+        PurchaseAssociatedFiles,
         Vendor,
         Profit,                 // salePrice - PurchaseTotal
 

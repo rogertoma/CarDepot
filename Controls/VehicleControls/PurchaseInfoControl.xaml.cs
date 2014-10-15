@@ -21,6 +21,7 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class PurchaseInfoControl : UserControl, IPropertyPanel
     {
+        VehicleAdminObject _vehicle = null;
         public PurchaseInfoControl()
         {
             InitializeComponent();
@@ -28,7 +29,18 @@ namespace CarDepot.Controls.VehicleControls
 
         public void LoadPanel(IAdminObject item)
         {
+            _vehicle = item as VehicleAdminObject;
+
             LoadAllChildren(PurchaseInfoGrid, item);
+            addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+        }
+
+        void addtionalContentControl_ListChanged(List<string[]> files)
+        {
+            if (_vehicle != null)
+            {
+                _vehicle.PurchaseAssociatedFiles = files;
+            }
         }
 
         public void LoadAllChildren(Panel panel, IAdminObject item)

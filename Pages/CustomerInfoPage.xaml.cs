@@ -41,6 +41,8 @@ namespace CarDepot.Pages
             //propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
 
             LoadPanel(_customer);
+
+
         }
 
         public void LoadPanel(IAdminObject item)
@@ -184,6 +186,10 @@ namespace CarDepot.Pages
                 _customer = new CustomerAdminObject(_customer.ObjectId);
                 cache.Add(_customer);
                 _customer.Cache = cache;
+            }
+            else
+            {
+                _customer = new CustomerAdminObject(_customer.ObjectId);
             }
 
             LoadPanel(_customer);

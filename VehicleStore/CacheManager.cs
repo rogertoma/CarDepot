@@ -25,7 +25,7 @@ namespace CarDepot.VehicleStore
         private static void LoadCache()
         {
             _userCache = new UserCache();
-            _activeVehicleCache = new ActiveVehicleCache();
+            //_activeVehicleCache = new ActiveVehicleCache();
         }
 
         public static VehicleCache ActiveVehicleCache

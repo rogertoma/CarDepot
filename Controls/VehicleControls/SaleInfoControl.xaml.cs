@@ -38,6 +38,16 @@ namespace CarDepot.Controls.VehicleControls
             _vehicle = item as VehicleAdminObject;
 
             LoadAllChildren(SaleInfoGrid, item);
+
+            addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+        }
+
+        void addtionalContentControl_ListChanged(List<string[]> files)
+        {
+            if (_vehicle != null)
+            {
+                _vehicle.SaleAssociatedFiles = files;
+            }
         }
 
         public void LoadAllChildren(Panel panel, IAdminObject item)

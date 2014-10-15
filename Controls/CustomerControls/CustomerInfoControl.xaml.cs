@@ -21,6 +21,7 @@ namespace CarDepot.Controls.CustomerControls
     public partial class CustomerInfoControl : UserControl, IPropertyPanel
     {
         private bool _isEditable = true;
+        CustomerAdminObject _customer = null;
         public CustomerInfoControl()
         {
             InitializeComponent();
@@ -30,9 +31,23 @@ namespace CarDepot.Controls.CustomerControls
         {
             var customer = item as CustomerAdminObject;
             if (customer == null)
+            {
                 return;
+            }
+
+            _customer = customer;
 
             LoadAllChildren(ContactCardGrid, item);
+
+            addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+        }
+
+        void addtionalContentControl_ListChanged(List<string[]> files)
+        {
+            if (_customer != null)
+            {
+                _customer.AssociatedFiles = files;
+            }
         }
 
         public bool isEditable

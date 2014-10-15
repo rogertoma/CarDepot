@@ -19,7 +19,12 @@ namespace CarDepot
     {
         private Dictionary<PropertyId, string> _basicInfo = new Dictionary<PropertyId, string>();
         private List<string[]> _images = new List<string[]>();
+        private List<string[]> _purchaseAssociatedFiles = new List<string[]>();
+        private List<string[]> _saleAssociatedFiles = new List<string[]>();
+
+
         private ObservableCollection<VehicleTask> _vehicleTasks = new ObservableCollection<VehicleTask>();
+
 
         public override IAdminItemCache Cache { get; set; }
 
@@ -154,6 +159,18 @@ namespace CarDepot
             get { return _images; }
         }
 
+        public List<string[]> PurchaseAssociatedFiles
+        {
+            set { _purchaseAssociatedFiles = value; }
+            get { return _purchaseAssociatedFiles; }
+        }
+
+        public List<string[]> SaleAssociatedFiles
+        {
+            set { _saleAssociatedFiles = value; }
+            get { return _saleAssociatedFiles; }
+        }
+
         public ObservableCollection<VehicleTask> VehicleTasks
         {
             set { _vehicleTasks = value; }
@@ -170,6 +187,50 @@ namespace CarDepot
         {
             switch (id)
             {
+                case PropertyId.PurchaseAssociatedFiles:
+                    _purchaseAssociatedFiles.Clear();
+                    foreach (XElement descendant in element.Descendants())
+                    {
+                        string[] multiValueItem = new string[2];
+                        multiValueItem[Settings.MultiValueKeyIndex] = descendant.Name.ToString();
+
+                        if (descendant.Value.StartsWith("\\"))
+                        {
+                            var directoryInfo = new FileInfo(ObjectId).Directory;
+                            if (directoryInfo != null)
+                                multiValueItem[Settings.MultiValueValueIndex] =
+                                    directoryInfo.FullName + descendant.Value;
+                        }
+                        else
+                        {
+                            multiValueItem[Settings.MultiValueValueIndex] = descendant.Value;
+                        }
+
+                        _purchaseAssociatedFiles.Add(multiValueItem);
+                    }
+                    break;
+                case PropertyId.SaleAssociatedFiles:
+                    _saleAssociatedFiles.Clear();
+                    foreach (XElement descendant in element.Descendants())
+                    {
+                        string[] multiValueItem = new string[2];
+                        multiValueItem[Settings.MultiValueKeyIndex] = descendant.Name.ToString();
+
+                        if (descendant.Value.StartsWith("\\"))
+                        {
+                            var directoryInfo = new FileInfo(ObjectId).Directory;
+                            if (directoryInfo != null)
+                                multiValueItem[Settings.MultiValueValueIndex] =
+                                    directoryInfo.FullName + descendant.Value;
+                        }
+                        else
+                        {
+                            multiValueItem[Settings.MultiValueValueIndex] = descendant.Value;
+                        }
+
+                        _saleAssociatedFiles.Add(multiValueItem);
+                    }
+                    break;
                 case PropertyId.Tasks:
                     VehicleTasks.Clear();
                     foreach (XElement descendant in element.Descendants())
@@ -270,6 +331,10 @@ namespace CarDepot
             {
                 case PropertyId.Images:
                     return Images;
+                case PropertyId.PurchaseAssociatedFiles:
+                    return PurchaseAssociatedFiles;
+                case PropertyId.SaleAssociatedFiles:
+                    return SaleAssociatedFiles;
                 default:
                     return null;
             }
@@ -289,25 +354,22 @@ namespace CarDepot
             }
 
             // images
-            List<string[]> vehicleImages = vehicle.Images.ToList();
-            foreach (string[] image in _images)
+            bool same = ListsAreEqual(_images, vehicle.Images.ToList());
+            if (!same)
             {
-                bool found = false;
-                foreach (string[] otherVehicleImage in vehicleImages)
-                {
-                    if (otherVehicleImage[Settings.MultiValueValueIndex] == image[Settings.MultiValueValueIndex])
-                    {
-                        found = true;
-                        vehicleImages.Remove(otherVehicleImage);
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    return false;
-                }
+                return false;
             }
-            if (vehicleImages.Count > 0)
+
+            // PurchaseAssociatedFiles
+            same = ListsAreEqual(_purchaseAssociatedFiles, vehicle.PurchaseAssociatedFiles.ToList());
+            if (!same)
+            {
+                return false;
+            }
+
+            // SaleAssociatedFiles
+            same = ListsAreEqual(_saleAssociatedFiles, vehicle.SaleAssociatedFiles.ToList());
+            if (!same)
             {
                 return false;
             }
@@ -370,5 +432,31 @@ namespace CarDepot
 #endregion
         }
 
+        private bool ListsAreEqual(List<string[]> list1, List<string[]> list2)
+        {
+            foreach (string[] list1Item in list1)
+            {
+                bool found = false;
+                foreach (string[] list2Item in list2)
+                {
+                    if (list2Item[Settings.MultiValueValueIndex] == list1Item[Settings.MultiValueValueIndex])
+                    {
+                        found = true;
+                        list2.Remove(list1Item);
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    return false;
+                }
+            }
+            if (list2.Count > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
