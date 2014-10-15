@@ -10,6 +10,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" MinHeight="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -19,11 +20,17 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Tasks" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Assigned To:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Assigned To:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <ComboBox x:Name="cmbAssignedTo" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
-        <Button Grid.Row="2" Name="btnSearch" Content="Search" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSearch_Click"/>
-        <controls:VehicleListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" x:Name="lstVehicles" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ListSelectionChanged="lstVehicles_SelectionChanged"/>
-        <ListView x:Name="lstTasks" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionChanged="lstTasks_SelectionChanged" MouseDoubleClick="lstTasks_MouseDoubleClick">
+
+        <Label Grid.Row="1" Grid.Column="3" Content="Or" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Category:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <ComboBox x:Name="cmbCategory" Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+
+        <Button Grid.Row="3" Grid.Column="2" Height="39" Width="70" Name="btnSearch" Content="Search" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnSearch_Click"/>
+        <controls:VehicleListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" x:Name="lstVehicles" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ListSelectionChanged="lstVehicles_SelectionChanged"/>
+        <ListView x:Name="lstTasks" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionChanged="lstTasks_SelectionChanged" MouseDoubleClick="lstTasks_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Task" Width="250" DisplayMemberBinding="{Binding Id}"/>

@@ -23,9 +23,6 @@ namespace CarDepot
     public class VehicleTask
     {
         private Dictionary<PropertyId, string> _basicInfo = new Dictionary<PropertyId, string>();
-        //private const string NOTSTARTED = "Not Started";
-        //private const string INPROGRESS = "In Progress";
-        //private const string COMPLETED = "Completed";
 
         public Dictionary<PropertyId, string> BasicInfo
         {

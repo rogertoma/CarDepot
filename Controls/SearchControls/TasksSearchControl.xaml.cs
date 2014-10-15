@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using System;
 
 
 namespace CarDepot.Controls.SearchControls
@@ -15,16 +16,28 @@ namespace CarDepot.Controls.SearchControls
     public partial class TasksSearchControl: UserControl
     {
         private VehicleCache cache = null;
-        private string assignedTo = null;
 
         public TasksSearchControl()
         {
             InitializeComponent();
 
+            InitializeSearchFields();
+        }
+
+        private void InitializeSearchFields()
+        {
+            cmbAssignedTo.Items.Add(new Label { Content = "" });
+            cmbCategory.Items.Add(new Label { Content = "" });
+
             foreach (UserAdminObject user in CacheManager.UserCache)
             {
                 Label lblRow = new Label { Content = user.Name };
                 cmbAssignedTo.Items.Add(lblRow);
+            }
+
+            foreach (VehicleTask.TaskCategoryTypes type in Enum.GetValues(typeof(VehicleTask.TaskCategoryTypes)))
+            {
+                cmbCategory.Items.Add(type.ToString());
             }
         }
 
@@ -32,18 +45,18 @@ namespace CarDepot.Controls.SearchControls
         {
             Dictionary<VehicleCacheTaskSearchKey, string> searchParam = new Dictionary<VehicleCacheTaskSearchKey, string>();
 
-            assignedTo = cmbAssignedTo.Text;
+            string assignedTo = cmbAssignedTo.Text;
+            if (!string.IsNullOrEmpty(assignedTo))
+            {
+                searchParam.Add(VehicleCacheTaskSearchKey.AssignedTo, assignedTo);
+            }
 
-            if (string.IsNullOrEmpty(assignedTo))
+            string category = cmbCategory.Text;
+            if (!string.IsNullOrEmpty(category))
             {
-                cmbAssignedTo.Background = Brushes.OrangeRed;
-                return;
+                searchParam.Add(VehicleCacheTaskSearchKey.Category, category);
             }
-            else
-            {
-                cmbAssignedTo.Background = Brushes.Gray;
-            }
-            searchParam.Add(VehicleCacheTaskSearchKey.AssignedTo, assignedTo);
+
             cache = new VehicleCache(Settings.VehiclePath, searchParam);
 
             UpdateUI();
@@ -62,12 +75,9 @@ namespace CarDepot.Controls.SearchControls
             {
                 foreach (var vehicleTask in vehicle.VehicleTasks)
                 {
-                    if (vehicleTask.AssignedTo == assignedTo)
-                    {
-                        ListViewItem taskItem = new ListViewItem();
-                        taskItem.Content = vehicleTask;
-                        lstTasks.Items.Add(taskItem);
-                    }
+                    ListViewItem taskItem = new ListViewItem();
+                    taskItem.Content = vehicleTask;
+                    lstTasks.Items.Add(taskItem);
                 }
             }
             

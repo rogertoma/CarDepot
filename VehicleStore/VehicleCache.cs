@@ -21,7 +21,8 @@ namespace CarDepot.VehicleStore
 
     public enum VehicleCacheTaskSearchKey
     {
-        AssignedTo
+        AssignedTo,
+        Category
     }
 
     public class VehicleCache : List<VehicleAdminObject>, IAdminItemCache
@@ -71,7 +72,15 @@ namespace CarDepot.VehicleStore
                 foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
                 {
                     VehicleAdminObject temp = new VehicleAdminObject(file);
-                    if (temp.VehicleTasks.Any(vehicleTask => vehicleTask.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo]))
+
+                    if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.AssignedTo) &&
+                        temp.VehicleTasks.Any(vehicleTask => (vehicleTask.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
+                    {
+                        temp.Cache = this;
+                        this.Add(temp);
+                    }
+                    else if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category) &&
+                        temp.VehicleTasks.Any(vehicleTask => (vehicleTask.Category == searchParam[VehicleCacheTaskSearchKey.Category] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
                     {
                         temp.Cache = this;
                         this.Add(temp);
