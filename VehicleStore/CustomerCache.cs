@@ -86,7 +86,8 @@ namespace CarDepot.VehicleStore
                 else
                 {
                     PropertyId id = (PropertyId)Enum.Parse(typeof(PropertyId), param.Key.ToString());
-                    if (customer.GetValue(id).Trim().ToLower() != param.Value.Trim().ToLower())
+                    if (customer != null && customer.GetValue(id) != null &&
+                        customer.GetValue(id).Trim().ToLower() != param.Value.Trim().ToLower())
                     {
                         meetsAllRequirements = false;
                         break;

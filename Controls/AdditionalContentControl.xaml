@@ -14,7 +14,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="FileList" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" MouseDoubleClick="FileList_MouseDoubleClick">
+        <ListView x:Name="FileList" Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" MouseDoubleClick="FileList_MouseDoubleClick" Drop="FileList_Drop" AllowDrop="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="FileName" Width="300"/>

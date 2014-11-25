@@ -176,5 +176,30 @@ namespace CarDepot.Controls
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void FileList_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            string[] dropedFiles = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
+
+            foreach (var fileName in dropedFiles)
+            {
+                MoveToAdditionalFilesFolder(fileName);
+            }
+
+            files.Clear();
+            foreach (var item in FileList.Items)
+            {
+                files.Add(new string[] { PropertyId.File.ToString(), item.ToString() });
+            }
+
+            _item.SetValue(PropertyId, files);
+
+            // If it's a customer we need to update the list here as well.
+            if (ListChanged != null)
+            {
+                ListChanged(files);
+            }
+        }
+
     }
 }

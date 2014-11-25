@@ -192,7 +192,10 @@ namespace CarDepot
                 return true;
             }
 
-            _vehicle.Cache.ModifyItem(_vehicle);
+            if (_vehicle != null && _vehicle.Cache != null)
+            {
+                _vehicle.Cache.ModifyItem(_vehicle);
+            }
 
             return false;
         }
