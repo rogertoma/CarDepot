@@ -295,7 +295,7 @@ namespace CarDepot
             if (cache != null)
             {
                 cache.Remove(_vehicle);
-                _vehicle = new VehicleAdminObject(_vehicle.ObjectId);
+                //_vehicle = new VehicleAdminObject(_vehicle.ObjectId);
                 cache.Add(_vehicle);
                 _vehicle.Cache = cache;
             }
@@ -309,7 +309,7 @@ namespace CarDepot
             {
                 return;
             }
-            VehicleUrlImport urlImport = new VehicleUrlImport(_vehicle,result);
+            VehicleUrlImport urlImport = new VehicleUrlImport(_vehicle, result);
             if (urlImport.ImportStatus == VehicleImportStatus.PASS)
             {
                 urlImport.ApplyVehicleValues();
