@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls
 {
@@ -57,6 +58,16 @@ namespace CarDepot.Controls
                 if (Text == string.Empty || Text == "")
                     this.MinWidth = UISettings.ADMINTEXTBOX_MINSIZE_WHEN_NO_TEXT;
             }
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         //void AdminTextBox_LostFocus(object sender, RoutedEventArgs e)

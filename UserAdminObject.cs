@@ -9,13 +9,26 @@ using CarDepot.VehicleStore;
 
 namespace CarDepot
 {
+
     public class UserAdminObject: AdminObject
     {
         List<string> _mainTabPages = new List<string>(); 
         public string Name { get; set; }
         public string Password { get; set; }
         public string PicturePath { get; set; }
-        List<IPropertyPanel> openedPages = new List<IPropertyPanel>(); 
+        List<IPropertyPanel> _openedPages = new List<IPropertyPanel>();
+        List<PermissionTypes> _permissions = new List<PermissionTypes>();
+        public CacheManager.UIMode UiMode = CacheManager.UIMode.Full;
+
+        public enum PermissionTypes
+        {
+            CreateNewVehicle,
+            CreateNewCustomer,
+            DeleteVehicle,
+            DeleteCustomer,
+            PurchaseInformation,
+            GenerateReport,
+        }
 
         public UserAdminObject(string objectId)
             : base(objectId)
@@ -29,10 +42,18 @@ namespace CarDepot
             get { return _mainTabPages; }
         }
 
-        public void AddPage(IPropertyPanel page)
+        public List<PermissionTypes> Permissions
         {
-            openedPages.Add(page);
+            set { _permissions = value; }
+            get { return _permissions;  }
         }
+
+        public List<IPropertyPanel> OpenedPages
+        {
+            set { _openedPages = value; }
+            get { return _openedPages; }
+        }
+
 
         public override IAdminItemCache Cache
         {

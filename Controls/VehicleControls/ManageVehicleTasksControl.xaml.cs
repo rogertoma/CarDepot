@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using ExcelLibrary.SpreadSheet;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -54,6 +55,16 @@ namespace CarDepot.Controls.VehicleControls
                 return;
 
             VehicleListView.LoadPanel(_vehicle);
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         private void ClearTaskContent()
@@ -353,6 +364,66 @@ namespace CarDepot.Controls.VehicleControls
             task.Comments = txtComments.Text;
 
             task.Minutes = txtMinutes.Text;
+        }
+
+        private void btnGenerateDefaultTasks_Click(object sender, RoutedEventArgs e)
+        {
+            VehicleTask picturesTask = new VehicleTask();
+            picturesTask.Id = "Take Pictures";
+            picturesTask.TaskVehicleId = _vehicle.Id;
+            picturesTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            picturesTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            picturesTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            picturesTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
+            picturesTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(picturesTask);
+            VehicleListView.Items.Add(picturesTask);
+
+            VehicleTask advertisingTask = new VehicleTask();
+            advertisingTask.Id = "Advertising";
+            advertisingTask.TaskVehicleId = _vehicle.Id;
+            advertisingTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            advertisingTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            advertisingTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            advertisingTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
+            advertisingTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(advertisingTask);
+            VehicleListView.Items.Add(advertisingTask);
+
+            VehicleTask oilTask = new VehicleTask();
+            oilTask.Id = "Oil Change";
+            oilTask.TaskVehicleId = _vehicle.Id;
+            oilTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            oilTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            oilTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            oilTask.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            oilTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(oilTask);
+            VehicleListView.Items.Add(oilTask);
+
+            VehicleTask cleaningTask = new VehicleTask();
+            cleaningTask.Id = "Clean Car";
+            cleaningTask.TaskVehicleId = _vehicle.Id;
+            cleaningTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            cleaningTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            cleaningTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            cleaningTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+            cleaningTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(cleaningTask);
+            VehicleListView.Items.Add(cleaningTask);
+
+            VehicleTask emissionsTask = new VehicleTask();
+            emissionsTask.Id = "Emissions Test";
+            emissionsTask.TaskVehicleId = _vehicle.Id;
+            emissionsTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            emissionsTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            emissionsTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            emissionsTask.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            emissionsTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(emissionsTask);
+            VehicleListView.Items.Add(emissionsTask);
+
+            VehicleListView.SelectedIndex = VehicleListView.Items.Count - 1;
         }
     }
 }

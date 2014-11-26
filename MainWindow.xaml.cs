@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,6 +19,8 @@ using CarDepot.Controls.VehicleControls;
 using CarDepot.Pages;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+
 
 namespace CarDepot
 {
@@ -27,6 +30,8 @@ namespace CarDepot
     public partial class MainWindow : Window
     {
         private UserAdminObject _user;
+        private int ControlSwitchCount = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -48,7 +53,9 @@ namespace CarDepot
                 Type elementType = Type.GetType(tab);
                 object page = Activator.CreateInstance(elementType);
 
-                PagesTabControl.Items.Add(GetPageTabItem(page as IPropertyPage));
+                var propertyPage = page as IPropertyPage;
+
+                PagesTabControl.Items.Add(GetPageTabItem(propertyPage));
                 CacheManager.MainTabControl = PagesTabControl;
             }
         }
@@ -97,6 +104,42 @@ namespace CarDepot
         {
             LogonPage logon = new LogonPage();
             logon.Show();
+        }
+
+        private void CarDepot_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            {
+                ControlSwitchCount++;
+            }
+            else
+            {
+                ControlSwitchCount = 0;
+            }
+
+            if (ControlSwitchCount == 3)
+            {
+                ControlSwitchCount = 0;
+                if (CacheManager.ActiveUser.UiMode == CacheManager.UIMode.Customer)
+                {
+                    TabItem tab = (TabItem)CacheManager.MainTabControl.Items[0];
+                    tab.Foreground = Brushes.Red;
+
+                    CacheManager.ActiveUser.UiMode = CacheManager.UIMode.Full;
+                }
+                else
+                {
+                    TabItem tab = (TabItem)CacheManager.MainTabControl.Items[0];
+                    tab.Foreground = Brushes.Black;
+
+                    CacheManager.ActiveUser.UiMode = CacheManager.UIMode.Customer;
+                }
+
+                foreach (var propertyPanel in CacheManager.ActiveUser.OpenedPages)
+                {
+                    propertyPanel.ApplyUiMode();
+                }
+            }
         }
     }
 }

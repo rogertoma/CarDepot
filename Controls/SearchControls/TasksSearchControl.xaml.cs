@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -16,6 +18,7 @@ namespace CarDepot.Controls.SearchControls
     public partial class TasksSearchControl: UserControl
     {
         private VehicleCache cache = null;
+        Dictionary<VehicleCacheTaskSearchKey, string> searchParam = new Dictionary<VehicleCacheTaskSearchKey, string>();
 
         public TasksSearchControl()
         {
@@ -43,8 +46,8 @@ namespace CarDepot.Controls.SearchControls
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            Dictionary<VehicleCacheTaskSearchKey, string> searchParam = new Dictionary<VehicleCacheTaskSearchKey, string>();
-
+            searchParam.Clear();
+            
             string assignedTo = cmbAssignedTo.Text;
             if (!string.IsNullOrEmpty(assignedTo))
             {
@@ -73,11 +76,28 @@ namespace CarDepot.Controls.SearchControls
 
             foreach (VehicleAdminObject vehicle in cache)
             {
-                foreach (var vehicleTask in vehicle.VehicleTasks)
+                foreach (var task in vehicle.VehicleTasks)
                 {
+                    if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.AssignedTo) &&
+                        task.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo])
+                    {
+                        ListViewItem taskItem = new ListViewItem();
+                        taskItem.Content = task;
+                        lstTasks.Items.Add(taskItem);
+                    }
+                    else if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category) &&
+                        task.Category == searchParam[VehicleCacheTaskSearchKey.Category])
+                    {
+                        ListViewItem taskItem = new ListViewItem();
+                        taskItem.Content = task;
+                        lstTasks.Items.Add(taskItem);
+                    }
+
+                    /*
                     ListViewItem taskItem = new ListViewItem();
-                    taskItem.Content = vehicleTask;
+                    taskItem.Content = task;
                     lstTasks.Items.Add(taskItem);
+                    */
                 }
             }
             
@@ -137,7 +157,7 @@ namespace CarDepot.Controls.SearchControls
 
                 if (vehicle.Id == task.TaskVehicleId)
                 {
-                    Utilities.LoadVehicleInfoWindow(vehicle);
+                    Utilities.LoadVehicleInfoWindow(vehicle, VehicleInfoWindow.VehicleInfoWindowTabs.Tasks);
                 }
             }
         }
@@ -181,5 +201,81 @@ namespace CarDepot.Controls.SearchControls
             }
         }
 
+        private GridViewColumnHeader lastHeaderClicked = null;
+        ListSortDirection lastDirection = ListSortDirection.Ascending;
+
+        private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
+            ListSortDirection direction = ListSortDirection.Ascending;
+            
+            if (headerClicked != null)
+            {
+                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
+                {
+
+                    if (headerClicked == lastHeaderClicked)
+                    {
+                        direction = lastDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+                    }
+                }
+
+                string header = headerClicked.Column.Header as string;
+                if (header.ToLower() == "task")
+                {
+                    header = "Id";
+                }
+
+                //PropertyId id = (PropertyId)Enum.Parse(typeof(PropertyId), header);
+                List<String> rowList = new List<string>();
+                List<VehicleTask> tasks = new List<VehicleTask>();
+
+                foreach (ListViewItem listViewItem in lstTasks.Items)
+                {
+                    VehicleTask vehicleTask = (VehicleTask)listViewItem.Content;
+                    tasks.Add(vehicleTask);
+                    //rowList.Add();
+                }
+
+                List<VehicleTask> sortedTasks = new List<VehicleTask>();
+                sortedTasks.AddRange(direction == ListSortDirection.Ascending
+                        ? tasks.OrderBy(vehicleTask => vehicleTask.GetType().GetProperty(header).GetValue(vehicleTask, null))
+                        : tasks.OrderByDescending(vehicleTask => vehicleTask.GetType().GetProperty(header).GetValue(vehicleTask, null)));
+                /*
+                List<VehicleTask> sortedtasks = new List<VehicleTask>();
+                sortedtasks.AddRange(direction == ListSortDirection.Ascending
+                        ? tasks.OrderBy(vehicleAdminObject => vehicleAdminObject.GetValue(category))
+                        : this.OrderByDescending(vehicleAdminObject => vehicleAdminObject.GetValue(category)));
+                */
+                
+                //cache.SortCache(id, direction);
+
+                lstTasks.Items.Clear();
+                foreach (VehicleTask task in sortedTasks)
+                {
+                    ListViewItem taskItem = new ListViewItem();
+                    taskItem.Content = task;
+                    lstTasks.Items.Add(taskItem);
+                }
+
+                //if (direction == ListSortDirection.Ascending)
+                //{
+                //    headerClicked.Column.HeaderTemplate = Resources["HeaderTemplateArrowUp"] as DataTemplate;
+                //}
+                //else
+                //{
+                //    headerClicked.Column.HeaderTemplate = Resources["HeaderTemplateArrowDown"] as DataTemplate;
+                //}
+
+                if (lastHeaderClicked != null && lastHeaderClicked != headerClicked)
+                {
+                    lastHeaderClicked.Column.HeaderTemplate = null;
+                }
+
+                lastHeaderClicked = headerClicked;
+                lastDirection = direction;
+            }
+             
+        }
     }
 }

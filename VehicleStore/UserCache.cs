@@ -16,7 +16,7 @@ namespace CarDepot.VehicleStore
     [PropertyId(PropertyId.Password)]
     [PropertyId(PropertyId.Picture)]
     [PropertyId(PropertyId.MainTabPages)]
-    class UserCache : List<UserAdminObject>, IAdminItemCache
+    public class UserCache : List<UserAdminObject>, IAdminItemCache
     {
         public UserAdminObject SystemAdminAccount = null;
         List<string> _properties = new List<string>();
@@ -50,6 +50,20 @@ namespace CarDepot.VehicleStore
             }
         }
 
+        private void ApplyPermissions(UserAdminObject user, string permissions)
+        {
+            string[] perms = permissions.Split(';');
+            foreach (string perm in perms)
+            {
+                if (!string.IsNullOrEmpty(perm))
+                {
+                    var type =
+                        (UserAdminObject.PermissionTypes) Enum.Parse(typeof (UserAdminObject.PermissionTypes), perm);
+                    user.Permissions.Add(type);
+                }
+            }
+        }
+
         private void LoadUser(string file)
         {
             UserAdminObject user = new UserAdminObject(file);
@@ -77,6 +91,9 @@ namespace CarDepot.VehicleStore
                         break;
                     case PropertyId.MainTabPages:
                         user.MainTabPages.Add(element.Value);
+                        break;
+                    case PropertyId.Permissions:
+                        ApplyPermissions(user, element.Value);
                         break;
                     case PropertyId.Picture:
                         if (element.Value.StartsWith("\\"))

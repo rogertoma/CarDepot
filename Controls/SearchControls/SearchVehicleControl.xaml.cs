@@ -22,13 +22,14 @@ namespace CarDepot.Controls.SearchControls
     /// <summary>
     /// Interaction logic for SearchVehicleControl.xaml
     /// </summary>
-    public partial class SearchVehicleControl : UserControl
+    public partial class SearchVehicleControl : UserControl, IPropertyPanel
     {
         
         private VehicleCache cache = null;
         public SearchVehicleControl()
         {
             InitializeComponent();
+            ApplyActiveUserPermissions();
         }
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
@@ -87,5 +88,26 @@ namespace CarDepot.Controls.SearchControls
             }
         }
 
+        public void LoadPanel(IAdminObject item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.GenerateReport))
+            {
+                BtnGenerateReport.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnGenerateReport.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

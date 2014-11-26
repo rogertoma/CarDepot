@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.CustomerControls
 {
@@ -40,6 +41,16 @@ namespace CarDepot.Controls.CustomerControls
             LoadAllChildren(ContactCardGrid, item);
 
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         void addtionalContentControl_ListChanged(List<string[]> files)

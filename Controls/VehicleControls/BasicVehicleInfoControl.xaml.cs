@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -25,6 +26,16 @@ namespace CarDepot.Controls.VehicleControls
         {
             LoadBasicIds(item);
             LoadAllChildren(BasicVehicleInfo, item);
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new System.NotImplementedException();
         }
 
         private void LoadBasicIds(IAdminObject item)

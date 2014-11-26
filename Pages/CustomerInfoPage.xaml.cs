@@ -37,9 +37,6 @@ namespace CarDepot.Pages
             InitializeComponent();
             _customer = customer ?? CreateNewDefaultVehicleObject();
 
-            //propertyPanels.Add(BasicVehicleControlPropertyPanel);
-            //propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
-
             LoadPanel(_customer);
 
 
@@ -48,6 +45,24 @@ namespace CarDepot.Pages
         public void LoadPanel(IAdminObject item)
         {
             CustomerInfoControl.LoadPanel(item);
+            ApplyActiveUserPermissions();
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.DeleteCustomer))
+            {
+                BtnDelete.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnDelete.Visibility = Visibility.Hidden;
+            }
         }
 
         public void SetParentTabControl(ClosableTab parentTabControl)

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CarDepot.Controls;
 using CarDepot.Controls.VehicleControls;
+using CarDepot.Pages;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
 using System.Drawing;
@@ -33,8 +34,15 @@ namespace CarDepot
         private VehicleAdminObject _vehicle;
         //bool isDeleted = false;
         List<IPropertyPanel> propertyPanels = new List<IPropertyPanel>();
+        private TabItem removedtTabItemItem = null;
 
-        public VehicleInfoWindow() : this (null)
+        public enum VehicleInfoWindowTabs
+        {
+            Default,
+            Tasks,
+        }
+
+        public VehicleInfoWindow() : this (null, VehicleInfoWindowTabs.Default)
         {
             //InitializeComponent();
         }
@@ -89,7 +97,7 @@ namespace CarDepot
             //TODO: add this vehicle to some cache.
         }
 
-        public VehicleInfoWindow(VehicleAdminObject vehicle)
+        public VehicleInfoWindow(VehicleAdminObject vehicle, VehicleInfoWindowTabs startTab)
         {
             InitializeComponent();
             _vehicle = vehicle ?? CreateNewDefaultVehicleObject();
@@ -99,15 +107,86 @@ namespace CarDepot
             propertyPanels.Add(PurchaseInfoControlPropertyPanel);
             propertyPanels.Add(SaleInfoControlPropertyPanel);
 
+            ApplyUiMode();
+            ApplyActiveUserPermissions();
+
             LoadPanel(_vehicle);
+            CacheManager.ActiveUser.OpenedPages.Add(this);
+
+            if (startTab == VehicleInfoWindowTabs.Tasks)
+            {
+                foreach (var tabItem in VehicleInfoTabControl.Items)
+                {
+                    if (tabItem.ToString().ToLower().Contains("tasks"))
+                    {
+                        ((TabItem) tabItem).IsSelected = true;
+                        break;
+                    }
+                }
+            }
         }
+
+        /*
+        public VehicleInfoWindow(VehicleAdminObject vehicle): this(vehicle, VehicleInfoWindowTabs.Default)
+        {
+           
+        }
+        */
 
         public void LoadPanel(IAdminObject item)
         {
             foreach (IPropertyPanel propertyPanel in propertyPanels)
             {
                 propertyPanel.LoadPanel(item);
-                //propertyPanel.UpdatePanel(item);
+            }
+        }
+
+        public void ApplyUiMode()
+        {
+            if (CacheManager.ActiveUser.UiMode == CacheManager.UIMode.Customer)
+            {
+                foreach (var tabItem in VehicleInfoTabControl.Items)
+                {
+                    if (tabItem.ToString().ToLower().Contains("purchase"))
+                    {
+                        removedtTabItemItem = (TabItem) tabItem;
+                        VehicleInfoTabControl.Items.Remove(tabItem);
+                        break;
+                    }
+                }
+            }
+            else if (CacheManager.ActiveUser.UiMode == CacheManager.UIMode.Full)
+            {
+                if (removedtTabItemItem != null)
+                {
+                    VehicleInfoTabControl.Items.Insert(1, removedtTabItemItem);
+                }
+            }
+
+            ApplyActiveUserPermissions();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            if (!CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.PurchaseInformation))
+            {
+                foreach (var tabItem in VehicleInfoTabControl.Items)
+                {
+                    if (tabItem.ToString().ToLower().Contains("purchase"))
+                    {
+                        VehicleInfoTabControl.Items.Remove(tabItem);
+                        break;
+                    }
+                }
+            }
+
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.DeleteVehicle))
+            {
+                BtnDelete.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnDelete.Visibility = Visibility.Hidden;
             }
         }
 

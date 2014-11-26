@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls
 {
@@ -40,6 +41,16 @@ namespace CarDepot.Controls
             {
                 this.Items.Add(task);
             }
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         public void ForceXmlUpdate()

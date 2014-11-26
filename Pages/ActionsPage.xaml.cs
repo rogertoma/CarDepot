@@ -21,12 +21,13 @@ namespace CarDepot.Controls.GeneralControls
     /// <summary>
     /// Interaction logic for ActionsControl.xaml
     /// </summary>
-    public partial class ActionsControl : UserControl, IPropertyPage
+    public partial class ActionsControl : UserControl, IPropertyPage, IPropertyPanel
     {
 
         public ActionsControl()
         {
             InitializeComponent();
+            ApplyActiveUserPermissions();
         }
 
         public string PageTitle
@@ -55,6 +56,7 @@ namespace CarDepot.Controls.GeneralControls
             tabItem.Title = "New Vehicle";
             tabItem.Content = page;
             CacheManager.MainTabControl.Items.Add(tabItem);
+
             tabItem.Focus();
         }
 
@@ -139,5 +141,36 @@ namespace CarDepot.Controls.GeneralControls
             tabItem.Focus();
         }
 
+        public void LoadPanel(IAdminObject item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.CreateNewCustomer))
+            {
+                BtnCreateNewCustomer.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnCreateNewCustomer.Visibility = Visibility.Hidden;
+            }
+
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.CreateNewVehicle))
+            {
+                BtnCreateNewVehicle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BtnCreateNewVehicle.Visibility = Visibility.Hidden;
+            }
+
+        }
     }
 }

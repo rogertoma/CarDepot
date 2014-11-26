@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls
 {
@@ -69,6 +70,16 @@ namespace CarDepot.Controls
             }
             catch {}
             imageTimer.Start();
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         private bool IsImage(string filePath)

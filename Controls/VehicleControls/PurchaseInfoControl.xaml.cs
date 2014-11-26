@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -33,6 +34,16 @@ namespace CarDepot.Controls.VehicleControls
 
             LoadAllChildren(PurchaseInfoGrid, item);
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         void addtionalContentControl_ListChanged(List<string[]> files)

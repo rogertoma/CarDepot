@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
+using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls
 {
@@ -104,6 +105,16 @@ namespace CarDepot.Controls
             }
             
             PropertyValueTextBox.LoadPanel(item);
+        }
+
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
         }
 
         public string TextBoxText

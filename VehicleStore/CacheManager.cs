@@ -8,12 +8,18 @@ using System.Windows.Controls;
 
 namespace CarDepot.VehicleStore
 {
-    class CacheManager
+    public class CacheManager
     {        
         private static UserCache _userCache = null;
         private static ActiveVehicleCache _activeVehicleCache = null;
         private static UserAdminObject _activeUser = null;
         private static TabControl _mainTabControl = null;
+
+        public enum UIMode
+        {
+            Customer,
+            Full,
+        }
 
         static CacheManager()
         {

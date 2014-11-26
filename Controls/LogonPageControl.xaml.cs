@@ -43,11 +43,13 @@ namespace CarDepot.Controls
         {
             if (validCredentials)
             {
+                user.OpenedPages.Clear();
+                CacheManager.ActiveUser = user;
+
                 MainWindow carDepot = new MainWindow(user);
                 carDepot.Closed += carDepot_Closed;
                 carDepot.Show();
                 this.Visibility = Visibility.Hidden;
-                CacheManager.ActiveUser = user;
             }
             else
             {

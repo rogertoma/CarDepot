@@ -38,6 +38,7 @@ namespace CarDepot
         Password,
         Picture,
         MainTabPages,
+        Permissions,
 
         //Customer PropertId's
         FirstName,

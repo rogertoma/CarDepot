@@ -42,6 +42,16 @@ namespace CarDepot.Controls.VehicleControls
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
         }
 
+        public void ApplyUiMode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ApplyActiveUserPermissions()
+        {
+            throw new NotImplementedException();
+        }
+
         void addtionalContentControl_ListChanged(List<string[]> files)
         {
             if (_vehicle != null)
