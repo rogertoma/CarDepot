@@ -180,6 +180,18 @@ namespace CarDepot
                 }
             }
 
+            if (!CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.SaleInformation))
+            {
+                foreach (var tabItem in VehicleInfoTabControl.Items)
+                {
+                    if (tabItem.ToString().ToLower().Contains("sale"))
+                    {
+                        VehicleInfoTabControl.Items.Remove(tabItem);
+                        break;
+                    }
+                }
+            }
+
             if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.DeleteVehicle))
             {
                 BtnDelete.Visibility = Visibility.Visible;

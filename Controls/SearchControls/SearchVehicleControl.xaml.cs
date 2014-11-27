@@ -29,6 +29,7 @@ namespace CarDepot.Controls.SearchControls
         public SearchVehicleControl()
         {
             InitializeComponent();
+
             ApplyActiveUserPermissions();
         }
 

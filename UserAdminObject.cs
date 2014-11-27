@@ -27,6 +27,7 @@ namespace CarDepot
             DeleteVehicle,
             DeleteCustomer,
             PurchaseInformation,
+            SaleInformation,
             GenerateReport,
         }
 
