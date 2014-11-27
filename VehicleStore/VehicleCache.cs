@@ -17,7 +17,11 @@ namespace CarDepot.VehicleStore
         IsSold,
         IsAvailable,
         FromDate,
-        ToDate
+        ToDate,
+        VinNumber,
+        Year,
+        Make,
+        Model,
     }
 
     public enum VehicleCacheTaskSearchKey
@@ -139,6 +143,34 @@ namespace CarDepot.VehicleStore
                         date = DateTime.Parse(sDate);
 
                         if (date < fromDate || date > toDate)
+                        {
+                            return false;
+                        }
+                        break;
+                    case VehicleCacheSearchKey.VinNumber:
+                        if (!string.IsNullOrEmpty(vehicle.VinNumber) && 
+                            !vehicle.VinNumber.ToLower().Contains(searchParam[VehicleCacheSearchKey.VinNumber].ToLower()))
+                        {
+                            return false;
+                        }
+                        break;
+                    case VehicleCacheSearchKey.Year:
+                        if (!string.IsNullOrEmpty(vehicle.Year) &&
+                            !vehicle.Year.ToLower().Contains(searchParam[VehicleCacheSearchKey.Year].ToLower()))
+                        {
+                            return false;
+                        }
+                        break;
+                    case VehicleCacheSearchKey.Make:
+                        if (!string.IsNullOrEmpty(vehicle.Make) &&
+                            !vehicle.Make.ToLower().Contains(searchParam[VehicleCacheSearchKey.Make].ToLower()))
+                        {
+                            return false;
+                        }
+                        break;
+                    case VehicleCacheSearchKey.Model:
+                        if (!string.IsNullOrEmpty(vehicle.Model) &&
+                            !vehicle.Model.ToLower().Contains(searchParam[VehicleCacheSearchKey.Model].ToLower()))
                         {
                             return false;
                         }

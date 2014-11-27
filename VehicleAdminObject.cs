@@ -85,6 +85,21 @@ namespace CarDepot
             get { return GetValue(PropertyId.StockNumber); }
             set { ApplyValue(PropertyId.StockNumber, value); }
         }
+        public string VinNumber
+        {
+            get { return GetValue(PropertyId.VinNumber); }
+            set { ApplyValue(PropertyId.VinNumber, value); }
+        }
+        public string SaleDate
+        {
+            get { return GetValue(PropertyId.SaleDate); }
+            set { ApplyValue(PropertyId.SaleDate, value); }
+        }
+        public string PurchaseDate
+        {
+            get { return GetValue(PropertyId.PurchaseDate); }
+            set { ApplyValue(PropertyId.PurchaseDate, value); }
+        }
         public string Profit
         {
             get { return GetValue(PropertyId.Profit); }

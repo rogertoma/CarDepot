@@ -40,6 +40,26 @@ namespace CarDepot.Controls.SearchControls
             Dictionary<VehicleCacheSearchKey, string> searchParam = new Dictionary<VehicleCacheSearchKey, string>();
             searchParam.Add(VehicleCacheSearchKey.FromDate, dpFrom.SelectedDate.ToString());
             searchParam.Add(VehicleCacheSearchKey.ToDate, dpTo.SelectedDate.ToString());
+            if (!string.IsNullOrEmpty(txtVinSearch.Text))
+            {
+                searchParam.Add(VehicleCacheSearchKey.VinNumber, txtVinSearch.Text);    
+            }
+
+            if (!string.IsNullOrEmpty(txtYearSearch.Text))
+            {
+                searchParam.Add(VehicleCacheSearchKey.Year, txtYearSearch.Text);
+            }
+
+            if (!string.IsNullOrEmpty(txtMakeSearch.Text))
+            {
+                searchParam.Add(VehicleCacheSearchKey.Make, txtMakeSearch.Text);
+            }
+
+            if (!string.IsNullOrEmpty(txtModelSearch.Text))
+            {
+                searchParam.Add(VehicleCacheSearchKey.Model, txtModelSearch.Text);
+            }
+
             if (cbSold.IsChecked == true)
             {
                 searchParam.Add(VehicleCacheSearchKey.IsSold, null);
