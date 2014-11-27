@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:CarDepot.Controls" xmlns:v="clr-namespace:CarDepot.Resources"
              x:Class="CarDepot.Controls.CustomerControls.CustomerInfoControl" 
-             mc:Ignorable="d" d:DesignWidth="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="701.5">
+             mc:Ignorable="d" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="701.5">
     <Grid x:Name="ContactCardGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -26,25 +29,43 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Contact Card" HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Content="Contact Card" HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"/>
         <Controls:AdminLabelTextbox PropertyId="Id" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <!--FirstName-->
         <Controls:AdminLabelTextbox PropertyId="FirstName" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="2" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <!--LastName-->
         <Controls:AdminLabelTextbox PropertyId="LastName" HorizontalAlignment="Left" Margin="10,07,0,10" VerticalAlignment="Top" Grid.Row="3" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        
+        <!--Address-->
+        <Controls:AdminLabelTextbox PropertyId="HomeStreetNumber" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="HomeStreet" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="HomeUnitNumber" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="HomeCity" HorizontalAlignment="Left" Margin="10,07,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="HomeProvince" HorizontalAlignment="Left" Margin="0,07,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="HomePostalCode" HorizontalAlignment="Left" Margin="0,07,0,0" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" ApplyDefaultGApSize="True"/>
+        
+        
         <Controls:AdminLabelTextbox PropertyId="JobTitle" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="4" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="MobilePhone" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="5" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="HomePhone" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="6" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="BusinessPhone" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="7" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="EMail" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="8" Grid.Column="0" ApplyDefaultGApSize="True"/>
         <Controls:AdminLabelTextbox PropertyId="Fax" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="9" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="HomeAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="10" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="BusinessAddress" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="11" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdminLabelTextbox PropertyId="Comments" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="12" Grid.Column="0" ApplyDefaultGApSize="True"/>
-        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="CustomerAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Controls:AdminLabelTextbox PropertyId="DriversLicense" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="10" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="LicenseExpiry" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="11" Grid.Column="0" ApplyDefaultGApSize="True"/>
+
+        <Controls:AdminLabelTextbox PropertyId="InsuranceCompany" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="12" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="PolicyNumber" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="13" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdminLabelTextbox PropertyId="InsuranceExpiryDate" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="14" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        
+        <Controls:AdminLabelTextbox PropertyId="Comments" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Top" Grid.Row="15" Grid.Column="0" ApplyDefaultGApSize="True"/>
+        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="CustomerAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="5"/>
     </Grid>
 </UserControl>

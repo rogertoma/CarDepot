@@ -55,10 +55,5 @@ namespace CarDepot.Controls
         {
             throw new NotImplementedException();
         }
-
-        public void ApplyActiveUserPermissions()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

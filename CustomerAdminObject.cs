@@ -53,11 +53,6 @@ namespace CarDepot
             get { return GetValue(PropertyId.HomePhone); }
             set { ApplyValue(PropertyId.HomePhone, value); }
         }
-        public string HomeAddress
-        {
-            get { return GetValue(PropertyId.HomeAddress); }
-            set { ApplyValue(PropertyId.HomeAddress, value); }
-        }
         #endregion
 
         public CustomerAdminObject() 

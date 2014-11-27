@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -22,6 +23,14 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class PurchaseInfoControl : UserControl, IPropertyPanel
     {
+        public enum WellKnownVendors
+        {
+            Adesa,
+            Manheim,
+            PrivatePurchase,
+            TradeIn
+        }
+
         VehicleAdminObject _vehicle = null;
         public PurchaseInfoControl()
         {
@@ -34,6 +43,34 @@ namespace CarDepot.Controls.VehicleControls
 
             LoadAllChildren(PurchaseInfoGrid, item);
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+
+            string foundVendor = _vehicle.GetValue(PropertyId.Vendor);
+            WellKnownVendors vehicleVendor = WellKnownVendors.Adesa;
+            bool foundVehicleVendor = false;
+            if (!string.IsNullOrEmpty(foundVendor))
+            {
+                foundVehicleVendor = true;
+                vehicleVendor = (WellKnownVendors)Enum.Parse(typeof(WellKnownVendors), foundVendor, true);
+            }
+
+            int foundIndex = -1;
+
+            cmbVendor.Items.Add("");
+            foreach (WellKnownVendors vendor in (WellKnownVendors[])Enum.GetValues(typeof(WellKnownVendors)))
+            {
+                cmbVendor.Items.Add(vendor.ToString());
+                if (foundVehicleVendor && vendor == vehicleVendor)
+                {
+                    foundIndex = cmbVendor.Items.Count - 1;
+                }
+            }
+
+            if (foundIndex != -1)
+            {
+                cmbVendor.SelectedIndex = foundIndex;
+            }
+
+            CalculateTasksCost();
         }
 
         public void ApplyUiMode()
@@ -70,17 +107,35 @@ namespace CarDepot.Controls.VehicleControls
             }
         }
 
+        private void CalculateTasksCost()
+        {
+            double totalCost = 0;
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                double cost = 0;
+                if (Utilities.StringToDouble(vehicleTask.Cost, out cost))
+                {
+                    totalCost += cost;
+                }
+            }
+
+            string totalCostString = "$" + totalCost.ToString("F");
+            txtTasksCost.Text = totalCostString;
+        }
+
         private void CalculateHst_TextChanged(object sender, TextChangedEventArgs e)
         {
             double purchasePrice = 0;
             double buyerFee = 0;
             double otherCost = 0;
+            double tasksCost = 0;
 
             Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice);
             Utilities.StringToDouble(TxtBuyerFee.Text, out buyerFee);
             Utilities.StringToDouble(TxtOtherCosts.Text, out otherCost);
+            Utilities.StringToDouble(txtTasksCost.Text, out tasksCost);
 
-            double hst = (purchasePrice + buyerFee + otherCost) * Settings.HST;
+            double hst = (purchasePrice + buyerFee + otherCost + tasksCost) * Settings.HST;
 
             TxtPurchaseHst.Text = "$" + hst.ToString("F");
         }
@@ -90,14 +145,16 @@ namespace CarDepot.Controls.VehicleControls
             double purchasePrice = 0;
             double buyerFee = 0;
             double otherCost = 0;
+            double tasksCost = 0;
             double hst = 0;
 
             Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice);
             Utilities.StringToDouble(TxtBuyerFee.Text, out buyerFee);
             Utilities.StringToDouble(TxtOtherCosts.Text, out otherCost);
             Utilities.StringToDouble(TxtPurchaseHst.Text, out hst);
+            Utilities.StringToDouble(txtTasksCost.Text, out tasksCost);
 
-            double totalCost = purchasePrice + buyerFee + otherCost + hst;
+            double totalCost = purchasePrice + buyerFee + otherCost + tasksCost + hst;
             TxtPurchaseTotal.Text = "$" + totalCost.ToString("F");
 
         }

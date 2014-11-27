@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -121,7 +122,7 @@ namespace CarDepot.VehicleStore
                         {
                             return false;
                         }
-                        date = DateTime.Parse(pDate);
+                        date = DateTime.Parse(pDate, CultureInfo.InvariantCulture);
 
                         if (date < fromDate || date > toDate)
                         {

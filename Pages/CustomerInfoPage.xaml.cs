@@ -252,7 +252,7 @@ namespace CarDepot.Pages
                 {
                     _parentTabControl.button_close_Click(null, null);
                 }
-                catch (Exception e) { }
+                catch { }
             }
             else
             {

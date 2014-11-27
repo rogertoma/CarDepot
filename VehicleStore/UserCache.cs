@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
 using System.Xml.Linq;
 using CarDepot.Pages;
@@ -24,6 +25,19 @@ namespace CarDepot.VehicleStore
         public UserCache()
         {
             Initialize();
+
+            if (!Directory.Exists(Settings.UserAccountsPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(Settings.UserAccountsPath);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Unable to create Directory" + Settings.UserAccountsPath);
+                    return;
+                }   
+            }
 
             string[] users = Directory.GetDirectories(Settings.UserAccountsPath);
             foreach (var user in users)

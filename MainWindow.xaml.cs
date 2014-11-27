@@ -78,6 +78,7 @@ namespace CarDepot
                 TabItem tabItem = new TabItem();
                 tabItem.Height = LookAndFeel.TabItemHeight;
                 tabItem.Header = ((IPropertyPage)page).PageTitle;
+                tabItem.Foreground = Brushes.Red;
                 tabItem.Content = page;
                 return tabItem;
             }

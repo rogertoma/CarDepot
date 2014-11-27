@@ -16,15 +16,16 @@ namespace CarDepot.Resources
         public static string VehiclePath = @"X:\Data\Vehicles";
         public static string CustomerPath = @"X:\Data\Customers";
         public static string Resouces = @"X:\Data\Resources";
+        public static string TempFolder = @"X:\Data\Temp";
+        public static string DefaultVehicleImagePath = @"X:\Data\Resources\DefaultVehicleImage.jpg";
+
         public static string CustomerInfoFileName = @"info.xml";        
         public static string CustomerInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Customer>\n</Customer>";
         public static string VehicleInfoFileName = @"info.xml";        
         public static string VehicleInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Vehicle>\n</Vehicle>";
-        public static string VehicleSoldPath = @"X:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
+        //public static string VehicleSoldPath = @"X:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
         public static string VehicleImageFolder = @"\Images";
         public static string AdditionalFilesFolder = @"\Files";
-        public static string TempFolder = @"X:\Data\Temp";
-        public static string DefaultVehicleImagePath = @"X:\Data\Resources\DefaultVehicleImage.jpg";
 
         public static int MultiValueKeyIndex = 0;
         public static int MultiValueValueIndex = 1;
