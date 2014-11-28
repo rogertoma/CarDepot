@@ -98,7 +98,13 @@ namespace CarDepot.Controls
 
             mouseTile.Left = System.Windows.Forms.Cursor.Position.X;
             mouseTile.Top = System.Windows.Forms.Cursor.Position.Y + 20;
-            mouseTile.Show();
+            try
+            {
+                mouseTile.Show();
+            }
+            catch
+            {
+            }
         }
 
         private void item_MouseEnter(object sender, MouseEventArgs e)
@@ -126,7 +132,13 @@ namespace CarDepot.Controls
 
             mouseTile.Left = System.Windows.Forms.Cursor.Position.X;
             mouseTile.Top = System.Windows.Forms.Cursor.Position.Y;
-            mouseTile.Show();
+            try
+            {
+                mouseTile.Show();
+            }
+            catch
+            {
+            }
 
         }
 
