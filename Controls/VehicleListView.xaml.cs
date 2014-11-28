@@ -70,7 +70,7 @@ namespace CarDepot.Controls
         void item_MouseLeave(object sender, MouseEventArgs e)
         {
             if (mouseTile != null)
-                mouseTile.Hide();
+                mouseTile.Close();
         }
 
         void item_MouseMove(object sender, MouseEventArgs e)
@@ -91,7 +91,7 @@ namespace CarDepot.Controls
             {
                 if (!mouseTile.Vehicle.Equals(vehicle))
                 {
-                    mouseTile.Hide();
+                    mouseTile.Close();
                     mouseTile = new VehicleTileControl(vehicle);
                 }
             }
@@ -119,7 +119,7 @@ namespace CarDepot.Controls
             {
                 if (!mouseTile.Vehicle.Equals(vehicle))
                 {
-                    mouseTile.Hide();
+                    mouseTile.Close();
                     mouseTile = new VehicleTileControl(vehicle);
                 }
             }
