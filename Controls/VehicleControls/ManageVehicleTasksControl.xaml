@@ -75,7 +75,6 @@
             <Button x:Name="btnCreate" Content="Create" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCreate_Click" Margin="0,0,0,5"/>
             <Button x:Name="btnUpdate" Content="Update" Grid.Column="2" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,0,5,5" Click="btnUpdate_Click"/>
             <Button x:Name="btnDelete" Content="Delete" Grid.Column="3" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnDelete_Click" Margin="0,0,0,5" />
-            <Button x:Name="btnGenerateDefaultTasks" Content="Generate Default Tasks" Grid.Column="5" Grid.Row="11" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Margin="0,0,0,5" Click="btnGenerateDefaultTasks_Click" />
         </Grid>
 
     </Grid>

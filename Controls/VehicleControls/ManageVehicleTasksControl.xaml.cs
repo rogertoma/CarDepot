@@ -366,6 +366,7 @@ namespace CarDepot.Controls.VehicleControls
             task.Minutes = txtMinutes.Text;
         }
 
+        /*
         private void btnGenerateDefaultTasks_Click(object sender, RoutedEventArgs e)
         {
             VehicleTask picturesTask = new VehicleTask();
@@ -425,5 +426,6 @@ namespace CarDepot.Controls.VehicleControls
 
             VehicleListView.SelectedIndex = VehicleListView.Items.Count - 1;
         }
+        */
     }
 }

@@ -77,6 +77,10 @@ namespace CarDepot.VehicleStore
                 foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
                 {
                     VehicleAdminObject temp = new VehicleAdminObject(file);
+                    if (!string.IsNullOrEmpty(temp.IsDeleted) && bool.Parse(temp.IsDeleted))
+                    {
+                        continue;
+                    }
 
                     if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.AssignedTo) &&
                         temp.VehicleTasks.Any(vehicleTask => (vehicleTask.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))

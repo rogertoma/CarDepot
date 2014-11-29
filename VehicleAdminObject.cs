@@ -100,6 +100,11 @@ namespace CarDepot
             get { return GetValue(PropertyId.PurchaseDate); }
             set { ApplyValue(PropertyId.PurchaseDate, value); }
         }
+        public string IsDeleted
+        {
+            get { return GetValue(PropertyId.IsDeleted); }
+            set { ApplyValue(PropertyId.IsDeleted, value); }
+        }
         public string Profit
         {
             get { return GetValue(PropertyId.Profit); }

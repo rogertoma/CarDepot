@@ -90,6 +90,17 @@ namespace CarDepot
 
             VehicleAdminObject vehicle = new VehicleAdminObject(fileName);
             vehicle.SetValue(PropertyId.PurchaseDate, ((DateTime)DateTime.Now).ToString("d"));
+
+            VehicleTask processVehicleTask = new VehicleTask();
+            processVehicleTask.Id = "Process Vehicle";
+            processVehicleTask.TaskVehicleId = vehicle.Id;
+            processVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            processVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            processVehicleTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            processVehicleTask.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            processVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
+            vehicle.VehicleTasks.Add(processVehicleTask);
+
             vehicle.Save(null);
 
             return vehicle;
@@ -303,11 +314,16 @@ namespace CarDepot
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            if (sender == null)
+            {
+                LoadPanel(_vehicle);
+                return;
+            }
             VehicleCache cache = _vehicle.Cache as VehicleCache;
             if (cache != null)
             {
                 cache.Remove(_vehicle);
-                //_vehicle = new VehicleAdminObject(_vehicle.ObjectId);
+                _vehicle = new VehicleAdminObject(_vehicle.ObjectId);
                 cache.Add(_vehicle);
                 _vehicle.Cache = cache;
             }
