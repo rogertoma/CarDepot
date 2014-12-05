@@ -14,8 +14,9 @@ namespace CarDepot.VehicleStore
 {
     public enum VehicleCacheSearchKey
     {
-        IsSold,
         IsAvailable,
+        IsSold,
+        WasAvailable,
         FromDate,
         ToDate,
         VinNumber,
@@ -55,6 +56,12 @@ namespace CarDepot.VehicleStore
                 {
                     VehicleAdminObject vehicleAdminObject = new VehicleAdminObject(file);
                     if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
+                    {
+                        continue;
+                    }
+                    if (string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Year)) ||
+                        string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Make)) ||
+                        string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Model)))
                     {
                         continue;
                     }
@@ -116,37 +123,87 @@ namespace CarDepot.VehicleStore
             }
             else
             {
-                toDate = DateTime.Now;
+                toDate = new DateTime(5000, 01, 01);
             }
 
 
             foreach (VehicleCacheSearchKey searchKey in searchParam.Keys)
             {
+                DateTime saleDate = DateTime.Now;
+                DateTime purchaseDate = DateTime.Now;
+
+                string sDate = vehicle.GetValue(PropertyId.SaleDate);
+                if (!string.IsNullOrEmpty(sDate))
+                {
+                    saleDate = DateTime.Parse(sDate, CultureInfo.InvariantCulture);
+                }
+                string pDate = vehicle.GetValue(PropertyId.PurchaseDate);
+                if (!string.IsNullOrEmpty(pDate))
+                {
+                    purchaseDate = DateTime.Parse(pDate, CultureInfo.InvariantCulture);
+                }
+
                 switch (searchKey)
                 {
                     case VehicleCacheSearchKey.IsAvailable:
-                        string pDate = vehicle.GetValue(PropertyId.PurchaseDate);
+                        if (!String.IsNullOrEmpty(sDate) && !searchParam.ContainsKey(VehicleCacheSearchKey.IsSold))
+                        {
+                            return false;
+                        }
+
                         if (String.IsNullOrEmpty(pDate))
                         {
                             return false;
                         }
-                        date = DateTime.Parse(pDate, CultureInfo.InvariantCulture);
 
-                        if (date < fromDate || date > toDate)
+                        if (purchaseDate < fromDate || purchaseDate > toDate)
                         {
                             return false;
                         }
+
                         break;
 
+                    case VehicleCacheSearchKey.WasAvailable:
+                        if (string.IsNullOrEmpty(pDate))
+                        {
+                            return false;
+                        }
+
+                        if (string.IsNullOrEmpty(sDate))
+                        {
+                            if (purchaseDate > toDate)
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            if (saleDate < toDate)
+                            {
+                                return false;
+                            }
+                        }
+
+                        break;
+
+                        //if (String.IsNullOrEmpty(pDate))
+                        //{
+                        //    return false;
+                        //}
+
+                        //if (purchaseDate < fromDate || purchaseDate > toDate)
+                        //{
+                        //    return false;
+                        //}
+                        //break;
+
                     case VehicleCacheSearchKey.IsSold:
-                        string sDate = vehicle.GetValue(PropertyId.SaleDate);
                         if (String.IsNullOrEmpty(sDate))
                         {
                             return false;
                         }
-                        date = DateTime.Parse(sDate);
 
-                        if (date < fromDate || date > toDate)
+                        if (saleDate < fromDate || saleDate > toDate)
                         {
                             return false;
                         }
@@ -154,6 +211,10 @@ namespace CarDepot.VehicleStore
                     case VehicleCacheSearchKey.VinNumber:
                         if (!string.IsNullOrEmpty(vehicle.VinNumber) && 
                             !vehicle.VinNumber.ToLower().Contains(searchParam[VehicleCacheSearchKey.VinNumber].ToLower()))
+                        {
+                            return false;
+                        }
+                        if (string.IsNullOrEmpty(vehicle.VinNumber))
                         {
                             return false;
                         }

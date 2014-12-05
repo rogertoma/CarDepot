@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -46,20 +47,25 @@
         <controls:AdminTextBox x:Name="TxtBuyerFee" PropertyId="PurchaseBuyerFee" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateHst_TextChanged"/>
         <Label Content="Other Costs" Grid.Row="6" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
         <controls:AdminTextBox x:Name="TxtOtherCosts" PropertyId="PurchaseOtherCosts" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateHst_TextChanged"/>
+        <Label Content="Warranty Cost" Grid.Row="7" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <controls:AdminTextBox x:Name="TxtWarrantyCosts" PropertyId="PurchaseWarrantyCost" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateHst_TextChanged"/>
 
-        <Label Content="Total HST" Grid.Row="7" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <controls:AdminTextBox x:Name="TxtPurchaseHst" PropertyId="PurchaseHst" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtPurchaseHst_TextChanged"/>
-        <Label Content="Total" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <controls:AdminTextBox x:Name="TxtPurchaseTotal" PropertyId="PurchaseTotal" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Check Number" Grid.Row="9" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <controls:AdminTextBox PropertyId="PurchaseCheckNumber" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Total HST" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <controls:AdminTextBox x:Name="TxtPurchaseHst" PropertyId="PurchaseHst" Grid.Column="1" Grid.Row="8" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtPurchaseHst_TextChanged"/>
+        <Label x:Name="lblSubtotal" Content="Subtotal: 0" Grid.Column="2" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="8" VerticalAlignment="Center"/>
+        
+        <Label Content="Total" Grid.Row="9" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <controls:AdminTextBox x:Name="TxtPurchaseTotal" PropertyId="PurchaseTotal" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Check Number" Grid.Row="10" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <controls:AdminTextBox PropertyId="PurchaseCheckNumber" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Accident Report" Grid.Row="10" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <controls:AdminTextBox PropertyId="PurchaseAccidentReported" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Accident Comment" Grid.Row="11" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
-        <controls:AdminTextBox PropertyId="PurchaseAccidentComment" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Accident Report" Grid.Row="11" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <controls:AdminTextBox PropertyId="PurchaseAccidentReported" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Accident Comment" Grid.Row="12" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" FontWeight="ExtraBlack"/>
+        <controls:AdminTextBox PropertyId="PurchaseAccidentComment" Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
-        <Label Content="Purchase Files" Grid.Row="12" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1"/>
-        <controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="PurchaseAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Content="Purchase Files" Grid.Row="13" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1"/>
+        <controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="PurchaseAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2"/>
+        
     </Grid>
 </UserControl>

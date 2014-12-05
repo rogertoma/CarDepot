@@ -97,7 +97,7 @@ namespace CarDepot
             processVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
             processVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
             processVehicleTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
-            processVehicleTask.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            processVehicleTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
             processVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(processVehicleTask);
 

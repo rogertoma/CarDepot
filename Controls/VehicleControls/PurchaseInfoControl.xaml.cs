@@ -129,13 +129,18 @@ namespace CarDepot.Controls.VehicleControls
             double buyerFee = 0;
             double otherCost = 0;
             double tasksCost = 0;
+            double warrantyCost = 0;
 
             Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice);
             Utilities.StringToDouble(TxtBuyerFee.Text, out buyerFee);
             Utilities.StringToDouble(TxtOtherCosts.Text, out otherCost);
             Utilities.StringToDouble(txtTasksCost.Text, out tasksCost);
+            Utilities.StringToDouble(TxtWarrantyCosts.Text, out warrantyCost);
 
-            double hst = (purchasePrice + buyerFee + otherCost + tasksCost) * Settings.HST;
+            lblSubtotal.Content = "Subtotal: " +
+                                  (purchasePrice + buyerFee + otherCost + tasksCost + warrantyCost).ToString("F");
+
+            double hst = (purchasePrice + buyerFee + otherCost + tasksCost + warrantyCost) * Settings.HST;
 
             TxtPurchaseHst.Text = "$" + hst.ToString("F");
         }
@@ -146,6 +151,7 @@ namespace CarDepot.Controls.VehicleControls
             double buyerFee = 0;
             double otherCost = 0;
             double tasksCost = 0;
+            double warrantyCost = 0;
             double hst = 0;
 
             Utilities.StringToDouble(TxtPurchasePrice.Text, out purchasePrice);
@@ -153,8 +159,9 @@ namespace CarDepot.Controls.VehicleControls
             Utilities.StringToDouble(TxtOtherCosts.Text, out otherCost);
             Utilities.StringToDouble(TxtPurchaseHst.Text, out hst);
             Utilities.StringToDouble(txtTasksCost.Text, out tasksCost);
+            Utilities.StringToDouble(TxtWarrantyCosts.Text, out warrantyCost);
 
-            double totalCost = purchasePrice + buyerFee + otherCost + tasksCost + hst;
+            double totalCost = purchasePrice + buyerFee + otherCost + tasksCost + warrantyCost + hst;
             TxtPurchaseTotal.Text = "$" + totalCost.ToString("F");
 
         }

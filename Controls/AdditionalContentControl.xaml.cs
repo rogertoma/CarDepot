@@ -113,8 +113,15 @@ namespace CarDepot.Controls
                     return;
             }
 
-            File.Copy(origionalFilePath, filePath, true);
-            FileList.Items.Add(origionalFile.Name);
+            try
+            {
+                File.Copy(origionalFilePath, filePath, true);
+                FileList.Items.Add(origionalFile.Name);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message + " Please try a different name", "Error");
+            }
             //return filePath;
         }
 

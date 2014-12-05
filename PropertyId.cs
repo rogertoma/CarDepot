@@ -102,6 +102,7 @@ namespace CarDepot
         PurchasePrice,
         PurchaseBuyerFee,
         PurchaseOtherCosts,
+        PurchaseWarrantyCost,
         PurchaseHst,
         PurchaseTotal,
         PurchaseCheckNumber,

@@ -65,6 +65,11 @@ namespace CarDepot.Controls.SearchControls
                 searchParam.Add(VehicleCacheSearchKey.IsSold, null);
             }
             
+            if (cbWasAvailable.IsChecked == true)
+            {
+                searchParam.Add(VehicleCacheSearchKey.WasAvailable, null);
+            }
+
             if (cbAvailable.IsChecked == true)
             {
                 searchParam.Add(VehicleCacheSearchKey.IsAvailable, null);
@@ -72,6 +77,7 @@ namespace CarDepot.Controls.SearchControls
 
             cache = new VehicleCache(Settings.VehiclePath, searchParam);
             LstSearchResults.SetContent(cache);
+            lblTotalCount.Content = cache.Count.ToString();
         }
 
         private void BtnGenerateReport_Click(object sender, RoutedEventArgs e)

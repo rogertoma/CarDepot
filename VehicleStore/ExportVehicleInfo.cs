@@ -23,6 +23,7 @@ namespace CarDepot.VehicleStore
 {
     class ExportVehicleInfo
     {
+        private VehicleCache _vehicleCache = null;
         #region private class datastructures
         private List<PropertyId> vehicleSaleProperties = new List<PropertyId>() {             
             PropertyId.SaleDate,
@@ -66,12 +67,26 @@ namespace CarDepot.VehicleStore
             PropertyId.PurchaseHst,
             PropertyId.PurchaseTotal
         };
+        
+        private List<PropertyId> allCarProperties = new List<PropertyId>() {             
+            PropertyId.VinNumber,
+            PropertyId.Year,
+            PropertyId.Make,
+            PropertyId.Model,
+            PropertyId.ExtColor,
+            PropertyId.Mileage,
+            PropertyId.PurchasePrice,
+            PropertyId.PurchaseBuyerFee,
+            PropertyId.PurchaseOtherCosts,
+        };
+
         private SortedDictionary<string, List<VehicleAdminObject>> soldVehicles = new SortedDictionary<string,List<VehicleAdminObject>>();
         private SortedDictionary<string, List<VehicleAdminObject>> purchasedVehicles = new SortedDictionary<string, List<VehicleAdminObject>>();
         #endregion
         
         public ExportVehicleInfo(VehicleCache vehicles, string fileName)
-        {       
+        {
+            _vehicleCache = vehicles;
             bucketSortVehicles(vehicles);
             //string file = Resources.Settings.TempFolder + DateTime.Now.ToFileTimeUtc().ToString() + ".xls";
             string currFileName = fileName;
@@ -427,9 +442,120 @@ namespace CarDepot.VehicleStore
                 row++;
             }
         }
+        private double CalculateTasksCost(VehicleAdminObject vehicleAdminObject)
+        {
+            double totalCost = 0;
+            foreach (VehicleTask vehicleTask in vehicleAdminObject.VehicleTasks)
+            {
+                double cost = 0;
+                if (Utilities.StringToDouble(vehicleTask.Cost, out cost))
+                {
+                    totalCost += cost;
+                }
+            }
+
+            return totalCost;
+        }
+
+        private void CreateAllVehiclesSheet(Workbook wb)
+        {
+            #region Setup Headers
+            wb.Worksheets.Add(new Worksheet("All Cars"));
+            Worksheet currentSheet = wb.Worksheets.Last();
+            int row = 0;
+            int column = 0;
+            for (column = 0; column < allCarProperties.Count; column++)
+            {
+                currentSheet.Cells[row, column] = new Cell(allCarProperties[column].ToString());
+                //currentSheet.Cells[row, column] = new Cell(allCarProperties[column].ToString());
+            }
+            currentSheet.Cells[row, column++] = new Cell("Tasks Cost");
+            currentSheet.Cells[row, column++] = new Cell("Total Cost");
+            currentSheet.Cells[row, column++] = new Cell("Total HST");
+            currentSheet.Cells[row, column] = new Cell("Total Total");
+
+#endregion
+
+            #region LoadVehicles
+            row = 1;
+
+            foreach (VehicleAdminObject vehicleAdminObject in _vehicleCache)
+            {
+                for (column = 0; column < allCarProperties.Count; column++)
+                {
+                    string stringValue = vehicleAdminObject.GetValue(allCarProperties[column]);
+                    double value = 0;
+                    if (allCarProperties[column] != PropertyId.Mileage &&
+                        Utilities.StringToDouble(stringValue, out value))
+                    {
+                         currentSheet.Cells[row, column] = new Cell(value, "#,##0.00");
+                    }
+                    else
+                    {
+                        currentSheet.Cells[row, column] = new Cell(vehicleAdminObject.GetValue(allCarProperties[column]));    
+                    }
+                }
+
+                double puchasePriceTotal = 0,
+                    buyerFeeTotal = 0,
+                    otherCostTotal = 0,
+                    tasksTotal = 0,
+                    totalCostTotal = 0,
+                    hstTotal = 0,
+                    totalTotal = 0;
+
+                double purchasePrice = 0;
+                double buyerFee = 0;
+                double otherCost = 0;
+                double tasksCost = 0;
+                double totalCost = 0;
+                double hst = 0;
+                double total = 0;
+
+                if (Utilities.StringToDouble(vehicleAdminObject.GetValue(PropertyId.PurchasePrice), out purchasePrice))
+                {
+                    puchasePriceTotal += purchasePrice;
+                }
+
+                if (Utilities.StringToDouble(vehicleAdminObject.GetValue(PropertyId.PurchaseBuyerFee), out buyerFee))
+                {
+                    buyerFeeTotal += buyerFee;
+                }
+
+                if (Utilities.StringToDouble(vehicleAdminObject.GetValue(PropertyId.PurchaseOtherCosts), out otherCost))
+                {
+                    otherCostTotal += otherCost;
+                }
+
+                tasksCost = CalculateTasksCost(vehicleAdminObject);
+                tasksTotal += tasksCost;
+
+                totalCost = purchasePrice + buyerFee + otherCost + tasksCost;
+                totalCostTotal += totalCost;
+
+                hst = totalCost * Settings.HST;
+                hstTotal += hst;
+
+                total = totalCost + hst;
+                totalTotal += total;
+
+                currentSheet.Cells[row, column++] = new Cell(tasksCost, "#,##0.00");
+                currentSheet.Cells[row, column++] = new Cell(totalCost, "#,##0.00");
+                currentSheet.Cells[row, column++] = new Cell(hst, "#,##0.00");
+                currentSheet.Cells[row, column] = new Cell(total, "#,##0.00");
+
+                row++;
+            }
+            #endregion
+
+            //#region
+
+        }
 
         private void createExcelFile(Workbook wb, string currFileName)
         {
+            CreateAllVehiclesSheet(wb);
+
             foreach (string monthYear in purchasedVehicles.Keys)
             {
                 createPurchasedSheet(wb, monthYear);

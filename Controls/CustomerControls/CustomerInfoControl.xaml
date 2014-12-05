@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:CarDepot.Controls" xmlns:v="clr-namespace:CarDepot.Resources"
              x:Class="CarDepot.Controls.CustomerControls.CustomerInfoControl" 
-             mc:Ignorable="d" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="701.5">
+             mc:Ignorable="d" d:DesignWidth="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto">
     <Grid x:Name="ContactCardGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

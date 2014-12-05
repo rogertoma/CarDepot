@@ -32,7 +32,7 @@
                 <VehicleControls:ManageVehicleTasksControl x:Name="ManageVehicleTasksControlPropertyPanel" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </TabItem>
             <TabItem Header="Sale Info">
-                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <VehicleControls:SaleInfoControl x:Name="SaleInfoControlPropertyPanel" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </ScrollViewer>
             </TabItem>
