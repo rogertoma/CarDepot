@@ -168,17 +168,15 @@ namespace CarDepot.VehicleStore
                         {
                             return false;
                         }
-
-                        if (string.IsNullOrEmpty(sDate))
+                        
+                        if (purchaseDate > toDate)
                         {
-                            if (purchaseDate > toDate)
-                            {
-                                return false;
-                            }
+                            return false;
                         }
-                        else
+
+                        if (!string.IsNullOrEmpty(sDate))
                         {
-                            if (saleDate < toDate)
+                            if (saleDate > toDate)
                             {
                                 return false;
                             }

@@ -30,7 +30,7 @@ namespace CarDepot.Controls
         {
             InitializeComponent();
             _user = user;
-            if (user.PicturePath != null)
+            if (!string.IsNullOrEmpty(user.PicturePath) && user.PicturePath != null)
             {
                 BitmapImage icon = new BitmapImage();
                 icon.BeginInit();

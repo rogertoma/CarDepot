@@ -27,6 +27,7 @@ namespace CarDepot.Controls.VehicleControls
         {
             Adesa,
             Manheim,
+            ManheimToronto,
             PrivatePurchase,
             TradeIn
         }

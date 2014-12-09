@@ -217,7 +217,7 @@ namespace CarDepot.Controls.VehicleControls
                 btnDelete.Visibility = Visibility.Collapsed;
                 btnCompleteTask.Visibility = Visibility.Collapsed;
             }
-            else if (task.Id == txtTaskId.Text.Trim())
+            else if (task.Id.ToLower().Trim() == txtTaskId.Text.ToLower().Trim())
             {
                 btnCreate.Visibility = Visibility.Collapsed;
                 btnUpdate.Visibility = Visibility.Visible;
