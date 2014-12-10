@@ -25,60 +25,6 @@ namespace CarDepot.VehicleStore
     {
         private VehicleCache _vehicleCache = null;
         #region private class datastructures
-        private List<PropertyId> vehicleSaleProperties = new List<PropertyId>() {             
-            PropertyId.SaleDate,
-            PropertyId.Year,
-            PropertyId.Make,
-            PropertyId.Model,
-            PropertyId.VinNumber,
-            PropertyId.SalePrice,
-            PropertyId.CarHST,
-            PropertyId.SaleHst,
-            PropertyId.PurchasePrice,
-            PropertyId.PurchaseBuyerFee,
-            PropertyId.PurchaseTotal,
-            PropertyId.SaleTradeInCost,
-            PropertyId.SaleWarrantyCost,
-            PropertyId.SaleLicenseFee,
-            PropertyId.SaleLienRegistrationFee,
-            PropertyId.SaleFinanceCost,
-            PropertyId.SaleTotalDue,
-            PropertyId.SaleCustomerPayment,
-            PropertyId.NetDifference,
-            PropertyId.NetDifferenceHST,
-            PropertyId.TotalFee,
-            PropertyId.PaymentType,
-            PropertyId.SaleDealerReserve,
-            PropertyId.SaleDealerReserveHST,
-            PropertyId.TotalHST,
-            PropertyId.TotalIncome,
-            PropertyId.NetIncome,
-            PropertyId.Profit
-        };
-        private List<PropertyId> vehiclePurchaseProperties = new List<PropertyId>() {             
-            PropertyId.PurchaseDate,
-            PropertyId.Vendor,
-            PropertyId.VendorDescription,
-            PropertyId.Year,
-            PropertyId.Make,
-            PropertyId.Model,
-            PropertyId.VinNumber,
-            PropertyId.PurchasePrice,
-            PropertyId.PurchaseBuyerFee,
-            PropertyId.PurchaseOtherCosts,
-        };
-        
-        //private List<PropertyId> allCarProperties = new List<PropertyId>() {             
-        //    PropertyId.VinNumber,
-        //    PropertyId.Year,
-        //    PropertyId.Make,
-        //    PropertyId.Model,
-        //    PropertyId.ExtColor,
-        //    PropertyId.Mileage,
-        //    PropertyId.PurchasePrice,
-        //    PropertyId.PurchaseBuyerFee,
-        //    PropertyId.PurchaseOtherCosts,
-        //};
 
         private SortedDictionary<string, List<VehicleAdminObject>> soldVehicles = new SortedDictionary<string,List<VehicleAdminObject>>();
         private SortedDictionary<string, List<VehicleAdminObject>> purchasedVehicles = new SortedDictionary<string, List<VehicleAdminObject>>();
@@ -160,241 +106,7 @@ namespace CarDepot.VehicleStore
             return;
         }
 
-        private double calcPurchaseTotal(VehicleAdminObject currVehicle)
-        {
-            double purchaseHst;
-            double purchasePrice;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchasePrice), out purchasePrice);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchaseHst), out purchaseHst);
-            return purchasePrice + purchaseHst;
-        }
-
-        private double calcSaleTotal(VehicleAdminObject currVehicle)
-        {
-            double salePrice;
-            double saleWarrantyCost;
-            double saleFinanceFees;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleWarrantyCost), out saleWarrantyCost);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePrice), out salePrice);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFinanceCost), out saleFinanceFees);
-            return salePrice + saleWarrantyCost + saleFinanceFees;
-        }
-
-        private double calcProfit(VehicleAdminObject currVehicle)
-        {
-            double salePrice;
-            double purchaseTotal;
-            double buyerFee;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePrice), out salePrice);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchaseTotal), out purchaseTotal);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.PurchaseBuyerFee), out buyerFee);
-            return salePrice - purchaseTotal - buyerFee;
-        }
-
-        private double calcNetDifference(VehicleAdminObject currVehicle)
-        {
-            double subTotal;
-            double tradeIn;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTotalDue), out subTotal);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTradeInCost), out tradeIn);
-            return subTotal - tradeIn;
-        }
-
-        private double calcNetDifferenceHST(VehicleAdminObject currVehicle)
-        {
-            double netDiff;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.NetDifference), out netDiff);
-            return netDiff * 0.13;
-        }
-
-        private double calcTotalFee(VehicleAdminObject currVehicle)
-        {
-            double netDiff;
-            double netDiffHST;
-            double licenseFee;
-            double lienRegFee;
-                CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.NetDifference), out netDiff);
-                CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.NetDifferenceHST), out netDiffHST);
-                CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLicenseFee), out licenseFee);
-                CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLienRegistrationFee), out lienRegFee);
-            return netDiff + netDiffHST + licenseFee + lienRegFee;
-        }
-
-        private double calcTotalHST(VehicleAdminObject currVehicle)
-        {
-            double carHST;
-            double dealerReserveHST;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleDealerReserveHST), out dealerReserveHST);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.CarHST), out carHST);
-            return carHST + dealerReserveHST;
-        }
-
-        private double calcCarHST(VehicleAdminObject currVehicle)
-        {
-            double salePrice;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePrice), out salePrice);
-            return salePrice * 0.13;
-        }
-
-        private double calcTotalIncome(VehicleAdminObject currVehicle)
-        {
-            double netDifference;
-            double totalHST;
-            double dealerReserve;
-            
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleDealerReserve), out dealerReserve);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.NetDifference), out netDifference);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalHST), out totalHST);
-
-            return netDifference + totalHST + dealerReserve;
-        }
-
-        private double calcNetIncome(VehicleAdminObject currVehicle)
-        {
-            double totalIncome;
-            double totalHST;
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalIncome), out totalIncome);
-            CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(PropertyId.TotalHST), out totalHST);
-            return totalIncome - totalHST;
-        }
-
-        private bool isValidValue(VehicleAdminObject currVehicle, PropertyId p)
-        {
-            return (currVehicle.GetValue(p) != null && !currVehicle.GetValue(p).Equals(string.Empty));
-        }
-        
-        private void applyValueToCell(VehicleAdminObject currVehicle, PropertyId p, Worksheet currSheet, int currRow, int currColumn)
-        {
-            if (isValidValue(currVehicle, p))
-            {
-                double value;
-                CarDepot.Resources.Utilities.StringToDouble(currVehicle.GetValue(p), out value);
-                currSheet.Cells[currRow, currColumn] = new Cell(value, "#,##0.00");
-            }
-            else
-            {
-                currSheet.Cells[currRow, currColumn] = new Cell(0, "0.00");
-                currVehicle.ApplyValue(p, "0.00");
-            }
-            return;
-        }
-
-        private void populateSoldSheet(Worksheet currSheet, VehicleAdminObject currVehicle, int currRow) 
-        {
-            int column = 0;
-            foreach (PropertyId p in vehicleSaleProperties)
-            {
-                switch (p)
-                {
-                    case PropertyId.ListPrice:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.PurchasePrice:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.PurchaseBuyerFee:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SalePrice:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleHst:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleCustomerPayment:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.PaymentType:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleLicenseFee:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleTradeInCost:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.PurchaseTotal:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleWarrantyCost:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleLienRegistrationFee:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleFinanceCost:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleDealerReserve:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.SaleDealerReserveHST:
-                        applyValueToCell(currVehicle, p, currSheet, currRow, column);
-                        break;
-                    case PropertyId.CarHST:
-                        double carHST = calcCarHST(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(carHST, "#,##0.00");
-                        break;
-                    case PropertyId.TotalHST:
-                        double totalHST = calcTotalHST(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(totalHST, "#,##0.00");
-                        break;
-                    case PropertyId.NetDifference:
-                        double NetDiff = calcNetDifference(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(NetDiff, "#,##0.00");
-                        break;
-                    case PropertyId.NetDifferenceHST:
-                        double NetDiffHST = calcNetDifferenceHST(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(NetDiffHST, "#,##0.00");
-                        break;
-                    case PropertyId.TotalFee:
-                        double totalFee = calcTotalFee(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(totalFee, "#,##0.00");
-                        break;
-                    case PropertyId.SaleTotalDue:
-                        double saleTotal = calcSaleTotal(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(saleTotal, "#,##0.00");
-                        break;
-                    case PropertyId.TotalIncome:
-                        double totalIncome = calcTotalIncome(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(totalIncome, "#,##0.00");
-                        break;
-                    case PropertyId.NetIncome:
-                        double netIncome = calcNetIncome(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(netIncome, "#,##0.00");
-                        break;
-                    case PropertyId.Profit:
-                        double profit = calcProfit(currVehicle);
-                        currSheet.Cells[currRow, column] = new Cell(profit, "#,##0.00");
-                        break;
-                    default:
-                        currSheet.Cells[currRow, column] = new Cell(currVehicle.GetValue(p));
-                        break;
-                }
-                currSheet.Cells.ColumnWidth[(ushort)column] = 5000;
-                column++;
-            } 
-        }
-
-
-        private void createSoldSheet(Workbook wb, string monthAndYearSold)
-        {
-            wb.Worksheets.Add(new Worksheet("Sold " + monthAndYearSold));
-            Worksheet currentSheet = wb.Worksheets.Last();
-            int row = 0; 
-            for(int column = 0; column < vehicleSaleProperties.Count; column++)
-            {
-                currentSheet.Cells[row, column] = new Cell(vehicleSaleProperties[column].ToString());
-            }
-            row = 1;
-            foreach(VehicleAdminObject v in soldVehicles[monthAndYearSold])
-            {
-                populateSoldSheet(currentSheet, v, row);
-                row++;
-            }
-        }
-
-        private void createPurchasedSheet(Workbook wb, string monthAndYearPurchased)
+        private void createPurchasedSheet(Workbook wb, string monthAndYearPurchased, List<VehicleAdminObject> vehicles, bool isForAccounting = false)
         {
             double purchasePriceTotal = 0,
                 buyerFeeTotal = 0,
@@ -406,7 +118,22 @@ namespace CarDepot.VehicleStore
                 totalTotal = 0;
 
             #region Setup Headers
-            wb.Worksheets.Add(new Worksheet("Purchased " + monthAndYearPurchased));
+
+            if (string.IsNullOrEmpty(monthAndYearPurchased))
+            {
+                if (isForAccounting)
+                    wb.Worksheets.Add(new Worksheet("Acc All Purchased Vehicles"));
+                else
+                    wb.Worksheets.Add(new Worksheet("All Purchased Vehicles"));
+            }
+            else
+            {
+                if (isForAccounting)
+                    wb.Worksheets.Add(new Worksheet("Acc Purchased " + monthAndYearPurchased));    
+                else
+                    wb.Worksheets.Add(new Worksheet("Purchased " + monthAndYearPurchased));    
+            }
+            
             Worksheet currentSheet = wb.Worksheets.Last();
             int row = 0;
             int column = 0;
@@ -421,7 +148,8 @@ namespace CarDepot.VehicleStore
             currentSheet.Cells[row, column++] = new Cell("VIN");
             currentSheet.Cells[row, column++] = new Cell("Purchased Price");
             currentSheet.Cells[row, column++] = new Cell("Buyer Fee");
-            currentSheet.Cells[row, column++] = new Cell("Tasks Cost");
+            if (!isForAccounting)
+                currentSheet.Cells[row, column++] = new Cell("Tasks Cost");
             currentSheet.Cells[row, column++] = new Cell("Warranty Cost");
             currentSheet.Cells[row, column++] = new Cell("Other Cost");
             currentSheet.Cells[row, column++] = new Cell("Total Cost");
@@ -432,7 +160,7 @@ namespace CarDepot.VehicleStore
 
             #region Populate Vehicle Data
             row = 1;
-            foreach (VehicleAdminObject vehicle in purchasedVehicles[monthAndYearPurchased])
+            foreach (VehicleAdminObject vehicle in vehicles)
             {
                 column = 0;
                 currentSheet.Cells[row, column++] = new Cell(row, "#");
@@ -491,9 +219,13 @@ namespace CarDepot.VehicleStore
                 column++;
 
                 //Tasks Cost
-                double tasksCost = CalculateTasksCost(vehicle);
-                currentSheet.Cells[row, column++] = new Cell(tasksCost, "#,##0.00");
-                tasksTotal += tasksCost;
+                double tasksCost = 0;
+                if (!isForAccounting)
+                {
+                    tasksCost = CalculateTasksCost(vehicle);
+                    currentSheet.Cells[row, column++] = new Cell(tasksCost, "#,##0.00");
+                    tasksTotal += tasksCost;
+                }
 
                 //Warranty Cost
                 string sWarrantyCost = vehicle.GetValue(PropertyId.PurchaseWarrantyCost);
@@ -541,7 +273,8 @@ namespace CarDepot.VehicleStore
             column = 8;
             currentSheet.Cells[row, column++] = new Cell(purchasePriceTotal, "#,##0.00");
             currentSheet.Cells[row, column++] = new Cell(buyerFeeTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(tasksTotal, "#,##0.00");
+            if (!isForAccounting)
+                currentSheet.Cells[row, column++] = new Cell(tasksTotal, "#,##0.00");
             currentSheet.Cells[row, column++] = new Cell(warrantyCostTotal, "#,##0.00");
             currentSheet.Cells[row, column++] = new Cell(otherCostTotal, "#,##0.00");
             currentSheet.Cells[row, column++] = new Cell(totalCostTotal, "#,##0.00");
@@ -566,164 +299,7 @@ namespace CarDepot.VehicleStore
             return totalCost;
         }
 
-        private void AllPurchasedVehiclesSheet(Workbook wb)
-        {
-            double purchasePriceTotal = 0,
-               buyerFeeTotal = 0,
-               otherCostTotal = 0,
-               tasksTotal = 0,
-               warrantyCostTotal = 0,
-               totalCostTotal = 0,
-               hstTotal = 0,
-               totalTotal = 0;
-
-            #region Setup Headers
-            wb.Worksheets.Add(new Worksheet("All Purchased Vehicles"));
-            Worksheet currentSheet = wb.Worksheets.Last();
-            int row = 0;
-            int column = 0;
-
-            currentSheet.Cells[row, column++] = new Cell("Item Number");
-            currentSheet.Cells[row, column++] = new Cell("Purchased Date");
-            currentSheet.Cells[row, column++] = new Cell("Vendor");
-            currentSheet.Cells[row, column++] = new Cell("Vendor Description");
-            currentSheet.Cells[row, column++] = new Cell("Year");
-            currentSheet.Cells[row, column++] = new Cell("Make");
-            currentSheet.Cells[row, column++] = new Cell("Model");
-            currentSheet.Cells[row, column++] = new Cell("VIN");
-            currentSheet.Cells[row, column++] = new Cell("Purchased Price");
-            currentSheet.Cells[row, column++] = new Cell("Buyer Fee");
-            currentSheet.Cells[row, column++] = new Cell("Tasks Cost");
-            currentSheet.Cells[row, column++] = new Cell("Warranty Cost");
-            currentSheet.Cells[row, column++] = new Cell("Other Cost");
-            currentSheet.Cells[row, column++] = new Cell("Total Cost");
-            currentSheet.Cells[row, column++] = new Cell("Total HST");
-            currentSheet.Cells[row, column] = new Cell("Total");
-
-            #endregion
-
-            #region Populate Vehicle Data
-            row = 1;
-            foreach (VehicleAdminObject vehicle in _vehicleCache)
-            {
-                column = 0;
-                currentSheet.Cells[row, column++] = new Cell(row, "#");
-
-                // Purchased Date
-                string pDate = vehicle.GetValue(PropertyId.PurchaseDate);
-                DateTime purchaseDate = DateTime.Now;
-                if (DateTime.TryParse(pDate, out purchaseDate))
-                    currentSheet.Cells[row, column] = new Cell(purchaseDate, CellFormat.Date);
-                else
-                    currentSheet.Cells[row, column] = new Cell(pDate);
-                column++;
-
-                //Vendor
-                currentSheet.Cells[row, column++] = new Cell(vehicle.GetValue(PropertyId.Vendor));
-
-                //Vendor Description
-                currentSheet.Cells[row, column++] = new Cell(vehicle.GetValue(PropertyId.VendorDescription));
-
-                //Year
-                string sYear = vehicle.GetValue(PropertyId.Year);
-                double year = 0;
-                if (Utilities.StringToDouble(sYear, out year))
-                    currentSheet.Cells[row, column] = new Cell(year, "####");
-                else
-                    currentSheet.Cells[row, column] = new Cell(sYear);
-                column++;
-
-                //Make
-                currentSheet.Cells[row, column++] = new Cell(vehicle.GetValue(PropertyId.Make));
-
-                //Model
-                currentSheet.Cells[row, column++] = new Cell(vehicle.GetValue(PropertyId.Model));
-
-                //Vin
-                currentSheet.Cells[row, column++] = new Cell(vehicle.GetValue(PropertyId.VinNumber));
-
-                //Purchase Price
-                string sPurchasePrice = vehicle.GetValue(PropertyId.PurchasePrice);
-                double purchasePrice = 0;
-                if (Utilities.StringToDouble(sPurchasePrice, out purchasePrice))
-                    currentSheet.Cells[row, column] = new Cell(purchasePrice, "#,##0.00");
-                else
-                    currentSheet.Cells[row, column] = new Cell(sPurchasePrice);
-                purchasePriceTotal += purchasePrice;
-                column++;
-
-                //Buyer Fee
-                string sBuyerFee = vehicle.GetValue(PropertyId.PurchaseBuyerFee);
-                double buyerFee = 0;
-                if (Utilities.StringToDouble(sBuyerFee, out buyerFee))
-                    currentSheet.Cells[row, column] = new Cell(buyerFee, "#,##0.00");
-                else
-                    currentSheet.Cells[row, column] = new Cell(sBuyerFee);
-                buyerFeeTotal += buyerFee;
-                column++;
-
-                //Tasks Cost
-                double tasksCost = CalculateTasksCost(vehicle);
-                currentSheet.Cells[row, column++] = new Cell(tasksCost, "#,##0.00");
-                tasksTotal += tasksCost;
-
-                //Warranty Cost
-                string sWarrantyCost = vehicle.GetValue(PropertyId.PurchaseWarrantyCost);
-                double warrantyCost = 0;
-                if (Utilities.StringToDouble(sWarrantyCost, out warrantyCost))
-                    currentSheet.Cells[row, column] = new Cell(warrantyCost, "#,##0.00");
-                else
-                    currentSheet.Cells[row, column] = new Cell(sWarrantyCost);
-                warrantyCostTotal += warrantyCost;
-                column++;
-
-                //Other Cost
-                string sOtherCost = vehicle.GetValue(PropertyId.PurchaseOtherCosts);
-                double otherCost = 0;
-                if (Utilities.StringToDouble(sOtherCost, out otherCost))
-                    currentSheet.Cells[row, column] = new Cell(otherCost, "#,##0.00");
-                else
-                    currentSheet.Cells[row, column] = new Cell(sOtherCost);
-                otherCostTotal += otherCost;
-                column++;
-
-                //Total Cost
-                double totalCost = purchasePrice + buyerFee + tasksCost + warrantyCost + otherCost;
-                currentSheet.Cells[row, column++] = new Cell(totalCost, "#,##0.00");
-                totalCostTotal += totalCost;
-
-                //Total Hst
-                double totalHst = totalCost * Settings.HST;
-                currentSheet.Cells[row, column++] = new Cell(totalHst, "#,##0.00");
-                hstTotal += totalHst;
-
-                //Total
-                double total = totalCost + totalHst;
-                currentSheet.Cells[row, column++] = new Cell(total, "#,##0.00");
-                totalTotal += total;
-
-                row++;
-            }
-
-            #endregion
-
-            #region TotalRow
-
-            currentSheet.Cells[row, 0] = new Cell("Total");
-            column = 8;
-            currentSheet.Cells[row, column++] = new Cell(purchasePriceTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(buyerFeeTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(tasksTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(warrantyCostTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(otherCostTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(totalCostTotal, "#,##0.00");
-            currentSheet.Cells[row, column++] = new Cell(hstTotal, "#,##0.00");
-            currentSheet.Cells[row, column] = new Cell(totalTotal, "#,##0.00");
-
-            #endregion
-        }
-
-        private void AllSoldVehiclesSheet(Workbook wb)
+        private void CreateSoldSheet (Workbook wb, string monthAndYearSold, List<VehicleAdminObject> vehicles, bool isForAccounting = false)
         {
             double purchasePriceTotal = 0,
                 buyerFeeTotal = 0,
@@ -734,7 +310,22 @@ namespace CarDepot.VehicleStore
                 totalTotal = 0;
 
             #region Setup Headers
-            wb.Worksheets.Add(new Worksheet("All Sold Cars"));
+
+            if (string.IsNullOrEmpty(monthAndYearSold))
+            {
+                if (isForAccounting)
+                    wb.Worksheets.Add(new Worksheet("Acc All Sold Cars"));
+                else
+                    wb.Worksheets.Add(new Worksheet("All All Sold Cars"));   
+            }
+            else
+            {
+                if (isForAccounting)
+                    wb.Worksheets.Add(new Worksheet("Acc Sold " + monthAndYearSold));
+                else
+                    wb.Worksheets.Add(new Worksheet("Sold " + monthAndYearSold));    
+            }
+            
             Worksheet currentSheet = wb.Worksheets.Last();
             int row = 0;
             int column = 0;
@@ -924,7 +515,8 @@ namespace CarDepot.VehicleStore
                 double warrantyCost = 0;
                 Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchasePrice), out purchasePrice);
                 Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchaseBuyerFee), out buyerFee);
-                tasksCost = CalculateTasksCost(vehicle);
+                if (!isForAccounting)
+                    tasksCost = CalculateTasksCost(vehicle);
                 Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchaseOtherCosts), out otherCost);
                 Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchaseWarrantyCost), out warrantyCost);
                 purchasePriceIncludingFees = purchasePrice + buyerFee + tasksCost + warrantyCost + otherCost;
@@ -946,17 +538,23 @@ namespace CarDepot.VehicleStore
 
         private void createExcelFile(Workbook wb, string currFileName)
         {
-            AllPurchasedVehiclesSheet(wb);
-            AllSoldVehiclesSheet(wb);
+            createPurchasedSheet(wb, null, _vehicleCache, true);
+            createPurchasedSheet(wb, null, _vehicleCache);
+
+            CreateSoldSheet(wb, null, _vehicleCache, true);
+            CreateSoldSheet(wb, null, _vehicleCache);
 
             foreach (string monthYear in purchasedVehicles.Keys)
             {
-                createPurchasedSheet(wb, monthYear);
+                createPurchasedSheet(wb, monthYear, purchasedVehicles[monthYear], true);
+                createPurchasedSheet(wb, monthYear, purchasedVehicles[monthYear]);
             }
             foreach (string monthYear in soldVehicles.Keys)
             {
-                createSoldSheet(wb, monthYear);
+                CreateSoldSheet(wb, monthYear, soldVehicles[monthYear], true);
+                CreateSoldSheet(wb, monthYear, soldVehicles[monthYear]);
             }
+
             int lastSheetNum = wb.Worksheets.Count + 1;
             wb.Worksheets.Add(new Worksheet("Sheet " + lastSheetNum.ToString()));
             Worksheet ws = wb.Worksheets[wb.Worksheets.Count - 1];

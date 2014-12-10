@@ -176,24 +176,13 @@ namespace CarDepot.VehicleStore
 
                         if (!string.IsNullOrEmpty(sDate))
                         {
-                            if (saleDate > toDate)
+                            if (saleDate < toDate)
                             {
                                 return false;
                             }
                         }
 
                         break;
-
-                        //if (String.IsNullOrEmpty(pDate))
-                        //{
-                        //    return false;
-                        //}
-
-                        //if (purchaseDate < fromDate || purchaseDate > toDate)
-                        //{
-                        //    return false;
-                        //}
-                        //break;
 
                     case VehicleCacheSearchKey.IsSold:
                         if (String.IsNullOrEmpty(sDate))
@@ -206,6 +195,7 @@ namespace CarDepot.VehicleStore
                             return false;
                         }
                         break;
+
                     case VehicleCacheSearchKey.VinNumber:
                         if (!string.IsNullOrEmpty(vehicle.VinNumber) && 
                             !vehicle.VinNumber.ToLower().Contains(searchParam[VehicleCacheSearchKey.VinNumber].ToLower()))
@@ -217,6 +207,7 @@ namespace CarDepot.VehicleStore
                             return false;
                         }
                         break;
+
                     case VehicleCacheSearchKey.Year:
                         if (!string.IsNullOrEmpty(vehicle.Year) &&
                             !vehicle.Year.ToLower().Contains(searchParam[VehicleCacheSearchKey.Year].ToLower()))
@@ -224,6 +215,7 @@ namespace CarDepot.VehicleStore
                             return false;
                         }
                         break;
+
                     case VehicleCacheSearchKey.Make:
                         if (!string.IsNullOrEmpty(vehicle.Make) &&
                             !vehicle.Make.ToLower().Contains(searchParam[VehicleCacheSearchKey.Make].ToLower()))
@@ -231,6 +223,7 @@ namespace CarDepot.VehicleStore
                             return false;
                         }
                         break;
+
                     case VehicleCacheSearchKey.Model:
                         if (!string.IsNullOrEmpty(vehicle.Model) &&
                             !vehicle.Model.ToLower().Contains(searchParam[VehicleCacheSearchKey.Model].ToLower()))

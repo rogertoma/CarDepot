@@ -28,7 +28,7 @@
         <Label Grid.Row="2" Grid.Column="0" Content="Category:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <ComboBox x:Name="cmbCategory" Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
 
-        <Button Grid.Row="3" Grid.Column="2" Height="39" Width="70" Name="btnSearch" Content="Search" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnSearch_Click"/>
+        <Button Grid.Row="3" Grid.Column="2" Height="39" Width="70" Name="btnSearch" Content="Search" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnSearch_Click" IsDefault="True"/>
         <controls:VehicleListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" x:Name="lstVehicles" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ListSelectionChanged="lstVehicles_SelectionChanged"/>
         <ListView x:Name="lstTasks" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0" HorizontalAlignment="Stretch" Grid.RowSpan="4" VerticalAlignment="Stretch" SelectionChanged="lstTasks_SelectionChanged" MouseDoubleClick="lstTasks_MouseDoubleClick" ButtonBase.Click="GridViewColumnHeaderClickedHandler">
             <ListView.View>

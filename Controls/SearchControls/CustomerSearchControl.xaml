@@ -39,7 +39,6 @@
                     <GridViewColumn Header="MobilePhone" Width ="120" DisplayMemberBinding="{Binding MobilePhone}"/>
                     <GridViewColumn Header="HomePhone" Width ="120" DisplayMemberBinding="{Binding HomePhone}"/>
                     <GridViewColumn Header="BusinessPhone" Width="120" DisplayMemberBinding="{Binding BusinessPhone}"/>
-                    <GridViewColumn Header="HomeAddress" Width="120" DisplayMemberBinding="{Binding HomeAddress}"/>
                 </GridView>
             </ListView.View>
         </ListView>
