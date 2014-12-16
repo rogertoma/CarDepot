@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,13 +24,32 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class SaleInfoControl : UserControl, IPropertyPanel
     {
+        public enum DepositTypes
+        {
+            Cash,
+            Credit,
+            Debit,
+            Cheque
+        }
+
+        public enum BrandTypes
+        {
+            None,
+            Rebuilt,
+            Salvage
+        }
+
+        public enum Certified
+        {
+            Yes,
+            No
+        }
+
         VehicleAdminObject _vehicle = null;
 
         public SaleInfoControl()
         {
             InitializeComponent();
-            LblBalanceDue.Visibility = Visibility.Collapsed;
-            LblBalanceDueTitle.Visibility = Visibility.Collapsed;
         }
 
         public void LoadPanel(IAdminObject item)
@@ -38,8 +59,99 @@ namespace CarDepot.Controls.VehicleControls
             _vehicle = item as VehicleAdminObject;
 
             LoadAllChildren(SaleInfoGrid, item);
+            LoadAllChildren(WarrantyGrid, item);
+            LoadAllChildren(TradeInGrid, item);
 
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+
+            LoadComboBoxes();
+        }
+
+        private void LoadComboBoxes()
+        {
+            #region Deposit Type
+            string foundDepositType = _vehicle.GetValue(PropertyId.SaleDepositType);
+            DepositTypes depositType = DepositTypes.Cash;
+            bool foundVehicleDepositType = false;
+            if (!string.IsNullOrEmpty(foundDepositType))
+            {
+                foundVehicleDepositType = true;
+                depositType = (DepositTypes)Enum.Parse(typeof(DepositTypes), foundDepositType, true);
+            }
+
+            int foundIndex = -1;
+
+            cmbSaleDepositeType.Items.Add("");
+            foreach (DepositTypes vendor in (DepositTypes[])Enum.GetValues(typeof(DepositTypes)))
+            {
+                cmbSaleDepositeType.Items.Add(vendor.ToString());
+                if (foundVehicleDepositType && vendor == depositType)
+                {
+                    foundIndex = cmbSaleDepositeType.Items.Count - 1;
+                }
+            }
+
+            if (foundIndex != -1)
+            {
+                cmbSaleDepositeType.SelectedIndex = foundIndex;
+            }
+            #endregion
+
+            #region BrandType
+            string foundBrandType = _vehicle.GetValue(PropertyId.SaleBrand);
+            BrandTypes brandType = BrandTypes.None;
+            bool foundVehicleBrandType = false;
+            if (!string.IsNullOrEmpty(foundBrandType))
+            {
+                foundVehicleBrandType = true;
+                brandType = (BrandTypes)Enum.Parse(typeof(BrandTypes), foundBrandType, true);
+            }
+
+            foundIndex = -1;
+
+            cmbBrand.Items.Add("");
+            foreach (BrandTypes vendor in (BrandTypes[])Enum.GetValues(typeof(BrandTypes)))
+            {
+                cmbBrand.Items.Add(vendor.ToString());
+                if (foundVehicleBrandType && vendor == brandType)
+                {
+                    foundIndex = cmbBrand.Items.Count - 1;
+                }
+            }
+
+            if (foundIndex != -1)
+            {
+                cmbBrand.SelectedIndex = foundIndex;
+            }
+            #endregion
+
+            #region Certified
+            string foundSafetyCertificateType = _vehicle.GetValue(PropertyId.SaleSafetyCertificate);
+            Certified SafetyCertificateType = Certified.No;
+            bool foundVehicleSafetyCertificateType = false;
+            if (!string.IsNullOrEmpty(foundSafetyCertificateType))
+            {
+                foundVehicleSafetyCertificateType = true;
+                SafetyCertificateType = (Certified)Enum.Parse(typeof(Certified), foundSafetyCertificateType, true);
+            }
+
+            foundIndex = -1;
+
+            cmbSafetyCertificate.Items.Add("");
+            foreach (Certified vendor in (Certified[])Enum.GetValues(typeof(Certified)))
+            {
+                cmbSafetyCertificate.Items.Add(vendor.ToString());
+                if (foundVehicleSafetyCertificateType && vendor == SafetyCertificateType)
+                {
+                    foundIndex = cmbSafetyCertificate.Items.Count - 1;
+                }
+            }
+
+            if (foundIndex != -1)
+            {
+                cmbSafetyCertificate.SelectedIndex = foundIndex;
+            }
+            #endregion
         }
 
         public void ApplyUiMode()
@@ -73,8 +185,11 @@ namespace CarDepot.Controls.VehicleControls
                 Panel isPanel = child as Panel;
                 if (isPanel != null)
                     LoadAllChildren(isPanel, item);
+
             }
         }
+
+
 
         private void TxtCustomerId_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -88,84 +203,73 @@ namespace CarDepot.Controls.VehicleControls
             }
             if (cache.Count > 0)
             {
-                customerInfoControl.LoadPanel(cache[0]);
-                customerInfoControl.Visibility = System.Windows.Visibility.Visible;
+                CustomerAdminObject customer = cache[0];
+                lblCustomerFound.Content = customer.FirstName + " " + customer.LastName;
             }
             else
             {
-                customerInfoControl.Visibility = System.Windows.Visibility.Hidden;
+                lblCustomerFound.Content = "";
             }
 
         }
-
-/*        private void TxtSalePrice_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            double result;
-            Utilities.StringToDouble(TxtSalePrice.Text, out result);
-
-            double hst = result * Settings.HST;
-            TxtSaleHst.Text = "$" + hst.ToString("F");
-
-        }*/
-/*
-
-        private void CalculateHST_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            double salePrice, warranty, financeFee, tradeIn;
-
-            Utilities.StringToDouble(TxtSalePrice.Text, out salePrice);
-            Utilities.StringToDouble(TxtWarrantyCost.Text, out warranty);
-            Utilities.StringToDouble(TxtFinanceCost.Text, out financeFee);
-            Utilities.StringToDouble(TxtTradeInCost.Text, out tradeIn);
-
-            double totalHst = (salePrice + warranty + financeFee + tradeIn) * Settings.HST;
-            TxtSaleHst.Text = "$" + totalHst.ToString("F");
-        }
-*/
 
         private void CalculateTotal_TextChanged(object sender, TextChangedEventArgs e)
         {
-            double salePrice, warranty, financeFee, tradeIn, hst, licenseFee, lienRegistrationFee;
+            double salePrice = 0,
+                warranty = 0,
+                financeFee = 0,
+                accessorys = 0,
+                tradeIn = 0,
+                licenseFee = 0,
+                payoutLienOnTrade = 0,
+                deposit = 0,
+                bankAdminFee = 0,
+                lienRegistrationFee = 0;
 
             Utilities.StringToDouble(TxtSalePrice.Text, out salePrice);
-            Utilities.StringToDouble(TxtWarrantyCost.Text, out warranty);
+            // TODO: Calculate Warranty
+            Utilities.StringToDouble(txtWarrantyCost.Text, out warranty);
             Utilities.StringToDouble(TxtFinanceCost.Text, out financeFee);
-            Utilities.StringToDouble(TxtTradeInCost.Text, out tradeIn);
+            Utilities.StringToDouble(TxtAccessoryCost.Text, out accessorys);
 
-            Utilities.StringToDouble(TxtSaleHst.Text, out hst);
+            double subTotal1 = salePrice + warranty + financeFee + accessorys;
+            txtSubTotal.Text = "$" + subTotal1.ToString("F");
+
+            Utilities.StringToDouble(TxtTradeInCost.Text, out tradeIn);
+            double netDifference = subTotal1 - tradeIn;
+            txtNetDifference.Text = "$" + netDifference.ToString("F");
+
+            double hst = netDifference*Settings.HST;
+            txtSalesTax.Text = "$" + hst.ToString("F");
+
             Utilities.StringToDouble(TxtLicensingFee.Text, out licenseFee);
+            Utilities.StringToDouble(TxtPayoutLienOnTradeIn.Text, out payoutLienOnTrade);
+
+            double subTotal2 = netDifference + hst + licenseFee + payoutLienOnTrade;
+            txtSubTotal2.Text = "$" + subTotal2.ToString("F");
+
+            Utilities.StringToDouble(TxtCustomerPayment.Text, out deposit);
+            Utilities.StringToDouble(TxtBankAdminFee.Text, out bankAdminFee);
             Utilities.StringToDouble(TxtLienRegistrationFee.Text, out lienRegistrationFee);
 
-            double totalHst = (salePrice + warranty + financeFee - tradeIn)*Settings.HST;
-            TxtSaleHst.Text = "$" + totalHst.ToString("F");
-
-            double totalCost = salePrice + warranty + financeFee - tradeIn + totalHst + licenseFee + lienRegistrationFee;
-            TxtTotalDue.Text = "$" + totalCost.ToString("F");
+            double totalDue = subTotal2 - deposit + bankAdminFee + lienRegistrationFee;
+            txtTotalBalanceDue.Text = "$" + totalDue.ToString("F");
         }
 
-        private void TxtTotalDue_TextChanged(object sender, TextChangedEventArgs e)
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            double totalDue = 0;
-            Utilities.StringToDouble(TxtTotalDue.Text, out totalDue);
-
-            if (totalDue != 0)
+            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog();
+            dialog.PageRangeSelection = PageRangeSelection.AllPages;
+            dialog.UserPageRangeEnabled = true;
+            // Display the dialog. This returns true if the user presses the Print button.
+            Nullable<Boolean> print = dialog.ShowDialog();
+            if (print == true)
             {
-                LblBalanceDue.Visibility = Visibility.Visible;
-                LblBalanceDueTitle.Visibility = Visibility.Visible;
-
-                double customerPayment = 0;
-                Utilities.StringToDouble(TxtCustomerPayment.Text, out customerPayment);
-                totalDue -= customerPayment;
-                LblBalanceDue.Content = "$" + totalDue.ToString("F");
-            
-            }
-            else
-            {
-                LblBalanceDue.Visibility = Visibility.Collapsed;
-                LblBalanceDueTitle.Visibility = Visibility.Collapsed;
+                
+                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, dialog, sender, e);
+                
             }
         }
-
 
     }
 }

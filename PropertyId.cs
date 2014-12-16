@@ -39,6 +39,7 @@ namespace CarDepot
         Picture,
         MainTabPages,
         Permissions,
+        RegistrationNumber,
 
         //Customer PropertId's
         FirstName,
@@ -90,11 +91,30 @@ namespace CarDepot
         SaleHst,
         SaleWarrantyCost,
         SaleWarrantyProvider,
+        SaleWarrantyMonths,
+        SaleWarrantyKMs,
+        SaleWarrantyDescription,
+        SaleDeliveryDate,
+        
+        SaleTradeInYear,
+        SaleTradeInMake,
+        SaleTradeInModel,
+        SaleTradeInColour,
+        SaleTradeInVIN,
+        SaleTradeInMileage,
+
         SaleLicenseFee,
+        SalePayoutLienOnTradeIn,
+        SaleBankAdminFee,
         SaleLienRegistrationFee,
         SaleFinanceCost,
         SaleTradeInCost,
         SaleDealerReserve,
+        SaleAccessoryCost,
+        SaleDepositType,
+        SaleBrand,
+        SaleSafetyCertificate,
+        SaleComments,
         //SaleFees,               // aka ministry license
         SaleTotalDue,             // salefees + saleHST + salePrice
         SaleCustomerPayment,

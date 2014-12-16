@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
 
@@ -13,6 +15,7 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class BasicVehicleInfoControl : UserControl, IPropertyPanel
     {
+        private IAdminObject _item = null;
         private PropertyId[] basicIds = { PropertyId.Bodystyle, PropertyId.Engine, PropertyId.Fueltype, 
                                             PropertyId.DriveTrain, PropertyId.Transmission, PropertyId.ExtColor, PropertyId.IntColor, 
                                             PropertyId.Mileage, PropertyId.StockNumber, PropertyId.ModelCode, 
@@ -24,6 +27,7 @@ namespace CarDepot.Controls.VehicleControls
 
         public void LoadPanel(IAdminObject item)
         {
+            _item = item;
             LoadBasicIds(item);
             LoadAllChildren(BasicVehicleInfo, item);
         }
@@ -106,6 +110,23 @@ namespace CarDepot.Controls.VehicleControls
             }
 
             return adminLabelTextboxes;
+        }
+
+        private void btnPrintBrochure_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog();
+            dialog.PageRangeSelection = PageRangeSelection.AllPages;
+            dialog.UserPageRangeEnabled = true;
+            // Display the dialog. This returns true if the user presses the Print button.
+            Nullable<Boolean> print = dialog.ShowDialog();
+            if (print == true)
+            {
+                VehicleAdminObject vehicle = _item as VehicleAdminObject;
+                if (vehicle != null)
+                {
+                    PrintCar printCurrentCar = new PrintCar(vehicle, sender, e);
+                }
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace CarDepot
         List<string> _mainTabPages = new List<string>(); 
         public string Name { get; set; }
         public string Password { get; set; }
+        public string RegistrationNumer { get; set; }
         public string PicturePath { get; set; }
         List<IPropertyPanel> _openedPages = new List<IPropertyPanel>();
         List<PermissionTypes> _permissions = new List<PermissionTypes>();

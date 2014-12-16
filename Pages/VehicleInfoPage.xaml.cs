@@ -406,18 +406,5 @@ namespace CarDepot
 
         }
 
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog();
-            dialog.PageRangeSelection = PageRangeSelection.AllPages;
-            dialog.UserPageRangeEnabled = true;
-            // Display the dialog. This returns true if the user presses the Print button.
-            Nullable<Boolean> print = dialog.ShowDialog();
-            if (print == true)
-            {
-                PrintCar printCurrentCar = new PrintCar(_vehicle, sender, e);
-            }
-            return;
-        }
     }
 }

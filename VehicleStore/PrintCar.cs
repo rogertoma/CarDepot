@@ -85,24 +85,6 @@ namespace CarDepot.VehicleStore
 
             #endregion
 
-            //#region BiWeeklyRate
-
-            //string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_PRINT_BIWEEKLYRATE, Strings.INFORMATION);
-            //if (!string.IsNullOrEmpty(result))
-            //{
-            //    using (Font font = new Font("Calibri (Body)", 16, FontStyle.Bold))
-            //    {
-            //        string listPrice = currVehicle.ListPrice;
-            //        if (!listPrice.Contains("$"))
-            //        {
-            //            listPrice = @"$" + listPrice;
-            //        }
-            //        e.Graphics.DrawString(listPrice, font, Brushes.Black, backgroundXPos + 505, backgroundYPos + 150);
-            //    }
-            //}
-
-            //#region
-
         }
     }
 }

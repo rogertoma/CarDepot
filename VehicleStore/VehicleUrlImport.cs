@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Net;
 using System.IO;
 using CarDepot.Resources;
+using ExcelLibrary.BinaryFileFormat;
 
 namespace CarDepot.VehicleStore
 {
@@ -59,92 +60,120 @@ namespace CarDepot.VehicleStore
                 inStream.Close();
                 res.Close();
 
-                string brochurePattern = "(/ebrochure.htm.*)(?=[\"])";
-                Regex rxImage = new Regex(@"(?<=<a\s?href=.{1})(.*\.jpg)");
-                Regex enginePattern = new Regex(@"(?<=<dt><span>Engine</span></dt><dd><span>)(.*)(?=</span></dd>)");
-                Regex bodyPattern = new Regex(@"(?<=<dt><span>Bodystyle</span></dt><dd><span>)(.*)(?=</span></dd>)");
-                Regex fuelPattern = new Regex(@"(?<=<dt><span>Fuel Type</span></dt><dd><span>)(.*)(?=</span></dd>)");
-                Regex colorPattern = new Regex(@"(?<=<dt><span>Ext. Colour</span></dt><dd><span>)(.*)(?=</span></dd>)");
-                Regex transmissionPattern = new Regex(@"(?<=<dt><span>Transmission</span></dt><dd><span>)(.*)(?=</span></dd>)");
-                Regex interiorColorPattern = new Regex(@"(?<=<dt><span>Int. Colour</span></dt><dd><span>)(.*)(?=</span></dd>)");
-                string mileagePattern = "(?<=<span>Kilometres</span></dt><dd class=\"mileageValue\"><span>)(.*)(?=</span></dd>)";
-                Regex stockNumberPattern = new Regex(@"(?<=<dt><span>Stock Number</span></dt><dd><span>)(.*)(?=</span></dd>)");
+                //Exterior Color
+                string exteriorColor = "Exterior Colour:\n</strong>\n<span class=\"value\">";
+                int startIndex = page.IndexOf(exteriorColor, System.StringComparison.Ordinal);
+                int length = page.IndexOf("</", startIndex + exteriorColor.Length, System.StringComparison.Ordinal) - startIndex - exteriorColor.Length;
+                string foundExteriorColor = page.Substring(startIndex + exteriorColor.Length, length);
+                dataMap.Add(PropertyId.ExtColor, foundExteriorColor.Trim());
 
-                Match brochureLink = Regex.Match(page, brochurePattern);
-                MatchCollection matches = rxImage.Matches(page);
-                Match engine = enginePattern.Match(page);
-                Match body = bodyPattern.Match(page);
-                Match fuel = fuelPattern.Match(page);
-                Match color = colorPattern.Match(page);
-                Match transmission = transmissionPattern.Match(page);
-                Match interiorColor = interiorColorPattern.Match(page);
-                Match mileage = Regex.Match(page, mileagePattern);
-                Match stockNumber = stockNumberPattern.Match(page);
+                string bodyStyle = "bodyStyle: '";
+                startIndex = page.IndexOf(bodyStyle, System.StringComparison.Ordinal);
+                length = page.IndexOf("'", startIndex + bodyStyle.Length, System.StringComparison.Ordinal) - startIndex - bodyStyle.Length;
+                string foundBodyStyle = page.Substring(startIndex + bodyStyle.Length, length);
+                dataMap.Add(PropertyId.Bodystyle, foundBodyStyle.Trim());
 
-                foreach (Match m in matches)
+                string Year = "year: '";
+                startIndex = page.IndexOf(Year, System.StringComparison.Ordinal);
+                length = page.IndexOf("'", startIndex + Year.Length, System.StringComparison.Ordinal) - startIndex - Year.Length;
+                string foundYear = page.Substring(startIndex + Year.Length, length);
+                dataMap.Add(PropertyId.Year, foundYear.Trim());
+
+                string Make = "make: '";
+                startIndex = page.IndexOf(Make, System.StringComparison.Ordinal);
+                length = page.IndexOf("'", startIndex + Make.Length, System.StringComparison.Ordinal) - startIndex - Make.Length;
+                string foundMake = page.Substring(startIndex + Make.Length, length);
+                dataMap.Add(PropertyId.Make, foundMake.Trim());
+
+                string Model = "model: '";
+                startIndex = page.IndexOf(Model, System.StringComparison.Ordinal);
+                length = page.IndexOf("'", startIndex + Model.Length, System.StringComparison.Ordinal) - startIndex - Model.Length;
+                string foundModel = page.Substring(startIndex + Model.Length, length);
+                dataMap.Add(PropertyId.Model, foundModel.Trim());
+
+                string Transmission = "Transmission:\n</strong>\n<span class=\"value\">";
+                startIndex = page.IndexOf(Transmission, System.StringComparison.Ordinal);
+                length = page.IndexOf("<", startIndex + Transmission.Length, System.StringComparison.Ordinal) - startIndex - Transmission.Length;
+                string foundTransmission = page.Substring(startIndex + Transmission.Length, length);
+                dataMap.Add(PropertyId.Transmission, foundTransmission.Trim());
+
+                string Engine = "Engine:\n</strong>\n<span class=\"value\">";
+                startIndex = page.IndexOf(Engine, System.StringComparison.Ordinal);
+                length = page.IndexOf("<", startIndex + Engine.Length, System.StringComparison.Ordinal) - startIndex - Engine.Length;
+                string foundEngine = page.Substring(startIndex + Engine.Length, length);
+                dataMap.Add(PropertyId.Engine, foundEngine.Trim());
+
+                string StockNumber = "Stock #:\n</strong>\n<span class=\"value\">";
+                startIndex = page.IndexOf(StockNumber, System.StringComparison.Ordinal);
+                length = page.IndexOf("<", startIndex + StockNumber.Length, System.StringComparison.Ordinal) - startIndex - StockNumber.Length;
+                string foundStockNumber = page.Substring(startIndex + StockNumber.Length, length);
+                dataMap.Add(PropertyId.StockNumber, foundStockNumber.Trim());
+
+                string Mileage = "Kilometres:\n</strong>\n<span class=\"value\">";
+                startIndex = page.IndexOf(Mileage, System.StringComparison.Ordinal);
+                length = page.IndexOf(" km", startIndex + Mileage.Length, System.StringComparison.Ordinal) - startIndex - Mileage.Length;
+                string foundMileage = page.Substring(startIndex + Mileage.Length, length);
+                dataMap.Add(PropertyId.Mileage, foundMileage.Trim());
+
+
+                string Price = "<strong class=\"h1 price\">";
+                startIndex = page.IndexOf(Price, System.StringComparison.Ordinal);
+                length = page.IndexOf("<", startIndex + Price.Length, System.StringComparison.Ordinal) - startIndex - Price.Length;
+                string foundPrice = page.Substring(startIndex + Price.Length, length);
+                dataMap.Add(PropertyId.ListPrice, foundPrice.Trim());
+
+                string Trim = "<h1> " + foundYear + " " + foundMake + " " + foundModel;
+                startIndex = page.IndexOf(Trim, System.StringComparison.Ordinal);
+                length = page.IndexOf("<", startIndex + Trim.Length, System.StringComparison.Ordinal) - startIndex - Trim.Length;
+                string foundTrim = page.Substring(startIndex + Trim.Length, length);
+                dataMap.Add(PropertyId.Trim, foundTrim.Trim());
+
+                // Load Images
+                string linkHeader = "<a href=\"";
+                startIndex = 0;
+                int foundIndex = page.IndexOf(linkHeader, startIndex, System.StringComparison.Ordinal);
+                while (foundIndex != -1)
                 {
-                    Uri path = new Uri(m.ToString());
-                    WebClient downloadClient = new WebClient();
-                    string tempOutputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
-                    downloadClient.DownloadFile(path, tempOutputFile);
-                    string outputFile = Settings.MoveToItemImageFolder(vehicle, tempOutputFile);
-                    imagePaths.Add(new string[] { PropertyId.VehicleImage.ToString(), outputFile });
-                    File.Delete(tempOutputFile);
+                    startIndex = foundIndex;
+                    int stringLength = page.IndexOf("\"", startIndex + linkHeader.Length, System.StringComparison.Ordinal) - foundIndex -
+                                       linkHeader.Length;
+
+                    string foundLink = page.Substring(foundIndex + linkHeader.Length, stringLength);
+                    if (foundLink.EndsWith(".jpg"))
+                    {
+                        WebClient downloadClient = new WebClient();
+                        string tempOutputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
+                        downloadClient.DownloadFile(foundLink, tempOutputFile);
+                        string outputFile = Settings.MoveToItemImageFolder(vehicle, tempOutputFile);
+                        imagePaths.Add(new string[] { PropertyId.VehicleImage.ToString(), outputFile });
+                        File.Delete(tempOutputFile);
+                    }
+
+                    foundIndex = page.IndexOf(linkHeader, startIndex + 1, System.StringComparison.Ordinal);
                 }
 
-                dataMap.Add(PropertyId.Fueltype, fuel.ToString().Trim());
-                dataMap.Add(PropertyId.ExtColor, color.ToString().Trim());
-                dataMap.Add(PropertyId.IntColor, interiorColor.ToString().Trim());
-                dataMap.Add(PropertyId.Bodystyle, body.ToString().Trim());
-                dataMap.Add(PropertyId.Transmission, transmission.ToString().Trim());
-                dataMap.Add(PropertyId.Engine, engine.ToString().Trim());
-                dataMap.Add(PropertyId.Mileage, mileage.ToString().Trim());
-                dataMap.Add(PropertyId.Images, imagePaths);
-                dataMap.Add(PropertyId.StockNumber, stockNumber.ToString().Trim());
-
-                getBrochure(host + brochureLink.ToString());
                 result = VehicleImportStatus.PASS;
             }
-        }
-
-        private void getBrochure(string brochureLink)
-        {
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(brochureLink);
-            HttpWebResponse res = (HttpWebResponse)req.GetResponse();
-            StreamReader inStream = new StreamReader(res.GetResponseStream());
-
-            string brochure = inStream.ReadToEnd();
-            inStream.Close();
-            res.Close();
-
-            string yearPattern = "(?<=<div id=\"ebVehicleTitle\">)(\\d{4})(?=.+</div>)";
-            string makePattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4})\\s)(\\w+)(?=\\s.*</div>)";
-            string modelPattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4})\\s(\\w+)\\s)(\\w+)(?=\\s.*</div>)";
-            string trimPattern = "(?<=<div id=\"ebVehicleTitle\">(\\d{4}\\s(\\w+)\\s(\\w+)\\s))(.*)(?=</div>)";
-            //Regex doorPattern = new Regex(@"(?<=<span>Doors:</span>)[^<]+(?=<br />)");
-            Regex pricePattern = new Regex(@"(?<=Internet Price:)[^<]+(?=<br/>)");
-
-            Match year = Regex.Match(brochure, yearPattern);
-            Match make = Regex.Match(brochure, makePattern);
-            Match model = Regex.Match(brochure, modelPattern);
-            Match trim = Regex.Match(brochure, trimPattern);
-            //Match door = doorPattern.Match(brochure);
-            Match listPrice = pricePattern.Match(brochure);
-
-            dataMap.Add(PropertyId.Year, year.ToString().Trim());
-            dataMap.Add(PropertyId.Make, make.ToString().Trim());
-            dataMap.Add(PropertyId.Model, model.ToString().Trim());
-            dataMap.Add(PropertyId.Trim, trim.ToString().Trim());
-            dataMap.Add(PropertyId.ListPrice, listPrice.ToString().Trim());
         }
 
         public void ApplyVehicleValues() 
         {
             foreach (var vehicleData in dataMap)
             {
-                _vehicle.SetValue(vehicleData.Key, vehicleData.Value);
+                if (!string.IsNullOrEmpty(vehicleData.Value.ToString()))
+                {
+                    if (vehicleData.Key == PropertyId.Mileage)
+                    {
+                        if (!string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.Mileage)))
+                            continue;
+                    }
+
+                    _vehicle.SetValue(vehicleData.Key, vehicleData.Value);
+                }
             }
+
             _vehicle.Images = imagePaths;
+            _vehicle.SetMultiValue(PropertyId.Images, imagePaths);
         }
     }
 }

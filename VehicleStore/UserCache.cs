@@ -109,6 +109,9 @@ namespace CarDepot.VehicleStore
                     case PropertyId.Permissions:
                         ApplyPermissions(user, element.Value);
                         break;
+                    case PropertyId.RegistrationNumber:
+                        user.RegistrationNumer = element.Value;
+                        break;
                     case PropertyId.Picture:
                         if (element.Value.StartsWith("\\"))
                         {
