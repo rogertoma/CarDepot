@@ -19,6 +19,8 @@ namespace CarDepot.VehicleStore
         private VehicleAdminObject currVehicle;
         float backgroundXPos = 5;
         float backgroundYPos = 10;
+        private int numOfPages = 2;
+        private int currentPage = 1;
 
         public PrintInvoice(VehicleAdminObject vehicle, System.Windows.Controls.PrintDialog dialog, Object sender, EventArgs e)
         {
@@ -36,6 +38,28 @@ namespace CarDepot.VehicleStore
         }
 
         private void printInvoice(Object sender, PrintPageEventArgs e)
+        {
+            if (currentPage == 1)
+            {
+                printPageOne(e);
+                currentPage++;
+                e.HasMorePages = true;
+            }
+            else
+            {
+                printPageTwo(e);
+            }
+        }
+
+
+
+        private void printPageTwo(PrintPageEventArgs e)
+        {
+            Image background = Image.FromFile(Settings.Resouces + @"\invoice2.png");
+            e.Graphics.DrawImage(background, backgroundXPos, backgroundXPos, 812, 1070);
+        }
+
+        private void printPageOne(PrintPageEventArgs e)
         {
             #region background
 
