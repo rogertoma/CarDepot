@@ -39,7 +39,7 @@ namespace CarDepot.VehicleStore
 
         private void printInvoice(Object sender, PrintPageEventArgs e)
         {
-            if (currentPage <= 2)
+            if (currentPage == 1)
             {
                 printPageOne(e);
                 currentPage++;
@@ -124,7 +124,7 @@ namespace CarDepot.VehicleStore
                 {
                     using (Font infoFont = new Font("Calibri", 10))
                     {
-                        e.Graphics.DrawString("FINANCE", infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 327);
+                        e.Graphics.DrawString("FINANCE", infoFont, Brushes.Black, backgroundXPos + 577, backgroundYPos + 327);
                     }
 
                     string stringFinanceFee = financeFee.ToString("F");
@@ -137,7 +137,7 @@ namespace CarDepot.VehicleStore
                 {
                     using (Font infoFont = new Font("Calibri", 10))
                     {
-                        e.Graphics.DrawString("ACCESSORIES", infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 351);
+                        e.Graphics.DrawString("ACCESSORIES", infoFont, Brushes.Black, backgroundXPos + 577, backgroundYPos + 351);
                     }
 
                     string stringAccessories = accessories.ToString("F");
@@ -176,7 +176,7 @@ namespace CarDepot.VehicleStore
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLicenseFee), out licensingFee))
                 {
                     string stringLicenseFee = licensingFee.ToString("F");
-                    e.Graphics.DrawString(stringLicenseFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 580);
+                    e.Graphics.DrawString(stringLicenseFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 577);
                 }
 
                 //Payout Lien on Trade
@@ -194,19 +194,20 @@ namespace CarDepot.VehicleStore
 
                 //Deposit
                 double deposit = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleCustomerPayment), out deposit))
+                string depositString = "DEPOSIT ";
+                using (Font infoFont = new Font("Calibri", 7))
                 {
-                    using (Font infoFont = new Font("Calibri", 10))
+                    string paymentType = currVehicle.GetValue(PropertyId.SaleDepositType);
+                    if (!string.IsNullOrEmpty(paymentType))
                     {
-                        string paymentType = currVehicle.GetValue(PropertyId.SaleDepositType);
-                        if (string.IsNullOrEmpty(paymentType))
-                        {
-                            paymentType = "DEPOSIT";
-                        }
-
-                        e.Graphics.DrawString(paymentType.ToUpper(), infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 693);    
+                        depositString += " (" + paymentType + ")";
                     }
 
+                    e.Graphics.DrawString(depositString.ToUpper(), infoFont, Brushes.Black, backgroundXPos + 577, backgroundYPos + 695);
+                }
+
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleCustomerPayment), out deposit))
+                {
                     string stringDeposit = deposit.ToString("F");
                     e.Graphics.DrawString(stringDeposit, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 694);
                 }
@@ -217,7 +218,7 @@ namespace CarDepot.VehicleStore
                 {
                     using (Font infoFont = new Font("Calibri", 7))
                     {
-                        e.Graphics.DrawString("BANK ADMIN", infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 787);
+                        e.Graphics.DrawString("BANK ADMIN", infoFont, Brushes.Black, backgroundXPos + 577, backgroundYPos + 787);
                     }
 
                     string stringBankAdminFee = bankAdminFee.ToString("F");
