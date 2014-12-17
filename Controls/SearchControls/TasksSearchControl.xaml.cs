@@ -79,25 +79,21 @@ namespace CarDepot.Controls.SearchControls
                 foreach (var task in vehicle.VehicleTasks)
                 {
                     if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.AssignedTo) &&
-                        task.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo])
+                        task.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo] &&
+                        !task.Status.ToLower().Equals(VehicleTask.StatusTypes.Completed.ToString().ToLower()))
                     {
                         ListViewItem taskItem = new ListViewItem();
                         taskItem.Content = task;
                         lstTasks.Items.Add(taskItem);
                     }
                     else if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category) &&
-                        task.Category == searchParam[VehicleCacheTaskSearchKey.Category])
+                        task.Category == searchParam[VehicleCacheTaskSearchKey.Category] && 
+                        !task.Status.ToLower().Equals(VehicleTask.StatusTypes.Completed.ToString().ToLower()))
                     {
                         ListViewItem taskItem = new ListViewItem();
                         taskItem.Content = task;
                         lstTasks.Items.Add(taskItem);
                     }
-
-                    /*
-                    ListViewItem taskItem = new ListViewItem();
-                    taskItem.Content = task;
-                    lstTasks.Items.Add(taskItem);
-                    */
                 }
             }
             

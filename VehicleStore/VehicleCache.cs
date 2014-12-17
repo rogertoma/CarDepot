@@ -48,7 +48,46 @@ namespace CarDepot.VehicleStore
             }
         }
 
-        public VehicleCache(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)//:this(vehiclePath)
+        public VehicleCache(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam, bool forceRefresh = false)//:this(vehiclePath)
+        {
+            //useCache = true;
+
+            if (CacheManager.AllVehicleCache == null || forceRefresh)
+            {
+                VehicleCacheSearchDrive(vehiclePath, searchParam);
+            }
+            else
+            {
+                VehicleCacheSearchCache(searchParam);
+            }
+        }
+
+        
+        public void VehicleCacheSearchCache(Dictionary<VehicleCacheSearchKey, string> searchParam)
+        {
+            foreach (VehicleAdminObject vehicleAdminObject in CacheManager.AllVehicleCache)
+            {
+                if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
+                {
+                    continue;
+                }
+                if (string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Year)) ||
+                    string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Make)) ||
+                    string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Model)))
+                {
+                    continue;
+                }
+
+                if (searchParam == null || searchParam.Count == 0 || VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
+                {
+                    vehicleAdminObject.Cache = this;
+                    this.Add(vehicleAdminObject);
+                }
+
+            }
+        }
+
+        public void VehicleCacheSearchDrive(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)
         {
             string[] vehicles = Directory.GetDirectories(vehiclePath);
             foreach (var vehicle in vehicles)
@@ -67,7 +106,7 @@ namespace CarDepot.VehicleStore
                         continue;
                     }
 
-                    if (VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
+                    if (searchParam == null || VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
                     {
                         vehicleAdminObject.Cache = this;
                         this.Add(vehicleAdminObject);
@@ -78,6 +117,43 @@ namespace CarDepot.VehicleStore
         }
 
         public VehicleCache(string vehiclePath, Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
+        {
+            if (CacheManager.ActiveVehicleCache != null)
+            {
+                VehicleCacheSearchCache(searchParam);
+            }
+            else
+            {
+                VehicleCacheSearchDrive(vehiclePath, searchParam);
+            }
+        }
+
+        private void VehicleCacheSearchCache(Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
+        {
+            foreach (VehicleAdminObject temp in CacheManager.AllVehicleCache)
+            {
+                if (!string.IsNullOrEmpty(temp.IsDeleted) && bool.Parse(temp.IsDeleted))
+                {
+                    continue;
+                }
+
+                if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.AssignedTo) &&
+                    temp.VehicleTasks.Any(vehicleTask => (vehicleTask.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
+                {
+                    temp.Cache = this;
+                    this.Add(temp);
+                }
+                else if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category) &&
+                    temp.VehicleTasks.Any(vehicleTask => (vehicleTask.Category == searchParam[VehicleCacheTaskSearchKey.Category] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
+                {
+                    temp.Cache = this;
+                    this.Add(temp);
+                }
+            } 
+        }
+
+        private void VehicleCacheSearchDrive(string vehiclePath,
+            Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
         {
             string[] vehicles = Directory.GetDirectories(vehiclePath);
             foreach (var vehicle in vehicles)
@@ -151,6 +227,8 @@ namespace CarDepot.VehicleStore
                         {
                             return false;
                         }
+
+
 
                         if (String.IsNullOrEmpty(pDate))
                         {
@@ -286,6 +364,14 @@ namespace CarDepot.VehicleStore
             //    _lock.ExitWriteLock();
             //}
 
+            if (CacheManager.AllVehicleCache != null)
+            {
+                CacheManager.AllVehicleCache.RemoveItem(item.ObjectId);
+                VehicleAdminObject vehicle = new VehicleAdminObject(item.ObjectId);
+                vehicle.Cache = CacheManager.AllVehicleCache;
+                CacheManager.AllVehicleCache.Add(vehicle);
+            }
+
             if (ItemUpdate != null)
             {
                 ItemUpdate.Invoke(this, new AdminItemCache.UpdateEventArgs(item.ObjectId, AdminItemCache.UpdateType.ModifyItem));
@@ -293,7 +379,7 @@ namespace CarDepot.VehicleStore
 
             //var vehicles = from v in this where v.ObjectId == item.ObjectId select v;
             //VehicleAdminObject vehicle = vehicles.FirstOrDefault();
-            //Remove(vehicle);
+            //Remove(vehicle);re
             //this.Add((VehicleAdminObject) item);
         }
 
@@ -309,7 +395,15 @@ namespace CarDepot.VehicleStore
 
         public void RemoveItem(string objectId)
         {
-            throw new NotImplementedException();
+
+            foreach (VehicleAdminObject vehicleAdminObject in this)
+            {
+                if (vehicleAdminObject.ObjectId == objectId)
+                {
+                    Remove(vehicleAdminObject);
+                    break;
+                }
+            }
         }
 
         public IAdminObject this[string objectId]

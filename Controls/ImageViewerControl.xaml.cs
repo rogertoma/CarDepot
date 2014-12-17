@@ -46,23 +46,21 @@ namespace CarDepot.Controls
         public void LoadPanel(IAdminObject item)
         {
             _item = item;
-
+            
             ThumbNailWrapPanel.Children.Clear();
-
             if (item == null)
             {
                 LoadDefaultImage();
                 return;
             }
-
             _images = item.GetMultiValue(PropertyId);
-
+            
             if (_images == null || _images.Count == 0)
             {
                 LoadDefaultImage();
                 return;
             }
-
+            
             try
             {
                 LoadVehicleImageLarge(_images[imageLoadIndex][Settings.MultiValueValueIndex]);

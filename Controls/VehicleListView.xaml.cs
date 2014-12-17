@@ -183,7 +183,15 @@ namespace CarDepot.Controls
 
         void item_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Utilities.LoadVehicleInfoWindow(((ListViewItem)sender).Content as VehicleAdminObject);
+            try
+            {
+                Utilities.LoadVehicleInfoWindow(((ListViewItem)sender).Content as VehicleAdminObject);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            
         }
 
         private GridViewColumnHeader lastHeaderClicked = null;

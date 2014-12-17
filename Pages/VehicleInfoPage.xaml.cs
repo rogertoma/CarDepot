@@ -96,16 +96,31 @@ namespace CarDepot
             processVehicleTask.TaskVehicleId = vehicle.Id;
             processVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
             processVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            processVehicleTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            processVehicleTask.AssignedTo = "Mathew Toma";
             processVehicleTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
             processVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(processVehicleTask);
 
+            VehicleTask emissionVehicleTask = new VehicleTask();
+            emissionVehicleTask.Id = "Emission test";
+            emissionVehicleTask.TaskVehicleId = vehicle.Id;
+            emissionVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            emissionVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            emissionVehicleTask.AssignedTo = CacheManager.UserCache.SystemAdminAccount.Name;
+            emissionVehicleTask.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            emissionVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
+            vehicle.VehicleTasks.Add(emissionVehicleTask);
+
             vehicle.Save(null);
+
+            vehicle.Cache = CacheManager.AllVehicleCache;
+            CacheManager.AllVehicleCache.Add(vehicle);
 
             return vehicle;
 
             //TODO: add this vehicle to some cache.
+            
+
         }
 
         public VehicleInfoWindow(VehicleAdminObject vehicle, VehicleInfoWindowTabs startTab)
@@ -327,6 +342,15 @@ namespace CarDepot
                 cache.Add(_vehicle);
                 _vehicle.Cache = cache;
             }
+
+            if (CacheManager.AllVehicleCache != null)
+            {
+                CacheManager.AllVehicleCache.RemoveItem(_vehicle.ObjectId);
+                VehicleAdminObject temp = new VehicleAdminObject(_vehicle.ObjectId);
+                temp.Cache = CacheManager.AllVehicleCache;
+                CacheManager.AllVehicleCache.Add(temp);
+            }
+
             LoadPanel(_vehicle);
         }
 

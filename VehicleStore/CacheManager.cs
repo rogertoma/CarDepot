@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using CarDepot.Resources;
 
 namespace CarDepot.VehicleStore
 {
@@ -12,6 +13,7 @@ namespace CarDepot.VehicleStore
     {        
         private static UserCache _userCache = null;
         private static ActiveVehicleCache _activeVehicleCache = null;
+        private static VehicleCache _allVehicleCache = null;
         private static UserAdminObject _activeUser = null;
         private static TabControl _mainTabControl = null;
 
@@ -31,7 +33,7 @@ namespace CarDepot.VehicleStore
         private static void LoadCache()
         {
             _userCache = new UserCache();
-            //_activeVehicleCache = new ActiveVehicleCache();
+            _allVehicleCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>());
         }
 
         public static VehicleCache ActiveVehicleCache
@@ -44,6 +46,15 @@ namespace CarDepot.VehicleStore
                 }
                 return _activeVehicleCache;
             }
+        }
+
+        public static VehicleCache AllVehicleCache
+        {
+            get
+            {
+                return _allVehicleCache;
+            }
+            set { _allVehicleCache = value; }
         }
 
         public static UserCache UserCache

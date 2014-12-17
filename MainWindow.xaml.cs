@@ -113,6 +113,10 @@ namespace CarDepot
             {
                 ControlSwitchCount++;
             }
+            else if (e.Key == Key.F5)
+            {
+                CacheManager.AllVehicleCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>(), true);
+            }
             else
             {
                 ControlSwitchCount = 0;
