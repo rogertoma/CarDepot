@@ -19,7 +19,7 @@ namespace CarDepot.VehicleStore
         private VehicleAdminObject currVehicle;
         float backgroundXPos = 5;
         float backgroundYPos = 10;
-        private int numOfPages = 2;
+        private int numOfPages = 3;
         private int currentPage = 1;
 
         public PrintInvoice(VehicleAdminObject vehicle, System.Windows.Controls.PrintDialog dialog, Object sender, EventArgs e)
@@ -39,7 +39,7 @@ namespace CarDepot.VehicleStore
 
         private void printInvoice(Object sender, PrintPageEventArgs e)
         {
-            if (currentPage == 1)
+            if (currentPage <= 2)
             {
                 printPageOne(e);
                 currentPage++;
@@ -64,7 +64,7 @@ namespace CarDepot.VehicleStore
             #region background
 
             Image background = Image.FromFile(Settings.Resouces + @"\invoice.png");
-            e.Graphics.DrawImage(background, backgroundXPos, backgroundXPos, 812, 1070);
+            e.Graphics.DrawImage(background, backgroundXPos, backgroundXPos, 800, 1070);
 
             #endregion
 
@@ -107,7 +107,7 @@ namespace CarDepot.VehicleStore
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePrice), out salePrice))
                 {
                     string stringSalePrice = salePrice.ToString("F");
-                    e.Graphics.DrawString(stringSalePrice, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 285);
+                    e.Graphics.DrawString(stringSalePrice, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 285);
                 }
 
                 //Warranty
@@ -115,7 +115,7 @@ namespace CarDepot.VehicleStore
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleWarrantyCost), out warranty))
                 {
                     string stringWarranty = warranty.ToString("F");
-                    e.Graphics.DrawString(stringWarranty, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 306);
+                    e.Graphics.DrawString(stringWarranty, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 306);
                 }
 
                 // Finance Fee
@@ -124,37 +124,37 @@ namespace CarDepot.VehicleStore
                 {
                     using (Font infoFont = new Font("Calibri", 10))
                     {
-                        e.Graphics.DrawString("FINANCE", infoFont, Brushes.Black, backgroundXPos + 585, backgroundYPos + 327);
+                        e.Graphics.DrawString("FINANCE", infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 327);
                     }
 
                     string stringFinanceFee = financeFee.ToString("F");
-                    e.Graphics.DrawString(stringFinanceFee, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 328);
+                    e.Graphics.DrawString(stringFinanceFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 328);
                 }
 
                 // Accessories Fee
                 double accessories = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFinanceCost), out accessories))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleAccessoryCost), out accessories))
                 {
                     using (Font infoFont = new Font("Calibri", 10))
                     {
-                        e.Graphics.DrawString("ACCESSORIES", infoFont, Brushes.Black, backgroundXPos + 585, backgroundYPos + 351);
+                        e.Graphics.DrawString("ACCESSORIES", infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 351);
                     }
 
                     string stringAccessories = accessories.ToString("F");
-                    e.Graphics.DrawString(stringAccessories, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 352);
+                    e.Graphics.DrawString(stringAccessories, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 352);
                 }
 
                 // Subtotal
                 double subTotal = accessories + financeFee + warranty + salePrice;
                 string stringSubTotal = subTotal.ToString("F");
-                e.Graphics.DrawString(stringSubTotal, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 466);
+                e.Graphics.DrawString(stringSubTotal, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 466);
 
                 // Trade In Allowance
                 double tradeInAllowance = 0;
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTradeInCost), out tradeInAllowance))
                 {
                     string stringTradeInAllowance = tradeInAllowance.ToString("F");
-                    e.Graphics.DrawString(stringTradeInAllowance, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 490);
+                    e.Graphics.DrawString(stringTradeInAllowance, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 490);
                 }
 
                 // Net difference
@@ -162,21 +162,21 @@ namespace CarDepot.VehicleStore
                 if (netDifference != subTotal)
                 {
                     string stringNetDifference = netDifference.ToString("F");
-                    e.Graphics.DrawString(stringNetDifference, font, Brushes.Black, backgroundXPos + 730,
+                    e.Graphics.DrawString(stringNetDifference, font, Brushes.Black, backgroundXPos + 715,
                         backgroundYPos + 512);
                 }
 
                 //Hst
                 double hst = netDifference * Settings.HST;
                 string stringHST = hst.ToString("F");
-                e.Graphics.DrawString(stringHST, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 535);
+                e.Graphics.DrawString(stringHST, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 535);
 
                 //Licensing Fee
                 double licensingFee = 0;
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLicenseFee), out licensingFee))
                 {
                     string stringLicenseFee = licensingFee.ToString("F");
-                    e.Graphics.DrawString(stringLicenseFee, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 580);
+                    e.Graphics.DrawString(stringLicenseFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 580);
                 }
 
                 //Payout Lien on Trade
@@ -184,13 +184,13 @@ namespace CarDepot.VehicleStore
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePayoutLienOnTradeIn), out payOutLien))
                 {
                     string stringPayOutLien = payOutLien.ToString("F");
-                    e.Graphics.DrawString(stringPayOutLien, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 626);
+                    e.Graphics.DrawString(stringPayOutLien, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 626);
                 }
 
                 // Subtotal 2
                 double subTotal2 = netDifference + hst + licensingFee + payOutLien;
                 string stringSubTotal2 = subTotal2.ToString("F");
-                e.Graphics.DrawString(stringSubTotal2, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 671);
+                e.Graphics.DrawString(stringSubTotal2, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 671);
 
                 //Deposit
                 double deposit = 0;
@@ -204,11 +204,11 @@ namespace CarDepot.VehicleStore
                             paymentType = "DEPOSIT";
                         }
 
-                        e.Graphics.DrawString(paymentType.ToUpper(), infoFont, Brushes.Black, backgroundXPos + 585, backgroundYPos + 693);    
+                        e.Graphics.DrawString(paymentType.ToUpper(), infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 693);    
                     }
 
                     string stringDeposit = deposit.ToString("F");
-                    e.Graphics.DrawString(stringDeposit, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 694);
+                    e.Graphics.DrawString(stringDeposit, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 694);
                 }
 
                 //BankAdminFee
@@ -217,11 +217,11 @@ namespace CarDepot.VehicleStore
                 {
                     using (Font infoFont = new Font("Calibri", 7))
                     {
-                        e.Graphics.DrawString("BANK ADMIN", infoFont, Brushes.Black, backgroundXPos + 585, backgroundYPos + 787);
+                        e.Graphics.DrawString("BANK ADMIN", infoFont, Brushes.Black, backgroundXPos + 580, backgroundYPos + 787);
                     }
 
                     string stringBankAdminFee = bankAdminFee.ToString("F");
-                    e.Graphics.DrawString(stringBankAdminFee, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 785);
+                    e.Graphics.DrawString(stringBankAdminFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 785);
                 }
 
                 //Lien Registration Fee
@@ -229,7 +229,7 @@ namespace CarDepot.VehicleStore
                 if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLienRegistrationFee), out lienRegistrationFee))
                 {
                     string stringLienRegistrationFee = lienRegistrationFee.ToString("F");
-                    e.Graphics.DrawString(stringLienRegistrationFee, font, Brushes.Black, backgroundXPos + 730, backgroundYPos + 809);
+                    e.Graphics.DrawString(stringLienRegistrationFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 809);
                 }
 
                 //Total Due
@@ -237,7 +237,7 @@ namespace CarDepot.VehicleStore
                 string stringTotalDue = totalDue.ToString("F");
                 using (Font infoFont = new Font("Calibri", 14))
                 {
-                    e.Graphics.DrawString(stringTotalDue, infoFont, Brushes.Black, backgroundXPos + 710,
+                    e.Graphics.DrawString(stringTotalDue, infoFont, Brushes.Black, backgroundXPos + 695,
                         backgroundYPos + 900);
                 }
             }
@@ -255,13 +255,13 @@ namespace CarDepot.VehicleStore
 
                 e.Graphics.DrawString(currVehicle.GetValue(PropertyId.SaleTradeInColour), font, Brushes.Black, backgroundXPos + 263, backgroundYPos + 385);
 
-                int xPos = 4;
+                int xPos = 9;
                 if (!string.IsNullOrEmpty(currVehicle.GetValue(PropertyId.SaleTradeInVIN)))
                 {
                     foreach (char vinChar in currVehicle.GetValue(PropertyId.SaleTradeInVIN))
                     {
                         e.Graphics.DrawString(vinChar.ToString(), font, Brushes.Black, backgroundXPos + xPos, backgroundYPos + 410);
-                        xPos += 18;
+                        xPos += 17;
                     }
                 }
 
@@ -279,7 +279,7 @@ namespace CarDepot.VehicleStore
                         xPos += 22;
                     }
 
-                    e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 164, backgroundYPos + 444);
+                    e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 162, backgroundYPos + 444);
                 }
 
                 
@@ -293,14 +293,14 @@ namespace CarDepot.VehicleStore
             {
                 using (Font font = new Font("Calibri (Body)", 10))
                 {
-                    e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 544, backgroundYPos + 430);
+                    e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 536, backgroundYPos + 430);
                 }
                 return;
             }
 
             using (Font font = new Font("Calibri (Body)", 10))
             {
-                e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 511, backgroundYPos + 430);
+                e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 503, backgroundYPos + 430);
 
                 e.Graphics.DrawString(currVehicle.GetValue(PropertyId.SaleWarrantyCost), font, Brushes.Black, backgroundXPos + 510, backgroundYPos + 455);
 
@@ -328,16 +328,16 @@ namespace CarDepot.VehicleStore
             {
                 using (Font infoFont = new Font("Calibri", 14))
                 {
-                    e.Graphics.DrawString(saleDate.Day.ToString(), infoFont, Brushes.Black, backgroundXPos + 665, backgroundYPos + 64);
-                    e.Graphics.DrawString(saleDate.Month.ToString(), infoFont, Brushes.Black, backgroundXPos + 716, backgroundYPos + 64);
-                    e.Graphics.DrawString(saleDate.Year.ToString(), infoFont, Brushes.Black, backgroundXPos + 760, backgroundYPos + 64);
+                    e.Graphics.DrawString(saleDate.Day.ToString(), infoFont, Brushes.Black, backgroundXPos + 655, backgroundYPos + 64);
+                    e.Graphics.DrawString(saleDate.Month.ToString(), infoFont, Brushes.Black, backgroundXPos + 705, backgroundYPos + 64);
+                    e.Graphics.DrawString(saleDate.Year.ToString(), infoFont, Brushes.Black, backgroundXPos + 750, backgroundYPos + 64);
                 }
             }
 
             using (Font font = new Font("Calibri (Body)", 10))
             {
                 //Dealer Guarantee
-                e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 536, backgroundYPos + 281);
+                e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 530, backgroundYPos + 281);
 
                 int yPos = 585;
                 string comments = currVehicle.GetValue(PropertyId.SaleComments);
@@ -407,33 +407,36 @@ namespace CarDepot.VehicleStore
             using (Font font = new Font("Calibri (Body)", 10))
             {
                 //Year
-                e.Graphics.DrawString(currVehicle.Year, font, Brushes.Black, backgroundXPos + 403, backgroundYPos + 115);
+                string year = currVehicle.Year;
+                if (year.Length == 4)
+                    year = year.Substring(2);
+                e.Graphics.DrawString(year, font, Brushes.Black, backgroundXPos + 403, backgroundYPos + 115);
 
                 //Make
-                e.Graphics.DrawString(currVehicle.Make, font, Brushes.Black, backgroundXPos + 450, backgroundYPos + 115);
+                e.Graphics.DrawString(currVehicle.Make, font, Brushes.Black, backgroundXPos + 445, backgroundYPos + 115);
 
                 //Model
-                e.Graphics.DrawString(currVehicle.Model, font, Brushes.Black, backgroundXPos + 550, backgroundYPos + 115);
+                e.Graphics.DrawString(currVehicle.Model, font, Brushes.Black, backgroundXPos + 545, backgroundYPos + 115);
 
                 //Colour
-                e.Graphics.DrawString(currVehicle.ExtColor, font, Brushes.Black, backgroundXPos + 690, backgroundYPos + 115);
+                e.Graphics.DrawString(currVehicle.ExtColor, font, Brushes.Black, backgroundXPos + 685, backgroundYPos + 115);
 
                 //VIN
                 string vin = currVehicle.GetValue(PropertyId.VinNumber);
-                int xPos = 408;
+                int xPos = 406;
                 foreach (char vinChar in vin)
                 {
                     e.Graphics.DrawString(vinChar.ToString(), font, Brushes.Black, backgroundXPos + xPos, backgroundYPos + 147);
-                    xPos += 24;
+                    xPos += 23;
                 }
 
                 string mileage = currVehicle.GetValue(PropertyId.Mileage);
                 if (!string.IsNullOrEmpty(mileage))
                 {
                     mileage = mileage.Replace(",", string.Empty);
-                    xPos = 415;
+                    xPos = 410;
                     int spacing = 6 - mileage.Length;
-                    xPos = 412 + (23*spacing);
+                    xPos = 405 + (23*spacing);
 
                     foreach (char mileageChar in mileage)
                     {
@@ -444,7 +447,7 @@ namespace CarDepot.VehicleStore
                 }
 
                 //IS Km's X
-                e.Graphics.DrawString("x", font, Brushes.Black, backgroundXPos + 476, backgroundYPos + 160);
+                e.Graphics.DrawString("x", font, Brushes.Black, backgroundXPos + 470, backgroundYPos + 160);
 
                 // Delivery Date
                 string stringDeliveryDate = currVehicle.GetValue(PropertyId.SaleDeliveryDate);
@@ -462,11 +465,11 @@ namespace CarDepot.VehicleStore
                     SaleInfoControl.Certified certified = (SaleInfoControl.Certified)Enum.Parse(typeof(SaleInfoControl.Certified), safety, true);
                     if (certified == SaleInfoControl.Certified.Yes)
                     {
-                        e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 549, backgroundYPos + 232);
+                        e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 540, backgroundYPos + 232);
                     }
                     else
                     {
-                        e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 549, backgroundYPos + 247);
+                        e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 540, backgroundYPos + 247);
                     }
                 }
 
