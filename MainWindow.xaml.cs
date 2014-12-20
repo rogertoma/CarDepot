@@ -127,15 +127,19 @@ namespace CarDepot
                 ControlSwitchCount = 0;
                 if (CacheManager.ActiveUser.UiMode == CacheManager.UIMode.Customer)
                 {
-                    TabItem tab = (TabItem)CacheManager.MainTabControl.Items[0];
-                    tab.Foreground = Brushes.Red;
+                    foreach (TabItem tabItem in CacheManager.MainTabControl.Items)
+                    {
+                        tabItem.Foreground = Brushes.Red;
+                    }
 
                     CacheManager.ActiveUser.UiMode = CacheManager.UIMode.Full;
                 }
                 else
                 {
-                    TabItem tab = (TabItem)CacheManager.MainTabControl.Items[0];
-                    tab.Foreground = Brushes.Black;
+                    foreach (TabItem tabItem in CacheManager.MainTabControl.Items)
+                    {
+                        tabItem.Foreground = Brushes.Black;
+                    }
 
                     CacheManager.ActiveUser.UiMode = CacheManager.UIMode.Customer;
                 }

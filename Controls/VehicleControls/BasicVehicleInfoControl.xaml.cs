@@ -114,18 +114,10 @@ namespace CarDepot.Controls.VehicleControls
 
         private void btnPrintBrochure_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog();
-            dialog.PageRangeSelection = PageRangeSelection.AllPages;
-            dialog.UserPageRangeEnabled = true;
-            // Display the dialog. This returns true if the user presses the Print button.
-            Nullable<Boolean> print = dialog.ShowDialog();
-            if (print == true)
+            VehicleAdminObject vehicle = _item as VehicleAdminObject;
+            if (vehicle != null)
             {
-                VehicleAdminObject vehicle = _item as VehicleAdminObject;
-                if (vehicle != null)
-                {
-                    PrintCar printCurrentCar = new PrintCar(vehicle, sender, e);
-                }
+                PrintCar printCurrentCar = new PrintCar(vehicle, sender, e);
             }
         }
     }

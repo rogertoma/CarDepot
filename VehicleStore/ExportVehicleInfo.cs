@@ -523,11 +523,15 @@ namespace CarDepot.VehicleStore
                 currentSheet.Cells[row, column++] = new Cell(purchasePriceIncludingFees, "#,##0.00");
 
                 //Sale Price
-                currentSheet.Cells[row, column++] = new Cell(saleNet, "#,##0.00");
+                currentSheet.Cells[row, column++] = new Cell(saleNet + tradeIn, "#,##0.00");
+                
+                string sLienPayout = vehicle.GetValue(PropertyId.SalePayoutLienOnTradeIn);
+                double lienPayout = 0;
+                Utilities.StringToDouble(sLienPayout, out lienPayout);
 
                 // Profit
                 double profit = 0;
-                profit = saleNet - purchasePriceIncludingFees;
+                profit = saleNet - purchasePriceIncludingFees + tradeIn - lienPayout;
                 currentSheet.Cells[row, column++] = new Cell(profit, "#,##0.00");
 
                 row++;

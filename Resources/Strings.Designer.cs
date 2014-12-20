@@ -475,5 +475,51 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("CONTROL_IMAGETHUMBNAILCONROL_CONFIRMDELETE", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAYOUTLIENTASK.
+        /// </summary>
+        internal static string PAYOUTLIENTASK
+        {
+            get
+            {
+                return ResourceManager.GetString("PAYOUTLIENTASK", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to VERIFYFINANCEDEPOSIT.
+        /// </summary>
+        internal static string VERIFYFINANCEDEPOSIT
+        {
+            get
+            {
+                return ResourceManager.GetString("VERIFYFINANCEDEPOSIT", resourceCulture);
+            }
+        }
+ 
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK.
+        /// </summary>
+        internal static string CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK
+        {
+            get
+            {
+                return ResourceManager.GetString("CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROL_TASKSCONTROL_TAB_TITLE.
+        /// </summary>
+        internal static string CONTROL_TASKSCONTROL_TAB_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("CONTROL_TASKSCONTROL_TAB_TITLE", resourceCulture);
+            }
+        }
+
+       
     }
 }

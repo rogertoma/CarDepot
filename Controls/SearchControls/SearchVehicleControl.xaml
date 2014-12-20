@@ -50,6 +50,7 @@
         <Label Content="Date Range:" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0"/>
         <DatePicker x:Name="dpFrom" MinWidth="120" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
         <DatePicker x:Name="dpTo" MinWidth="120" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" />
+
         <!--Button Section-->
         <Label x:Name="lblTotalCount" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="0"/>
         <Button Name="BtnGenerateReport" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" Grid.Column="5" Click="BtnGenerateReport_Click">

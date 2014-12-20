@@ -289,6 +289,14 @@ namespace CarDepot.Controls.VehicleControls
             if (task == null)
                 return;
 
+            if (!task.AssignedTo.Equals(CacheManager.ActiveUser.Name) && !task.AssignedTo.Equals(CacheManager.UserCache.SystemAdminAccount.Name))
+            {
+                MessageBox.Show(string.Format(Strings.CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK, task.AssignedTo),
+                    Strings.ERROR);
+
+                return;
+            }
+
             task.ClosedBy = CacheManager.ActiveUser.Name;
             task.Status = VehicleTask.StatusTypes.Completed.ToString();
             VehicleListView.Items.Refresh();

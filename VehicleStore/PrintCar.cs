@@ -38,11 +38,18 @@ namespace CarDepot.VehicleStore
             try
             {
                 brochure.PrintPage += new PrintPageEventHandler(this.printBrochure);
-                brochure.Print();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = brochure;
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                brochure.Print();
             }
         }
         

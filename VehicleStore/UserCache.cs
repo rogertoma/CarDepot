@@ -50,6 +50,9 @@ namespace CarDepot.VehicleStore
 
             SystemAdminAccount = new UserAdminObject("");
             SystemAdminAccount.Name = Strings.SYSTEMADMINACCOUNTNAME;
+            SystemAdminAccount.Password = "";
+            SystemAdminAccount.MainTabPages.Add("CarDepot.Controls.GeneralControls.ActionsControl");
+            //SystemAdminAccount
             this.Add(SystemAdminAccount);
         }
 

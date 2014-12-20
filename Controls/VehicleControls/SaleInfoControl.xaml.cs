@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using Panel = System.Windows.Controls.Panel;
+using PrintDialog = System.Windows.Controls.PrintDialog;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -194,14 +198,18 @@ namespace CarDepot.Controls.VehicleControls
         private void TxtCustomerId_TextChanged(object sender, TextChangedEventArgs e)
         {
             Dictionary<CustomerCacheSearchKey, string> searchParam = new Dictionary<CustomerCacheSearchKey, string>();
-            searchParam.Add(CustomerCacheSearchKey.Id, TxtCustomerId.Text);
-            CustomerCache cache = new CustomerCache(searchParam);
+            CustomerCache cache = null;
+            if (!string.IsNullOrEmpty(TxtCustomerId.Text))
+            {
+                searchParam.Add(CustomerCacheSearchKey.Id, TxtCustomerId.Text);
+                cache = new CustomerCache(searchParam);
+            }
 
             if (_vehicle != null)
             {
                 _vehicle.SetValue(PropertyId.SaleCustomerId, TxtCustomerId.Text);
             }
-            if (cache.Count > 0)
+            if (cache != null && cache.Count > 0)
             {
                 CustomerAdminObject customer = cache[0];
                 lblCustomerFound.Content = customer.FirstName + " " + customer.LastName;
@@ -258,17 +266,91 @@ namespace CarDepot.Controls.VehicleControls
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.PrintDialog dialog = new System.Windows.Controls.PrintDialog();
-            dialog.PageRangeSelection = PageRangeSelection.AllPages;
-            dialog.UserPageRangeEnabled = true;
-            // Display the dialog. This returns true if the user presses the Print button.
-            Nullable<Boolean> print = dialog.ShowDialog();
-            if (print == true)
+            PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, sender, e);
+        }
+
+        private void PayoutLien_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculateTotal_TextChanged(sender, e);
+
+            double payoutLien = 0;
+
+            if (!Utilities.StringToDouble(TxtPayoutLienOnTradeIn.Text, out payoutLien) || Math.Abs(payoutLien) == 0.0)
             {
-                
-                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, dialog, sender, e);
-                
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.PAYOUTLIENTASK))
+                    {
+                        _vehicle.VehicleTasks.Remove(vehicleTask);
+                        break;
+                    }
+                }
             }
+            else
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.PAYOUTLIENTASK))
+                    {
+                        return;
+                    }
+                }
+
+                VehicleTask payoutLienTask = new VehicleTask();
+                payoutLienTask.Id = Strings.PAYOUTLIENTASK;
+                payoutLienTask.TaskVehicleId = _vehicle.Id;
+                payoutLienTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                payoutLienTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                payoutLienTask.AssignedTo = "Reyad Toma";
+                payoutLienTask.Category = VehicleTask.TaskCategoryTypes.Finance.ToString();
+                payoutLienTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(payoutLienTask);    
+            }
+
+            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+        }
+
+        private void LienRegistrationFee_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculateTotal_TextChanged(sender, e);
+
+            double leinRegistrationFee = 0;
+
+            if (!Utilities.StringToDouble(TxtLienRegistrationFee.Text, out leinRegistrationFee) || Math.Abs(leinRegistrationFee) == 0.0)
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.VERIFYFINANCEDEPOSIT))
+                    {
+                        _vehicle.VehicleTasks.Remove(vehicleTask);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.VERIFYFINANCEDEPOSIT))
+                    {
+                        return;
+                    }
+                }
+
+                VehicleTask verifyFinanceDepositTask = new VehicleTask();
+                verifyFinanceDepositTask.Id = Strings.VERIFYFINANCEDEPOSIT;
+                verifyFinanceDepositTask.TaskVehicleId = _vehicle.Id;
+                verifyFinanceDepositTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                verifyFinanceDepositTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                verifyFinanceDepositTask.AssignedTo = "Reyad Toma";
+                verifyFinanceDepositTask.Category = VehicleTask.TaskCategoryTypes.Finance.ToString();
+                verifyFinanceDepositTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(verifyFinanceDepositTask);
+            }
+
+            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+
+
         }
 
     }

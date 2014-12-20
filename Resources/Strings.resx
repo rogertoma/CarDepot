@@ -123,11 +123,17 @@
   <data name="CONTROL_IMAGETHUMBNAILCONROL_CONFIRMDELETE" xml:space="preserve">
     <value>Are you sure you want to delete this image?</value>
   </data>
+  <data name="CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK" xml:space="preserve">
+    <value>The following task is assigned to {0}, they are the only ones able to complete it.</value>
+  </data>
   <data name="CONTROL_MANAGEVEHICLETASKS_CONFIRMDELETE" xml:space="preserve">
     <value>You are about to delete the selected task</value>
   </data>
   <data name="CONTROL_MANAGEVEHICLETASKS_CONFIRMDELETETITLE" xml:space="preserve">
     <value>Confirm Delete</value>
+  </data>
+  <data name="CONTROL_TASKSCONTROL_TAB_TITLE" xml:space="preserve">
+    <value>My Tasks</value>
   </data>
   <data name="CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE" xml:space="preserve">
     <value>A file with this name already exists, would you like to replace it?</value>
@@ -204,6 +210,9 @@
   <data name="PAGE_VEHICLETASKSEARCHPAGE_TITLE" xml:space="preserve">
     <value>Search Tasks</value>
   </data>
+  <data name="PAYOUTLIENTASK" xml:space="preserve">
+    <value>Payout Lien</value>
+  </data>
   <data name="SYSTEMADMINACCOUNTNAME" xml:space="preserve">
     <value>SystemAdminAccount</value>
   </data>
@@ -224,6 +233,9 @@
   </data>
   <data name="VEHICLEINFOPAGE_PRINT_BIWEEKLYRATE" xml:space="preserve">
     <value>Please enter the financing bi-weekly rate for this vehicle, if not available press cancel. (Note: text will be printed as you input it)</value>
+  </data>
+  <data name="VERIFYFINANCEDEPOSIT" xml:space="preserve">
+    <value>Verify Finance Deposit</value>
   </data>
   <data name="WARNING" xml:space="preserve">
     <value>Warning</value>

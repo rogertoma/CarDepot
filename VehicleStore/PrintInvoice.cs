@@ -22,18 +22,26 @@ namespace CarDepot.VehicleStore
         private int numOfPages = 3;
         private int currentPage = 1;
 
-        public PrintInvoice(VehicleAdminObject vehicle, System.Windows.Controls.PrintDialog dialog, Object sender, EventArgs e)
+        public PrintInvoice(VehicleAdminObject vehicle, Object sender, EventArgs e)
         {
             currVehicle = vehicle;
+
             PrintDocument invoice = new PrintDocument();
             try
             {
                 invoice.PrintPage += new PrintPageEventHandler(this.printInvoice);
-                invoice.Print();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("PrintInvoice: " + ex.Message);
+            }
+
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = invoice;
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                invoice.Print();
             }
         }
 
@@ -358,12 +366,15 @@ namespace CarDepot.VehicleStore
 
         private void printCustomerInformation(PrintPageEventArgs e)
         {
-
+            CustomerCache cache = null;
             Dictionary<CustomerCacheSearchKey, string> searchParam = new Dictionary<CustomerCacheSearchKey, string>();
-            searchParam.Add(CustomerCacheSearchKey.Id, currVehicle.GetValue(PropertyId.SaleCustomerId));
-            CustomerCache cache = new CustomerCache(searchParam);
+            if (!string.IsNullOrEmpty(currVehicle.GetValue(PropertyId.SaleCustomerId)))
+            {
+                searchParam.Add(CustomerCacheSearchKey.Id, currVehicle.GetValue(PropertyId.SaleCustomerId));
+                cache = new CustomerCache(searchParam);
+            }
 
-            if (cache.Count <= 0)
+            if (cache == null || cache.Count <= 0)
                 return;
             
             using (Font font = new Font("Calibri (Body)", 10))
@@ -371,7 +382,7 @@ namespace CarDepot.VehicleStore
                 CustomerAdminObject customer = cache[0];
 
                 e.Graphics.DrawString(customer.FirstName, font, Brushes.Black, backgroundXPos + 90, backgroundYPos + 115);
-                e.Graphics.DrawString(customer.LastName, font, Brushes.Black, backgroundXPos + 300, backgroundYPos + 115);
+                e.Graphics.DrawString(customer.LastName, font, Brushes.Black, backgroundXPos + 280, backgroundYPos + 115);
 
                 string address = string.Format("{0} {1}",
                     customer.GetValue(PropertyId.HomeStreetNumber),

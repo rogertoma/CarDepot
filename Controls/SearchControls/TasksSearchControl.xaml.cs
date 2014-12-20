@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CarDepot.Pages;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
 using System;
@@ -15,7 +16,7 @@ namespace CarDepot.Controls.SearchControls
     /// <summary>
     /// Interaction logic for TasksSearchPage.xaml
     /// </summary>
-    public partial class TasksSearchControl: UserControl
+    public partial class TasksSearchControl : UserControl, IPropertyPage
     {
         private VehicleCache cache = null;
         Dictionary<VehicleCacheTaskSearchKey, string> searchParam = new Dictionary<VehicleCacheTaskSearchKey, string>();
@@ -25,6 +26,26 @@ namespace CarDepot.Controls.SearchControls
             InitializeComponent();
 
             InitializeSearchFields();
+
+            DefaultToActiveUser();
+        }
+
+        private void DefaultToActiveUser()
+        {
+            bool foundUser = false;
+            for (int i = 0; i < cmbAssignedTo.Items.Count; i++)
+            {
+                Label lbl = cmbAssignedTo.Items[i] as Label;
+                if (lbl == null)
+                    continue;
+
+                if (lbl.Content.Equals(CacheManager.ActiveUser.Name))
+                {
+                    cmbAssignedTo.SelectedIndex = i;
+                }
+            }
+
+            btnSearch_Click(null, null);
         }
 
         private void InitializeSearchFields()
@@ -63,6 +84,7 @@ namespace CarDepot.Controls.SearchControls
             cache = new VehicleCache(Settings.VehiclePath, searchParam);
 
             UpdateUI();
+            lblTotalCount.Content = cache.Count.ToString();
         }
         
         private void UpdateUI()
@@ -272,6 +294,16 @@ namespace CarDepot.Controls.SearchControls
                 lastDirection = direction;
             }
              
+        }
+
+        public string PageTitle
+        {
+            get { return Strings.CONTROL_TASKSCONTROL_TAB_TITLE; }
+        }
+
+        public bool IsCloseable
+        {
+            get { return false; }
         }
     }
 }

@@ -13,13 +13,13 @@
                     <GridViewColumn Header="Year" Width="80" DisplayMemberBinding="{Binding Year}"/>
                     <GridViewColumn Header="Make" Width="80" DisplayMemberBinding="{Binding Make}"/>
                     <GridViewColumn Header="Model" Width ="80" DisplayMemberBinding="{Binding Model}"/>
-                    <GridViewColumn Header="ListPrice" Width ="80" DisplayMemberBinding="{Binding ListPrice}"/>
-                    <GridViewColumn Header="DriveTrain" Width ="80" DisplayMemberBinding="{Binding DriveTrain}"/>
-                    <GridViewColumn Header="Transmission" Width ="80" DisplayMemberBinding="{Binding Transmission}"/>
                     <GridViewColumn Header="Mileage" Width ="80" DisplayMemberBinding="{Binding Mileage}"/>
+                    <GridViewColumn Header="ListPrice" Width ="80" DisplayMemberBinding="{Binding ListPrice}"/>
+                    <GridViewColumn Header="VinNumber" Width ="150" DisplayMemberBinding="{Binding VinNumber}"/>
+                    <GridViewColumn Header="Transmission" Width ="80" DisplayMemberBinding="{Binding Transmission}"/>
                     <GridViewColumn Header="Engine" Width ="80" DisplayMemberBinding="{Binding Engine}"/>
                     <GridViewColumn Header="ExtColor" Width ="80" DisplayMemberBinding="{Binding ExtColor}"/>
-                    <GridViewColumn Header="VinNumber" Width ="150" DisplayMemberBinding="{Binding VinNumber}"/>
+                    <GridViewColumn Header="DriveTrain" Width ="80" DisplayMemberBinding="{Binding DriveTrain}"/>
                     <GridViewColumn Header="StockNumber" Width ="80" DisplayMemberBinding="{Binding StockNumber}"/>
                     <GridViewColumn Header="PurchaseDate" Width ="80" DisplayMemberBinding="{Binding PurchaseDate}"/>
                     <GridViewColumn Header="SaleDate" Width ="80" DisplayMemberBinding="{Binding SaleDate}"/>
