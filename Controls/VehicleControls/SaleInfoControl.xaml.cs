@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -266,7 +267,13 @@ namespace CarDepot.Controls.VehicleControls
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, sender, e);
+            DialogResult result = System.Windows.Forms.MessageBox.Show("Did you remember to update the mileage?", Strings.WARNING,
+                System.Windows.Forms.MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, sender, e);    
+            }
         }
 
         private void PayoutLien_TextChanged(object sender, TextChangedEventArgs e)

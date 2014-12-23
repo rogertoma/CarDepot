@@ -428,7 +428,17 @@ namespace CarDepot.VehicleStore
                 e.Graphics.DrawString(currVehicle.Make, font, Brushes.Black, backgroundXPos + 445, backgroundYPos + 115);
 
                 //Model
-                e.Graphics.DrawString(currVehicle.Model, font, Brushes.Black, backgroundXPos + 545, backgroundYPos + 115);
+                e.Graphics.DrawString(currVehicle.Model, font, Brushes.Black, backgroundXPos + 540, backgroundYPos + 115);
+
+                //Trim
+                string trim = currVehicle.GetValue(PropertyId.Trim);
+                if (!string.IsNullOrEmpty(trim))
+                {
+                    if (trim.Length > 5)
+                        trim = trim.Substring(0, 5);
+
+                    e.Graphics.DrawString(trim, font, Brushes.Black, backgroundXPos + 615, backgroundYPos + 115);
+                }
 
                 //Colour
                 e.Graphics.DrawString(currVehicle.ExtColor, font, Brushes.Black, backgroundXPos + 685, backgroundYPos + 115);
