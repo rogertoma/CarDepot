@@ -58,6 +58,8 @@ namespace CarDepot
                 PagesTabControl.Items.Add(GetPageTabItem(propertyPage));
                 CacheManager.MainTabControl = PagesTabControl;
             }
+
+            CacheManager.MainTabControl.SelectedIndex = _user.MainTabPages.Count - 1;
         }
 
         private TabItem GetPageTabItem(IPropertyPage page)

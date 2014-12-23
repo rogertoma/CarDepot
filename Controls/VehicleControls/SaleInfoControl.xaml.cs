@@ -353,5 +353,73 @@ namespace CarDepot.Controls.VehicleControls
 
         }
 
+        private void SaleDatePicker_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DateTime saleDate = DateTime.Now;
+
+            if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDate), out saleDate))
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                    {
+                        _vehicle.VehicleTasks.Remove(vehicleTask);
+                        break;
+                    }
+                }
+
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.NEWCAROILCHANGETASK))
+                    {
+                        _vehicle.VehicleTasks.Remove(vehicleTask);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                    {
+                        return;
+                    }
+                }
+
+                VehicleTask newCarCleaningTask = new VehicleTask();
+                newCarCleaningTask.Id = Strings.SOLDCARCLEANINGTASK;
+                newCarCleaningTask.TaskVehicleId = _vehicle.Id;
+                newCarCleaningTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                newCarCleaningTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                newCarCleaningTask.AssignedTo = "Mike Wilson";
+                newCarCleaningTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+                newCarCleaningTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(newCarCleaningTask);
+            }
+
+            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+        }
+
+        private void AdminDatePicker_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DateTime dueDate = DateTime.Now;
+
+            if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDeliveryDate), out dueDate))
+            {
+                return;
+            }
+
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                {
+                    vehicleTask.DueDate = dueDate.ToString("d");
+                }
+            }
+
+            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+        }
+
     }
 }

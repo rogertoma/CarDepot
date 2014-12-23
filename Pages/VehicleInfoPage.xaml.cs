@@ -111,6 +111,26 @@ namespace CarDepot
             emissionVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(emissionVehicleTask);
 
+            VehicleTask newVehicleClean = new VehicleTask();
+            newVehicleClean.Id = "New Car Clean";
+            newVehicleClean.TaskVehicleId = vehicle.Id;
+            newVehicleClean.CreatedDate = DateTime.Today.Date.ToString("d");
+            newVehicleClean.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            newVehicleClean.AssignedTo = "Mike Wilson";
+            newVehicleClean.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+            newVehicleClean.CreatedBy = CacheManager.ActiveUser.Name;
+            vehicle.VehicleTasks.Add(newVehicleClean);
+
+            VehicleTask newVehicleOilChange = new VehicleTask();
+            newVehicleOilChange.Id = Strings.NEWCAROILCHANGETASK;
+            newVehicleOilChange.TaskVehicleId = vehicle.Id;
+            newVehicleOilChange.CreatedDate = DateTime.Today.Date.ToString("d");
+            newVehicleOilChange.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            newVehicleOilChange.AssignedTo = "Chris Rome";
+            newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
+            vehicle.VehicleTasks.Add(newVehicleOilChange);
+
             vehicle.Save(null);
 
             vehicle.Cache = CacheManager.AllVehicleCache;

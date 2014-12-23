@@ -150,6 +150,9 @@
   <data name="INFORMATION" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="NEWCAROILCHANGETASK" xml:space="preserve">
+    <value>New Car Oil Change</value>
+  </data>
   <data name="PAGES_ACTIVEVEHICLE_TAB_TITLE" xml:space="preserve">
     <value>Vehicle's on lot</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="PAYOUTLIENTASK" xml:space="preserve">
     <value>Payout Lien</value>
+  </data>
+  <data name="SOLDCARCLEANINGTASK" xml:space="preserve">
+    <value>Clean Sold Car</value>
   </data>
   <data name="SYSTEMADMINACCOUNTNAME" xml:space="preserve">
     <value>SystemAdminAccount</value>
