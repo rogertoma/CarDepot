@@ -541,7 +541,38 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("NEWCAROILCHANGETASK", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to NEWCARCLEANINGTASK.
+        /// </summary>
+        internal static string NEWCARCLEANINGTASK
+        {
+            get
+            {
+                return ResourceManager.GetString("NEWCARCLEANINGTASK", resourceCulture);
+            }
+        }
         
-       
+        /// <summary>
+        ///   Looks up a localized string similar to CARDELIVEREDTASK.
+        /// </summary>
+        internal static string CARDELIVEREDTASK
+        {
+            get
+            {
+                return ResourceManager.GetString("CARDELIVEREDTASK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USERLEFTCOMMENTSTASK.
+        /// </summary>
+        internal static string USERLEFTCOMMENTSTASK
+        {
+            get
+            {
+                return ResourceManager.GetString("USERLEFTCOMMENTSTASK", resourceCulture);
+            }
+        }
     }
 }

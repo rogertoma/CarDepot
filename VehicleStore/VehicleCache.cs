@@ -18,6 +18,7 @@ namespace CarDepot.VehicleStore
         IsAvailable,
         IsSold,
         WasAvailable,
+        IncludeSoldNotDelivered,
         FromDate,
         ToDate,
         VinNumber,
@@ -82,6 +83,25 @@ namespace CarDepot.VehicleStore
                 {
                     vehicleAdminObject.Cache = this;
                     this.Add(vehicleAdminObject);
+                }
+
+            }
+
+            if (searchParam.ContainsKey(VehicleCacheSearchKey.IncludeSoldNotDelivered))
+            {
+                foreach (VehicleAdminObject vehicleAdminObject in CacheManager.AllVehicleCache)
+                {
+                    foreach (VehicleTask vehicleTask in vehicleAdminObject.VehicleTasks)
+                    {
+                        if (vehicleTask.Id.Equals(Strings.CARDELIVEREDTASK) &&
+                            !vehicleTask.Status.Equals(VehicleTask.StatusTypes.Completed.ToString()))
+                        {
+                            if (!this.Contains(vehicleAdminObject))
+                            {
+                                this.Add(vehicleAdminObject);
+                            }
+                        }
+                    }
                 }
 
             }
@@ -227,8 +247,6 @@ namespace CarDepot.VehicleStore
                         {
                             return false;
                         }
-
-
 
                         if (String.IsNullOrEmpty(pDate))
                         {

@@ -383,17 +383,32 @@ namespace CarDepot.Controls.VehicleControls
                         break;
                     }
                 }
-            }
-            else
-            {
+
                 foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {
-                    if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                    if (vehicleTask.Id.Equals(Strings.CARDELIVEREDTASK))
                     {
-                        return;
+                        _vehicle.VehicleTasks.Remove(vehicleTask);
+                        break;
                     }
                 }
 
+                _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+                return;
+            }
+
+            #region AddSoldCarCleaning
+            bool soldCarCleaningTaskFound = false;
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                {
+                    soldCarCleaningTaskFound = true;
+                }
+            }
+
+            if (!soldCarCleaningTaskFound)
+            {
                 VehicleTask newCarCleaningTask = new VehicleTask();
                 newCarCleaningTask.Id = Strings.SOLDCARCLEANINGTASK;
                 newCarCleaningTask.TaskVehicleId = _vehicle.Id;
@@ -404,6 +419,28 @@ namespace CarDepot.Controls.VehicleControls
                 newCarCleaningTask.CreatedBy = CacheManager.ActiveUser.Name;
                 _vehicle.VehicleTasks.Add(newCarCleaningTask);
             }
+            #endregion
+
+            #region Car Delivery Task
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                if (vehicleTask.Id.Equals(Strings.CARDELIVEREDTASK))
+                {
+                    _vehicle.VehicleTasks.Remove(vehicleTask);
+                    break;
+                }
+            }
+
+            VehicleTask vehicleDeliveredTask = new VehicleTask();
+            vehicleDeliveredTask.Id = Strings.CARDELIVEREDTASK;
+            vehicleDeliveredTask.TaskVehicleId = _vehicle.Id;
+            vehicleDeliveredTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            vehicleDeliveredTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            vehicleDeliveredTask.AssignedTo = "Reyad Toma";
+            vehicleDeliveredTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+            vehicleDeliveredTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(vehicleDeliveredTask);
+            #endregion
 
             _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
         }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:CarDepot.Controls"
              mc:Ignorable="d" Height="353" Width="528">
-    <Grid Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <Grid Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,-111,0">
         <Grid.RowDefinitions>
             <RowDefinition Name="Title" Height="50"/>
             <RowDefinition Name="Status" Height="Auto"/>
@@ -22,6 +22,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
@@ -31,7 +32,8 @@
         <Label Content="Status:" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
         <CheckBox x:Name="cbAvailable" Content="Available" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="True" />
         <CheckBox x:Name="cbSold" Content="Sold" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" />
-        <CheckBox x:Name="cbWasAvailable" Content="Was Available" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" IsChecked="False" />
+        <CheckBox x:Name="cbWasAvailable" Margin="0,0,10,0" Content="Was Available" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" IsChecked="False" />
+        <CheckBox x:Name="cbSoldNotDelivered" Content="Sold not delivered" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" IsChecked="False" />
         
         <!--Vin Search-->
         <Label Content="VIN:" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>

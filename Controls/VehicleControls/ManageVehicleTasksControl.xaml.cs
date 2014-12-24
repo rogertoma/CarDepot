@@ -297,11 +297,32 @@ namespace CarDepot.Controls.VehicleControls
                 return;
             }
 
+            task.Comments = txtComments.Text;
             task.ClosedBy = CacheManager.ActiveUser.Name;
             task.Status = VehicleTask.StatusTypes.Completed.ToString();
+
+            if (task.Id.Equals(Strings.NEWCARCLEANINGTASK) && !string.IsNullOrEmpty(task.Comments))
+            {
+                VehicleTask newCleanTaskResults = new VehicleTask();
+                newCleanTaskResults.Id = string.Format(Strings.USERLEFTCOMMENTSTASK, CacheManager.ActiveUser.Name);
+                newCleanTaskResults.TaskVehicleId = _vehicle.Id;
+                newCleanTaskResults.CreatedDate = DateTime.Today.Date.ToString("d");
+                newCleanTaskResults.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                newCleanTaskResults.Comments = task.Comments;
+                newCleanTaskResults.AssignedTo = "Mathew Toma";
+                newCleanTaskResults.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+                newCleanTaskResults.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(newCleanTaskResults);
+                VehicleListView.Items.Add(newCleanTaskResults);
+            }
+
             VehicleListView.Items.Refresh();
             VehicleListView.ForceXmlUpdate();
             VehicleListView.SelectedIndex = -1;
+
+            //_vehicle.VehicleTasks.Add(task);
+            //VehicleListView.Items.Add(task);
+            //VehicleListView.SelectedIndex = VehicleListView.Items.Count - 1;
         }
 
         private void UpdateTaskBasedOnUi(VehicleTask task)

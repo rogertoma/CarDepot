@@ -75,6 +75,11 @@ namespace CarDepot.Controls.SearchControls
                 searchParam.Add(VehicleCacheSearchKey.IsAvailable, null);
             }
 
+            if (cbSoldNotDelivered.IsChecked == true)
+            {
+                searchParam.Add(VehicleCacheSearchKey.IncludeSoldNotDelivered, null);
+            }
+
             cache = new VehicleCache(Settings.VehiclePath, searchParam);
             LstSearchResults.SetContent(cache);
             lblTotalCount.Content = cache.Count.ToString();
@@ -134,6 +139,15 @@ namespace CarDepot.Controls.SearchControls
             else
             {
                 BtnGenerateReport.Visibility = Visibility.Hidden;
+            }
+
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.SoldButNotDeliveredCheckBox))
+            {
+                cbSoldNotDelivered.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cbSoldNotDelivered.Visibility = Visibility.Hidden;
             }
         }
     }

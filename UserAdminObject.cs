@@ -29,6 +29,7 @@ namespace CarDepot
             DeleteCustomer,
             PurchaseInformation,
             SaleInformation,
+            SoldButNotDeliveredCheckBox,
             GenerateReport,
         }
 

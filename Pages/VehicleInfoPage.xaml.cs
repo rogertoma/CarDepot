@@ -112,7 +112,7 @@ namespace CarDepot
             vehicle.VehicleTasks.Add(emissionVehicleTask);
 
             VehicleTask newVehicleClean = new VehicleTask();
-            newVehicleClean.Id = "New Car Clean";
+            newVehicleClean.Id = Strings.NEWCARCLEANINGTASK;
             newVehicleClean.TaskVehicleId = vehicle.Id;
             newVehicleClean.CreatedDate = DateTime.Today.Date.ToString("d");
             newVehicleClean.Status = VehicleTask.StatusTypes.NotStarted.ToString();
