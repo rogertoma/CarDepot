@@ -144,6 +144,9 @@
   <data name="CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE_TITLE" xml:space="preserve">
     <value>Replace File?</value>
   </data>
+  <data name="DELETECARFROMADVERTISING" xml:space="preserve">
+    <value>Delete car from advertising</value>
+  </data>
   <data name="ERROR" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="PAYOUTLIENTASK" xml:space="preserve">
     <value>Payout Lien</value>
+  </data>
+  <data name="PURCHASEWARRANTYTASK" xml:space="preserve">
+    <value>Purchase Warranty</value>
   </data>
   <data name="SOLDCARCLEANINGTASK" xml:space="preserve">
     <value>Clean Sold Car</value>

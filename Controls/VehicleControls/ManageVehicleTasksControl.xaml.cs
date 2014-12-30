@@ -223,7 +223,14 @@ namespace CarDepot.Controls.VehicleControls
                 btnUpdate.Visibility = Visibility.Visible;
                 btnDelete.Visibility = Visibility.Visible;
 
-                btnCompleteTask.Visibility = string.IsNullOrEmpty(task.ClosedBy) ? Visibility.Visible : Visibility.Collapsed;
+                if (task.Status != VehicleTask.StatusTypes.Completed.ToString())
+                {
+                    btnCompleteTask.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    btnCompleteTask.Visibility = Visibility.Collapsed;
+                }
             }
         }
 

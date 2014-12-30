@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using CarDepot.Pages;
 using Panel = System.Windows.Controls.Panel;
 using PrintDialog = System.Windows.Controls.PrintDialog;
 using UserControl = System.Windows.Controls.UserControl;
@@ -366,9 +367,18 @@ namespace CarDepot.Controls.VehicleControls
 
             if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDate), out saleDate))
             {
+                //foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                //{
+                    //if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                    //{
+                    //    _vehicle.VehicleTasks.Remove(vehicleTask);
+                    //    break;
+                    //}
+                //}
+
                 foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {
-                    if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                    if (vehicleTask.Id.Equals(Strings.DELETECARFROMADVERTISING))
                     {
                         _vehicle.VehicleTasks.Remove(vehicleTask);
                         break;
@@ -398,27 +408,27 @@ namespace CarDepot.Controls.VehicleControls
             }
 
             #region AddSoldCarCleaning
-            bool soldCarCleaningTaskFound = false;
-            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
-            {
-                if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
-                {
-                    soldCarCleaningTaskFound = true;
-                }
-            }
+            //bool soldCarCleaningTaskFound = false;
+            //foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            //{
+            //    if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+            //    {
+            //        soldCarCleaningTaskFound = true;
+            //    }
+            //}
 
-            if (!soldCarCleaningTaskFound)
-            {
-                VehicleTask newCarCleaningTask = new VehicleTask();
-                newCarCleaningTask.Id = Strings.SOLDCARCLEANINGTASK;
-                newCarCleaningTask.TaskVehicleId = _vehicle.Id;
-                newCarCleaningTask.CreatedDate = DateTime.Today.Date.ToString("d");
-                newCarCleaningTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-                newCarCleaningTask.AssignedTo = "Mike Wilson";
-                newCarCleaningTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
-                newCarCleaningTask.CreatedBy = CacheManager.ActiveUser.Name;
-                _vehicle.VehicleTasks.Add(newCarCleaningTask);
-            }
+            //if (!soldCarCleaningTaskFound)
+            //{
+            //    VehicleTask newCarCleaningTask = new VehicleTask();
+            //    newCarCleaningTask.Id = Strings.SOLDCARCLEANINGTASK;
+            //    newCarCleaningTask.TaskVehicleId = _vehicle.Id;
+            //    newCarCleaningTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            //    newCarCleaningTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            //    newCarCleaningTask.AssignedTo = "Mike Wilson";
+            //    newCarCleaningTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+            //    newCarCleaningTask.CreatedBy = CacheManager.ActiveUser.Name;
+            //    _vehicle.VehicleTasks.Add(newCarCleaningTask);
+            //}
             #endregion
 
             #region Car Delivery Task
@@ -442,28 +452,109 @@ namespace CarDepot.Controls.VehicleControls
             _vehicle.VehicleTasks.Add(vehicleDeliveredTask);
             #endregion
 
+            #region Delete car advertising task
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                if (vehicleTask.Id.Equals(Strings.DELETECARFROMADVERTISING))
+                {
+                    _vehicle.VehicleTasks.Remove(vehicleTask);
+                    break;
+                }
+            }
+
+            VehicleTask deleteAdvertisingTask = new VehicleTask();
+            deleteAdvertisingTask.Id = Strings.DELETECARFROMADVERTISING;
+            deleteAdvertisingTask.TaskVehicleId = _vehicle.Id;
+            deleteAdvertisingTask.CreatedDate = DateTime.Today.Date.ToString("d");
+            deleteAdvertisingTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+            deleteAdvertisingTask.AssignedTo = "Mathew Toma";
+            deleteAdvertisingTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+            deleteAdvertisingTask.CreatedBy = CacheManager.ActiveUser.Name;
+            _vehicle.VehicleTasks.Add(deleteAdvertisingTask);
+            #endregion
+
             _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
         }
 
-        private void AdminDatePicker_LostFocus(object sender, RoutedEventArgs e)
+        private void txtWarrantyCost_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DateTime dueDate = DateTime.Now;
+            CalculateTotal_TextChanged(sender, e);
+            double warranty = 0;
 
-            if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDeliveryDate), out dueDate))
+            if (Utilities.StringToDouble(txtWarrantyCost.Text, out warranty) && !warranty.Equals(0))
             {
-                return;
-            }
-
-            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
-            {
-                if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {
-                    vehicleTask.DueDate = dueDate.ToString("d");
+                    if (vehicleTask.Id.Equals(Strings.PURCHASEWARRANTYTASK))
+                    {
+                        return;
+                    }
+                }
+
+                VehicleTask purchaseWarrantyTask = new VehicleTask();
+                purchaseWarrantyTask.Id = Strings.PURCHASEWARRANTYTASK;
+                purchaseWarrantyTask.TaskVehicleId = _vehicle.Id;
+                purchaseWarrantyTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                purchaseWarrantyTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                purchaseWarrantyTask.AssignedTo = "Mathew Toma";
+                purchaseWarrantyTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+                purchaseWarrantyTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(purchaseWarrantyTask);
+            }
+            else
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.PURCHASEWARRANTYTASK))
+                    {
+                        if (vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())
+                            _vehicle.VehicleTasks.Remove(vehicleTask);
+
+                        break;
+                    }
                 }
             }
 
             _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
         }
+
+        private void lblCustomerFound_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Dictionary<CustomerCacheSearchKey, string> searchParam = new Dictionary<CustomerCacheSearchKey, string>();
+            CustomerCache cache = null;
+            CustomerAdminObject customer = null;
+            if (!string.IsNullOrEmpty(TxtCustomerId.Text))
+            {
+                searchParam.Add(CustomerCacheSearchKey.Id, TxtCustomerId.Text);
+                cache = new CustomerCache(searchParam);
+            }
+
+            if (cache != null && cache.Count > 0)
+            {
+                customer = cache[0];
+            }
+            else
+            {
+                return;
+            }
+
+            CustomerInfoPage customerInfo = new CustomerInfoPage(customer);
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.CustomerTabColor;
+            customerInfo.SetParentTabControl(tabItem);
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = "Customer: " + customer.LastName + ", " + customer.FirstName;
+            tabItem.Content = customerInfo;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+        }
+
 
     }
 }

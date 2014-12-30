@@ -13,18 +13,18 @@ namespace CarDepot.Resources
 {
     static class Settings
     {
-        public static string UserAccountsPath = @"x:\Data\Users";
-        public static string VehiclePath = @"x:\Data\Vehicles";
-        public static string CustomerPath = @"x:\Data\Customers";
-        public static string Resouces = @"x:\Data\Resources";
-        public static string TempFolder = @"x:\Data\Temp";
-        public static string DefaultVehicleImagePath = @"x:\Data\Resources\DefaultVehicleImage.jpg";
+        public static string UserAccountsPath = @"c:\Data\Users";
+        public static string VehiclePath = @"c:\Data\Vehicles";
+        public static string CustomerPath = @"c:\Data\Customers";
+        public static string Resouces = @"c:\Data\Resources";
+        public static string TempFolder = @"c:\Data\Temp";
+        public static string DefaultVehicleImagePath = @"c:\Data\Resources\DefaultVehicleImage.jpg";
 
         public static string CustomerInfoFileName = @"info.xml";        
         public static string CustomerInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Customer>\n</Customer>";
         public static string VehicleInfoFileName = @"info.xml";        
         public static string VehicleInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Vehicle>\n</Vehicle>";
-        //public static string VehicleSoldPath = @"x:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
+        //public static string VehicleSoldPath = @"c:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
         public static string VehicleImageFolder = @"\Images";
         public static string AdditionalFilesFolder = @"\Files";
 

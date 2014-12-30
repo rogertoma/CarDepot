@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:CarDepot.Controls"
-             mc:Ignorable="d" Height="353" Width="528">
-    <Grid Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,-111,0">
+             mc:Ignorable="d" Height="353" Width="Auto">
+    <Grid Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Name="Title" Height="50"/>
             <RowDefinition Name="Status" Height="Auto"/>
@@ -59,7 +59,7 @@
             <TextBlock Text="Generate Report" TextWrapping="Wrap" TextAlignment="Center" Height="35" Width="70"/>
         </Button>
         <Button Name="BtnSearch" Content="Search" Height="39" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="6" Click="BtnSearch_Click" IsDefault="True"/>
-        <controls:VehicleListView x:Name="LstSearchResults" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="7"/>
+        <controls:VehicleListView x:Name="LstSearchResults" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="9"/>
         
 
     </Grid>

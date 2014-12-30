@@ -49,7 +49,7 @@
         <!--Customer ID-->
         <Label Content="CUSTOMER ID" Grid.Row="2" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Controls:AdminTextBox x:Name="TxtCustomerId" PropertyId="SaleCustomerId" Grid.Row="2" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TxtCustomerId_TextChanged"/>
-        <Label x:Name="lblCustomerFound" Content="" Grid.Row="2"  Grid.Column="2" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center"/>
+        <Label x:Name="lblCustomerFound" Content="" Grid.Row="2"  Grid.Column="2" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Center" Cursor="Hand" MouseDoubleClick="lblCustomerFound_MouseDoubleClick" Foreground="Blue" />
 
         <!--Sale Price-->
         <Label Content="SALE PRICE" Grid.Row="3" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -106,7 +106,7 @@
         <Controls:AdminTextBox x:Name="TxtComments" PropertyId="SaleComments" Grid.Column="1" Grid.Row="19" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
         <Label Content="DELIVERY DATE" Grid.Row="20" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Controls:AdminDatePicker PropertyId="SaleDeliveryDate" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="20" VerticalAlignment="Top" Width="125" LostFocus="AdminDatePicker_LostFocus"/>
+        <Controls:AdminDatePicker PropertyId="SaleDeliveryDate" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="20" VerticalAlignment="Top" Width="125"/>
 
         <Label Content="SALE FILES" Grid.Row="21" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1"/>
         <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="SaleAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="22" Grid.Column="0" Grid.ColumnSpan="2"/>
@@ -133,7 +133,7 @@
                 <Controls:AdminTextBox x:Name="txtWarrantyProvider" PropertyId="SaleWarrantyProvider" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
 
                 <Label Content="WARRANTY PRICE" Grid.Row="2" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Controls:AdminTextBox x:Name="txtWarrantyCost" PropertyId="SaleWarrantyCost" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>
+                <Controls:AdminTextBox x:Name="txtWarrantyCost" PropertyId="SaleWarrantyCost" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="txtWarrantyCost_TextChanged"/>
 
                 <Label Content="MONTHS" Grid.Row="3" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Controls:AdminTextBox x:Name="txtWarranyMonths" PropertyId="SaleWarrantyMonths" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
