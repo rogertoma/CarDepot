@@ -384,9 +384,23 @@ namespace CarDepot.VehicleStore
                 e.Graphics.DrawString(customer.FirstName, font, Brushes.Black, backgroundXPos + 90, backgroundYPos + 115);
                 e.Graphics.DrawString(customer.LastName, font, Brushes.Black, backgroundXPos + 280, backgroundYPos + 115);
 
-                string address = string.Format("{0} {1}",
+                string address = "";
+
+                if (string.IsNullOrEmpty(customer.GetValue(PropertyId.HomeUnitNumber)))
+                {
+                    address = string.Format("{0} {1}",
                     customer.GetValue(PropertyId.HomeStreetNumber),
                     customer.GetValue(PropertyId.HomeStreet));
+                }
+                else
+                {
+                    address = string.Format("{0} - {1} {2}",
+                        customer.GetValue(PropertyId.HomeUnitNumber),
+                        customer.GetValue(PropertyId.HomeStreetNumber),
+                        customer.GetValue(PropertyId.HomeStreet));
+                }
+
+                
 
                 e.Graphics.DrawString(address, font, Brushes.Black, backgroundXPos + 30, backgroundYPos + 145);
 

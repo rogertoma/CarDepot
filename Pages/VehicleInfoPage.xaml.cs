@@ -131,6 +131,7 @@ namespace CarDepot
             newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(newVehicleOilChange);
 
+            vehicle.SetValue(PropertyId.Tasks, vehicle.VehicleTasks);
             vehicle.Save(null);
 
             vehicle.Cache = CacheManager.AllVehicleCache;

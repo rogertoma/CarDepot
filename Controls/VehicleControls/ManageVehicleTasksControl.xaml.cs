@@ -326,10 +326,6 @@ namespace CarDepot.Controls.VehicleControls
             VehicleListView.Items.Refresh();
             VehicleListView.ForceXmlUpdate();
             VehicleListView.SelectedIndex = -1;
-
-            //_vehicle.VehicleTasks.Add(task);
-            //VehicleListView.Items.Add(task);
-            //VehicleListView.SelectedIndex = VehicleListView.Items.Count - 1;
         }
 
         private void UpdateTaskBasedOnUi(VehicleTask task)

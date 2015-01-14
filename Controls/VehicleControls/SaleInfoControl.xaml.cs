@@ -365,7 +365,7 @@ namespace CarDepot.Controls.VehicleControls
         {
             DateTime saleDate = DateTime.Now;
 
-            if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDate), out saleDate))
+            if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDate), out saleDate) )
             {
                 //foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 //{
@@ -387,15 +387,6 @@ namespace CarDepot.Controls.VehicleControls
 
                 foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {
-                    if (vehicleTask.Id.Equals(Strings.NEWCAROILCHANGETASK))
-                    {
-                        _vehicle.VehicleTasks.Remove(vehicleTask);
-                        break;
-                    }
-                }
-
-                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
-                {
                     if (vehicleTask.Id.Equals(Strings.CARDELIVEREDTASK))
                     {
                         _vehicle.VehicleTasks.Remove(vehicleTask);
@@ -406,6 +397,17 @@ namespace CarDepot.Controls.VehicleControls
                 _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
                 return;
             }
+
+            #region Delete Oil Cleaning
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                if (vehicleTask.Id.Equals(Strings.NEWCAROILCHANGETASK))
+                {
+                    _vehicle.VehicleTasks.Remove(vehicleTask);
+                    break;
+                }
+            }
+            #endregion
 
             #region AddSoldCarCleaning
             //bool soldCarCleaningTaskFound = false;
@@ -432,45 +434,57 @@ namespace CarDepot.Controls.VehicleControls
             #endregion
 
             #region Car Delivery Task
+
+            bool carDeliveryTaskFound = false;
             foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
             {
                 if (vehicleTask.Id.Equals(Strings.CARDELIVEREDTASK))
                 {
-                    _vehicle.VehicleTasks.Remove(vehicleTask);
+                    carDeliveryTaskFound = true;
                     break;
                 }
             }
 
-            VehicleTask vehicleDeliveredTask = new VehicleTask();
-            vehicleDeliveredTask.Id = Strings.CARDELIVEREDTASK;
-            vehicleDeliveredTask.TaskVehicleId = _vehicle.Id;
-            vehicleDeliveredTask.CreatedDate = DateTime.Today.Date.ToString("d");
-            vehicleDeliveredTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            vehicleDeliveredTask.AssignedTo = "Reyad Toma";
-            vehicleDeliveredTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
-            vehicleDeliveredTask.CreatedBy = CacheManager.ActiveUser.Name;
-            _vehicle.VehicleTasks.Add(vehicleDeliveredTask);
+            if (!carDeliveryTaskFound)
+            {
+                VehicleTask vehicleDeliveredTask = new VehicleTask();
+                vehicleDeliveredTask.Id = Strings.CARDELIVEREDTASK;
+                vehicleDeliveredTask.TaskVehicleId = _vehicle.Id;
+                vehicleDeliveredTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                vehicleDeliveredTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                vehicleDeliveredTask.AssignedTo = "Reyad Toma";
+                vehicleDeliveredTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+                vehicleDeliveredTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(vehicleDeliveredTask);
+            }
+
             #endregion
 
             #region Delete car advertising task
+
+            bool deleteCarFromAdvertisingTaskFound = false;
             foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
             {
                 if (vehicleTask.Id.Equals(Strings.DELETECARFROMADVERTISING))
                 {
-                    _vehicle.VehicleTasks.Remove(vehicleTask);
+                    deleteCarFromAdvertisingTaskFound = true;
                     break;
                 }
             }
 
-            VehicleTask deleteAdvertisingTask = new VehicleTask();
-            deleteAdvertisingTask.Id = Strings.DELETECARFROMADVERTISING;
-            deleteAdvertisingTask.TaskVehicleId = _vehicle.Id;
-            deleteAdvertisingTask.CreatedDate = DateTime.Today.Date.ToString("d");
-            deleteAdvertisingTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            deleteAdvertisingTask.AssignedTo = "Mathew Toma";
-            deleteAdvertisingTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
-            deleteAdvertisingTask.CreatedBy = CacheManager.ActiveUser.Name;
-            _vehicle.VehicleTasks.Add(deleteAdvertisingTask);
+            if (!deleteCarFromAdvertisingTaskFound)
+            {
+                VehicleTask deleteAdvertisingTask = new VehicleTask();
+                deleteAdvertisingTask.Id = Strings.DELETECARFROMADVERTISING;
+                deleteAdvertisingTask.TaskVehicleId = _vehicle.Id;
+                deleteAdvertisingTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                deleteAdvertisingTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                deleteAdvertisingTask.AssignedTo = "Mathew Toma";
+                deleteAdvertisingTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+                deleteAdvertisingTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(deleteAdvertisingTask);
+            }
+
             #endregion
 
             _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);

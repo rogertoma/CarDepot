@@ -217,10 +217,12 @@ namespace CarDepot
         {
             var elements = from node in xdoc.Descendants() where node.Name.LocalName == id.ToString() select node;
             XElement element = elements.FirstOrDefault() as XElement;
-
-            if (element != null)
+            
+            while (element != null)
             {
                 element.Remove();
+                elements = from node in xdoc.Descendants() where node.Name.LocalName == id.ToString() select node;
+                element = elements.FirstOrDefault() as XElement;
             }
 
             if (PropertyIdSettings.IsMultiValue(id))

@@ -13,6 +13,7 @@ namespace CarDepot.Controls
     class AdminListView: ListView, IPropertyPanel
     {
         private IAdminObject _item = null;
+        bool loadingPanel = false;
         public PropertyId PropertyId { set; get; }
 
         public AdminListView()
@@ -22,7 +23,7 @@ namespace CarDepot.Controls
 
         void AdminListView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (_item == null)
+            if (_item == null || loadingPanel)
                 return;
 
             _item.SetValue(PropertyId.Tasks, ((VehicleAdminObject)_item).VehicleTasks);
@@ -30,6 +31,7 @@ namespace CarDepot.Controls
 
         public void LoadPanel(IAdminObject item)
         {
+            loadingPanel = true;
             this.Items.Clear();
 
             _item = item;
@@ -41,6 +43,8 @@ namespace CarDepot.Controls
             {
                 this.Items.Add(task);
             }
+
+            loadingPanel = false;
         }
 
         public void ApplyUiMode()
