@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Controls;
 using CarDepot.Resources;
+using System;
+using System.Runtime.InteropServices;
 
 namespace CarDepot.VehicleStore
 {
     public class CacheManager
     {        
+        private static bool _updateingCache = false;
         private static UserCache _userCache = null;
         private static ActiveVehicleCache _activeVehicleCache = null;
         private static VehicleCache _allVehicleCache = null;
@@ -25,6 +29,12 @@ namespace CarDepot.VehicleStore
 
         static CacheManager()
         {
+            System.Timers.Timer updateTasks = null;
+            updateTasks = new System.Timers.Timer();
+            updateTasks.Interval = 300000; // Every 5 Minutes
+            updateTasks.Elapsed += updateTasks_Elapsed;
+            updateTasks.Start();
+
             Thread loadCache = new Thread(new ThreadStart(LoadCache));
             loadCache.SetApartmentState(ApartmentState.STA);
             loadCache.Start();
@@ -89,6 +99,22 @@ namespace CarDepot.VehicleStore
                 return _mainTabControl;
             }
             set { _mainTabControl = value; }
+        }
+
+        public static void UpdateAllVehicleCache()
+        {
+            _allVehicleCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>(), true);
+            _updateingCache = false;
+        }
+
+        static void updateTasks_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (!_updateingCache)
+            {
+                _updateingCache = true;
+                Thread updateAllVehicleCache = new Thread(new ThreadStart(UpdateAllVehicleCache));
+                updateAllVehicleCache.Start();
+            }
         }
     }
 }
