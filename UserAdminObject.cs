@@ -30,6 +30,7 @@ namespace CarDepot
             PurchaseInformation,
             SaleInformation,
             SoldButNotDeliveredCheckBox,
+            WarPurchasedCheckBox,
             GenerateReport,
         }
 

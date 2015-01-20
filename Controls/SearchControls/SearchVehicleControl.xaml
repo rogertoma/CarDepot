@@ -26,6 +26,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Label Content="Vehicle Search" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="6"/>
         <!--Status Section-->
@@ -33,7 +34,8 @@
         <CheckBox x:Name="cbAvailable" Content="Available" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="True" />
         <CheckBox x:Name="cbSold" Content="Sold" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" />
         <CheckBox x:Name="cbWasAvailable" Margin="0,0,10,0" Content="Was Available" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" IsChecked="False" />
-        <CheckBox x:Name="cbSoldNotDelivered" Content="Sold not delivered" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" IsChecked="False" />
+        <CheckBox x:Name="cbWasPurchased" Margin="0,0,10,0"  Content="Was Purchased" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" IsChecked="False" />
+        <CheckBox x:Name="cbSoldNotDelivered" Content="Sold not delivered" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="5" IsChecked="False" />
         
         <!--Vin Search-->
         <Label Content="VIN:" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
@@ -55,10 +57,10 @@
 
         <!--Button Section-->
         <Label x:Name="lblTotalCount" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="6" Grid.Column="0"/>
-        <Button Name="BtnGenerateReport" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" Grid.Column="5" Click="BtnGenerateReport_Click">
+        <Button Name="BtnGenerateReport" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" Grid.Column="6" Click="BtnGenerateReport_Click">
             <TextBlock Text="Generate Report" TextWrapping="Wrap" TextAlignment="Center" Height="35" Width="70"/>
         </Button>
-        <Button Name="BtnSearch" Content="Search" Height="39" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="6" Click="BtnSearch_Click" IsDefault="True"/>
+        <Button Name="BtnSearch" Content="Search" Height="39" Width="70" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="6" Grid.Column="7" Click="BtnSearch_Click" IsDefault="True"/>
         <controls:VehicleListView x:Name="LstSearchResults" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="9"/>
         
 

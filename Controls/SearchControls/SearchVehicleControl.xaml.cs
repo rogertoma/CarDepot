@@ -75,6 +75,11 @@ namespace CarDepot.Controls.SearchControls
                 searchParam.Add(VehicleCacheSearchKey.IsAvailable, null);
             }
 
+            if (cbWasPurchased.IsChecked == true)
+            {
+                searchParam.Add(VehicleCacheSearchKey.WasPurchased, null);
+            }
+
             if (cbSoldNotDelivered.IsChecked == true)
             {
                 searchParam.Add(VehicleCacheSearchKey.IncludeSoldNotDelivered, null);
@@ -148,6 +153,15 @@ namespace CarDepot.Controls.SearchControls
             else
             {
                 cbSoldNotDelivered.Visibility = Visibility.Hidden;
+            }
+
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.WarPurchasedCheckBox))
+            {
+                cbWasPurchased.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cbWasPurchased.Visibility = Visibility.Collapsed;
             }
         }
     }

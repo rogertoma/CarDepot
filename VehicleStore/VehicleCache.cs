@@ -18,6 +18,7 @@ namespace CarDepot.VehicleStore
         IsAvailable,
         IsSold,
         WasAvailable,
+        WasPurchased,
         IncludeSoldNotDelivered,
         FromDate,
         ToDate,
@@ -277,6 +278,24 @@ namespace CarDepot.VehicleStore
                             {
                                 return false;
                             }
+                        }
+
+                        break;
+
+                    case VehicleCacheSearchKey.WasPurchased:
+                        if (string.IsNullOrEmpty(pDate))
+                        {
+                            return false;
+                        }
+
+                        if (purchaseDate < fromDate)
+                        {
+                            return false;
+                        }
+
+                        if (purchaseDate > toDate)
+                        {
+                            return false;
                         }
 
                         break;

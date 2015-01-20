@@ -132,6 +132,7 @@ namespace CarDepot
         PurchaseAccidentComment,
         Vendor,
         VendorDescription,
+        LicensingCost,
         Profit,                 // salePrice - PurchaseTotal
 
         //Task PropertyId's
