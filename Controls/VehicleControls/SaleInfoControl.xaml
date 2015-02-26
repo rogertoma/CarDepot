@@ -65,13 +65,14 @@
         <TextBox x:Name="txtSubTotal" Grid.Row="6" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" IsReadOnly="True" IsTabStop="False" IsEnabled="False" FontWeight="ExtraBlack"/>
 
         <Label Content="TRADE-IN ALLOWANCE" Grid.Row="7" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Controls:AdminTextBox x:Name="TxtTradeInCost" PropertyId="SaleTradeInCost" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="CalculateTotal_TextChanged"/>
+        <Controls:AdminTextBox x:Name="TxtTradeInCost" PropertyId="SaleTradeInCost" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="TxtTradeInCost_TextChanged"/>
 
         <Label Content="NET DIFFERENCE" Grid.Row="8" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox x:Name="txtNetDifference" Grid.Row="8" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"  IsReadOnly="True" IsTabStop="False" IsEnabled="False" FontWeight="ExtraBlack"/>
 
         <Label Content="SALES TAX" Grid.Row="9" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtSalesTax" Grid.Row="9" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"  IsReadOnly="True" IsTabStop="False" IsEnabled="False" FontWeight="ExtraBlack"/>
+        <TextBox x:Name="txtSalesTax" Grid.Row="9" Grid.Column="1" Margin="0,10,0,0" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsReadOnly="True" IsTabStop="False" IsEnabled="False" FontWeight="ExtraBlack"/>
+        <Controls:AdminTextBox x:Name="txtSalesTaxPercentage" PropertyId="SaleTaxPercentage" Grid.Column="2" Grid.Row="9" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="PayoutLien_TextChanged"/>
         <!--<Controls:AdminTextBox x:Name="TxtSaleHst" PropertyId="SaleHst" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>-->
 
         <Label Content="LICENSING FEE" Grid.Row="10" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -100,7 +101,7 @@
         <Controls:AdminComboBox x:Name="cmbBrand" Grid.Column="1" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.Row="17" VerticalAlignment="Top" Width="120" PropertyId="SaleBrand"/>
 
         <Label x:Name="lblSafetyCertificate" Content="SAFETY CERTIFICATE" Grid.Row="18" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Controls:AdminComboBox x:Name="cmbSafetyCertificate" Grid.Column="1" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.Row="18" VerticalAlignment="Top" Width="120" PropertyId="SaleSafetyCertificate"/>
+        <Controls:AdminComboBox x:Name="cmbSafetyCertificate" Grid.Column="1" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.Row="18" VerticalAlignment="Top" Width="120" PropertyId="SaleSafetyCertificate" SelectionChanged="cmbSafetyCertificate_SelectionChanged"/>
 
         <Label Content="COMMENTS" Grid.Row="19" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Controls:AdminTextBox x:Name="TxtComments" PropertyId="SaleComments" Grid.Column="1" Grid.Row="19" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>

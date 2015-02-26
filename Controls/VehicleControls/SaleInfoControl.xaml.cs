@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -71,6 +72,16 @@ namespace CarDepot.Controls.VehicleControls
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
 
             LoadComboBoxes();
+
+            if (!CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.UpdateSaleTaxPercentage))
+            {
+                txtSalesTaxPercentage.Visibility = Visibility.Hidden;
+            }
+
+            if (string.IsNullOrEmpty(txtSalesTaxPercentage.Text))
+            {
+                txtSalesTaxPercentage.Text = Settings.HST.ToString(CultureInfo.InvariantCulture);
+            }
         }
 
         private void LoadComboBoxes()
@@ -249,7 +260,13 @@ namespace CarDepot.Controls.VehicleControls
             double netDifference = subTotal1 - tradeIn;
             txtNetDifference.Text = "$" + netDifference.ToString("F");
 
-            double hst = netDifference*Settings.HST;
+            double hstPercentage = 0;
+            if (!Utilities.StringToDouble(_vehicle.GetValue(PropertyId.SaleTaxPercentage), out hstPercentage))
+            {
+                hstPercentage = Settings.HST;
+            }
+
+            double hst = netDifference * hstPercentage;
             txtSalesTax.Text = "$" + hst.ToString("F");
 
             Utilities.StringToDouble(TxtLicensingFee.Text, out licenseFee);
@@ -270,6 +287,44 @@ namespace CarDepot.Controls.VehicleControls
         {
             DialogResult result = System.Windows.Forms.MessageBox.Show("Did you remember to update the mileage?", Strings.WARNING,
                 System.Windows.Forms.MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                double tradeInAmount = 0;
+
+                if (Utilities.StringToDouble(TxtTradeInCost.Text, out tradeInAmount) && tradeInAmount != 0)
+                {
+                    if (string.IsNullOrEmpty(txtTradeInYear.Text))
+                    {
+                        System.Windows.Forms.MessageBox.Show("You did not specify the trade in Year", Strings.ERROR);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(txtTradeInMake.Text))
+                    {
+                        System.Windows.Forms.MessageBox.Show("You did not specify the trade in Make", Strings.ERROR);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(txtTradeInModel.Text))
+                    {
+                        System.Windows.Forms.MessageBox.Show("You did not specify the trade in Model", Strings.ERROR);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(txtTradeInMileage.Text))
+                    {
+                        System.Windows.Forms.MessageBox.Show("You did not specify the trade in Mileage", Strings.ERROR);
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(txtTradeInVIN.Text))
+                    {
+                        System.Windows.Forms.MessageBox.Show("You did not specify the trade in VIN", Strings.ERROR);
+                        return;
+                    }
+                }
+            }
 
             if (result == DialogResult.Yes)
             {
@@ -567,6 +622,92 @@ namespace CarDepot.Controls.VehicleControls
             tabItem.Content = customerInfo;
             CacheManager.MainTabControl.Items.Add(tabItem);
             tabItem.Focus();
+        }
+
+        private void TxtTradeInCost_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculateTotal_TextChanged(sender, e);
+
+            double tradeIn = 0;
+
+            if (Utilities.StringToDouble(TxtTradeInCost.Text, out tradeIn) && !tradeIn.Equals(0))
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.CREATETRADEINFORMTASK))
+                    {
+                        return;
+                    }
+                }
+
+                VehicleTask createTradeInTask = new VehicleTask();
+                string taskText = string.Format(Strings.CREATETRADEINFORMTASK, txtTradeInModel.Text, txtTradeInVIN.Text);
+                createTradeInTask.Id = taskText;
+                createTradeInTask.TaskVehicleId = _vehicle.Id;
+                createTradeInTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                createTradeInTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                createTradeInTask.AssignedTo = CacheManager.ActiveUser.Name.ToString(CultureInfo.InvariantCulture);
+                createTradeInTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
+                createTradeInTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(createTradeInTask);
+            }
+            else
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.CREATETRADEINFORMTASK))
+                    {
+                        if (vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())
+                            _vehicle.VehicleTasks.Remove(vehicleTask);
+
+                        break;
+                    }
+                }
+            }
+
+            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+        }
+
+        private void cmbSafetyCertificate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            double tradeIn = 0;
+
+            if (cmbSafetyCertificate.SelectedItem.ToString() == Certified.No.ToString())
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.ENSUREVEHICLEHASTRADEINFORM))
+                    {
+                        return;
+                    }
+                }
+
+                VehicleTask createTradeInTask = new VehicleTask();
+                string taskText = string.Format(Strings.ENSUREVEHICLEHASTRADEINFORM, _vehicle.Model, _vehicle.VinNumber);
+                createTradeInTask.Id = taskText;
+                createTradeInTask.TaskVehicleId = _vehicle.Id;
+                createTradeInTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                createTradeInTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                createTradeInTask.AssignedTo = CacheManager.ActiveUser.Name.ToString(CultureInfo.InvariantCulture);
+                createTradeInTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
+                createTradeInTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(createTradeInTask);
+            }
+            else
+            {
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.ENSUREVEHICLEHASTRADEINFORM))
+                    {
+                        if (vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())
+                            _vehicle.VehicleTasks.Remove(vehicleTask);
+
+                        break;
+                    }
+                }
+            }
+
+            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
         }
 
 

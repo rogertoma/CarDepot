@@ -102,6 +102,9 @@ namespace CarDepot.Controls
             {
                 ((TabControl)this.Parent).Items.Remove(this);
             }
+
+            this.Content = null;
+            this.DataContext = null;
         }
         // Label SizeChanged - When the Size of the Label changes
         // (due to setting the Title) set position of button properly

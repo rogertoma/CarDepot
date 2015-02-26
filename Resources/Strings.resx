@@ -138,6 +138,9 @@
   <data name="CONTROL_TASKSCONTROL_TAB_TITLE" xml:space="preserve">
     <value>My Tasks</value>
   </data>
+  <data name="CREATETRADEINFORMTASK" xml:space="preserve">
+    <value>Create a trade in form for vehicle traded in</value>
+  </data>
   <data name="CUSTOMERINFOPAGE_ADDFILERESOURCE_REPLACEFILE" xml:space="preserve">
     <value>A file with this name already exists, would you like to replace it?</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="DELETECARFROMADVERTISING" xml:space="preserve">
     <value>Delete car from advertising</value>
+  </data>
+  <data name="ENSUREVEHICLEHASTRADEINFORM" xml:space="preserve">
+    <value>Check if this vehicle has a trade in form</value>
   </data>
   <data name="ERROR" xml:space="preserve">
     <value>Error</value>
@@ -209,6 +215,9 @@
   </data>
   <data name="PAGES_VEHICLEINFOPAGE_UNABLETODELETE" xml:space="preserve">
     <value>Unable to delete vehicle, you do not have the latest version.  Please refresh and reattempt delete.</value>
+  </data>
+  <data name="PAGES_VEHICLEINFOPAGE_VINLENGTHCOUNT" xml:space="preserve">
+    <value>It appears that your VIN may not be the correct</value>
   </data>
   <data name="PAGES_VEHICLEINFOWINDOW_BASICINFO_TAB_TITLE" xml:space="preserve">
     <value>General Vehicle Information</value>

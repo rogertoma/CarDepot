@@ -183,10 +183,10 @@ namespace CarDepot.Controls
 
         private void FileList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string selectedFile = FileList.SelectedItem.ToString();
-            string file = new FileInfo(_item.ObjectId).Directory.FullName + "\\" + PropertyId + "\\" + selectedFile;
             try
             {
+                string selectedFile = FileList.SelectedItem.ToString();
+                string file = new FileInfo(_item.ObjectId).Directory.FullName + "\\" + PropertyId + "\\" + selectedFile;
                 System.Diagnostics.Process.Start(file);
             }
             catch (Exception ex)

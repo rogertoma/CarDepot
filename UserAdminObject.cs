@@ -32,6 +32,7 @@ namespace CarDepot
             SoldButNotDeliveredCheckBox,
             WarPurchasedCheckBox,
             GenerateReport,
+            UpdateSaleTaxPercentage,
         }
 
         public UserAdminObject(string objectId)

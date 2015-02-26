@@ -119,6 +119,8 @@ namespace CarDepot
         SaleTotalDue,             // salefees + saleHST + salePrice
         SaleCustomerPayment,
         SaleAssociatedFiles,
+        SaleTaxPercentage,
+
         PurchasePrice,
         PurchaseBuyerFee,
         PurchaseOtherCosts,

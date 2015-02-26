@@ -347,15 +347,19 @@ namespace CarDepot.VehicleStore
             currentSheet.Cells[row, column++] = new Cell("Sale Price");
             currentSheet.Cells[row, column++] = new Cell("Finance Fees");
             currentSheet.Cells[row, column++] = new Cell("Trade In");
-            if (!isForAccounting)
-                currentSheet.Cells[row, column++] = new Cell("Warranty Price");
+            currentSheet.Cells[row, column++] = new Cell("Warranty");
+            currentSheet.Cells[row, column++] = new Cell("Accessories");
             currentSheet.Cells[row, column++] = new Cell("Sale Net");
+            currentSheet.Cells[row, column++] = new Cell("Sale HST Percentage");
             currentSheet.Cells[row, column++] = new Cell("Sale HST");
+            currentSheet.Cells[row, column++] = new Cell("Lien Fee");
             currentSheet.Cells[row, column++] = new Cell("Gross Ministry Licensing");
+            currentSheet.Cells[row, column++] = new Cell("SubTotal");
             currentSheet.Cells[row, column++] = new Cell("Ministry Licensing HST");
             currentSheet.Cells[row, column++] = new Cell("Net Ministry Licensing");
             if (!isForAccounting)
                 currentSheet.Cells[row, column++] = new Cell("Ministry Licensing charges");
+            currentSheet.Cells[row, column++] = new Cell("Deposit");
             currentSheet.Cells[row, column++] = new Cell("Total Sale Amount");
 
             column++;
@@ -445,24 +449,48 @@ namespace CarDepot.VehicleStore
                 //Warranty Price
                 string sWarrantyPrice = vehicle.GetValue(PropertyId.SaleWarrantyCost);
                 double warrantyPrice = 0;
-                if (!isForAccounting)
-                {
-                    if (Utilities.StringToDouble(sWarrantyPrice, out warrantyPrice))
-                        currentSheet.Cells[row, column] = new Cell(warrantyPrice, "#,##0.00");
-                    else
-                        currentSheet.Cells[row, column] = new Cell(sWarrantyPrice);
-                    column++;
-                }
+                if (Utilities.StringToDouble(sWarrantyPrice, out warrantyPrice))
+                    currentSheet.Cells[row, column] = new Cell(warrantyPrice, "#,##0.00");
+                else
+                    currentSheet.Cells[row, column] = new Cell(sWarrantyPrice);
+                column++;
+
+                //Accessories
+                string sAccessoryPrice = vehicle.GetValue(PropertyId.SaleAccessoryCost);
+                double accessoryPrice = 0;
+                if (Utilities.StringToDouble(sAccessoryPrice, out accessoryPrice))
+                    currentSheet.Cells[row, column] = new Cell(accessoryPrice, "#,##0.00");
+                else
+                    currentSheet.Cells[row, column] = new Cell(sAccessoryPrice);
+                column++;
 
                 //Sale net
                 double saleNet = 0;
-                saleNet = salePrice + financeFee + warrantyPrice - tradeIn;
+                saleNet = salePrice + financeFee + warrantyPrice + accessoryPrice - tradeIn;
                 currentSheet.Cells[row, column++] = new Cell(saleNet, "#,##0.00");
+
+                //Sale Hst Percentage
+                string sSaleHstPercentage = vehicle.GetValue(PropertyId.SaleAccessoryCost);
+                double saleHstPercentage = 0;
+                if (Utilities.StringToDouble(sSaleHstPercentage, out saleHstPercentage))
+                    currentSheet.Cells[row, column] = new Cell(saleHstPercentage, "#,##0.00");
+                else
+                    currentSheet.Cells[row, column] = new Cell(sSaleHstPercentage);
+                column++;
 
                 //Sale HST
                 double saleHST = 0;
-                saleHST = saleNet * Settings.HST;
+                saleHST = saleNet * saleHstPercentage;
                 currentSheet.Cells[row, column++] = new Cell(saleHST, "#,##0.00");
+
+                //Lien Fee
+                string sLienFee = vehicle.GetValue(PropertyId.SaleLienRegistrationFee);
+                double lienFee = 0;
+                if (Utilities.StringToDouble(sLienFee, out lienFee))
+                    currentSheet.Cells[row, column] = new Cell(lienFee, "#,##0.00");
+                else
+                    currentSheet.Cells[row, column] = new Cell(sLienFee);
+                column++;
 
                 //Ministry Fees
                 string sMinistryLicensing = vehicle.GetValue(PropertyId.SaleLicenseFee);
@@ -472,10 +500,14 @@ namespace CarDepot.VehicleStore
                 Utilities.StringToDouble(vehicle.GetValue(PropertyId.SaleLienRegistrationFee), out lienRegistrationFee);
                 double bankAdminFee = 0;
                 Utilities.StringToDouble(vehicle.GetValue(PropertyId.SaleBankAdminFee), out bankAdminFee);
-                double totalMinistryCost = ministryLicensing + lienRegistrationFee + bankAdminFee;
+                double totalMinistryCost = ministryLicensing + bankAdminFee;
 
                 currentSheet.Cells[row, column++] = new Cell(totalMinistryCost, "#,##0.00");
-      
+
+                //Subtotal
+                double subTotal = 0;
+                subTotal = saleNet + saleHST + totalMinistryCost;
+                currentSheet.Cells[row, column++] = new Cell(subTotal, "#,##0.00");
 
                 //Ministry HST
                 double ministryHST = 0;
@@ -499,9 +531,17 @@ namespace CarDepot.VehicleStore
                     column++;
                 }
 
-                //Total Amount
+                string sDeposit = vehicle.GetValue(PropertyId.SaleCustomerPayment);
+                double deposit = 0;
+                if (Utilities.StringToDouble(sDeposit, out deposit))
+                    currentSheet.Cells[row, column] = new Cell(deposit, "#,##0.00");
+                else
+                    currentSheet.Cells[row, column] = new Cell(sDeposit);
+                column++;
+
+                //Total Sale Amount
                 double totalSaleAmount = 0;
-                totalSaleAmount = saleNet + saleHST + totalMinistryCost + ministryHST;
+                totalSaleAmount = subTotal + lienFee - deposit;
                 currentSheet.Cells[row, column++] = new Cell(totalSaleAmount, "#,##0.00");
 
                 //Empty Column
@@ -559,7 +599,7 @@ namespace CarDepot.VehicleStore
                     
                     // Net Income
                     double netIncome = 0;
-                    netIncome = saleNet + warrantyPrice + ministryNET + netDealerReserve + tradeIn;
+                    netIncome = saleNet + warrantyPrice + ministryLicensing - ministryLicensingCost + netDealerReserve + tradeIn;
                     currentSheet.Cells[row, column++] = new Cell(netIncome, "#,##0.00");
 
                     // Net Profit

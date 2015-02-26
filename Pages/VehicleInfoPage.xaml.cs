@@ -334,12 +334,17 @@ namespace CarDepot
             {
                 _vehicle.Cache.ModifyItem(_vehicle);
             }
-
+            
             return false;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (_vehicle.GetValue(PropertyId.VinNumber).ToString().Length != 17)
+            {
+                MessageBox.Show(Strings.PAGES_VEHICLEINFOPAGE_VINLENGTHCOUNT, Strings.WARNING, MessageBoxButton.OK);
+            }
+
             bool successfulSave = _vehicle.Save(this);
             if (!successfulSave)
             {

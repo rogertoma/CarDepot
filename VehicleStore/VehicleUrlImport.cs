@@ -141,6 +141,12 @@ namespace CarDepot.VehicleStore
                     string foundLink = page.Substring(foundIndex + linkHeader.Length, stringLength);
                     if (foundLink.EndsWith(".jpg"))
                     {
+                        if (foundLink.StartsWith("//"))
+                        {
+                            foundLink = foundLink.Substring(2);
+                            foundLink = "http://" + foundLink;
+                        }
+
                         WebClient downloadClient = new WebClient();
                         string tempOutputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";
                         downloadClient.DownloadFile(foundLink, tempOutputFile);

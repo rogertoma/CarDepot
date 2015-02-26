@@ -21,7 +21,16 @@ namespace CarDepot.Pages
     {
         public LogonPage()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+            
         }
 
         private void LogonPageControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

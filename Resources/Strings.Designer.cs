@@ -596,6 +596,40 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("DELETECARFROMADVERTISING", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to DELETECARFROMADVERTISING.
+        /// </summary>
+        internal static string PAGES_VEHICLEINFOPAGE_VINLENGTHCOUNT
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGES_VEHICLEINFOPAGE_VINLENGTHCOUNT", resourceCulture);
+            }
+        }
         
+        /// <summary>
+        ///   Looks up a localized string similar to CREATETRADEINFORMTASK.
+        /// </summary>
+        internal static string CREATETRADEINFORMTASK
+        {
+            get
+            {
+                return ResourceManager.GetString("CREATETRADEINFORMTASK", resourceCulture);
+            }
+        }
+     
+        /// <summary>
+        ///   Looks up a localized string similar to ENSUREVEHICLEHASTRADEINFORM.
+        /// </summary>
+        internal static string ENSUREVEHICLEHASTRADEINFORM
+        {
+            get
+            {
+                return ResourceManager.GetString("ENSUREVEHICLEHASTRADEINFORM", resourceCulture);
+            }
+        }
+        
+   
     }
 }
