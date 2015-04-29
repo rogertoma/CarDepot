@@ -357,8 +357,6 @@ namespace CarDepot.VehicleStore
             currentSheet.Cells[row, column++] = new Cell("SubTotal");
             currentSheet.Cells[row, column++] = new Cell("Ministry Licensing HST");
             currentSheet.Cells[row, column++] = new Cell("Net Ministry Licensing");
-            if (!isForAccounting)
-                currentSheet.Cells[row, column++] = new Cell("Ministry Licensing charges");
             currentSheet.Cells[row, column++] = new Cell("Deposit");
             currentSheet.Cells[row, column++] = new Cell("Total Sale Amount");
 
@@ -470,12 +468,14 @@ namespace CarDepot.VehicleStore
                 currentSheet.Cells[row, column++] = new Cell(saleNet, "#,##0.00");
 
                 //Sale Hst Percentage
-                string sSaleHstPercentage = vehicle.GetValue(PropertyId.SaleAccessoryCost);
+                string sSaleHstPercentage = vehicle.GetValue(PropertyId.SaleTaxPercentage);
                 double saleHstPercentage = 0;
-                if (Utilities.StringToDouble(sSaleHstPercentage, out saleHstPercentage))
-                    currentSheet.Cells[row, column] = new Cell(saleHstPercentage, "#,##0.00");
-                else
-                    currentSheet.Cells[row, column] = new Cell(sSaleHstPercentage);
+                Utilities.StringToDouble(sSaleHstPercentage, out saleHstPercentage);
+                if (Math.Abs(saleHstPercentage) <= 0)
+                {
+                    saleHstPercentage = Settings.HST;
+                }
+                currentSheet.Cells[row, column] = new Cell(saleHstPercentage, "#,##0.00");
                 column++;
 
                 //Sale HST
@@ -519,18 +519,7 @@ namespace CarDepot.VehicleStore
                 ministryNET = totalMinistryCost / (1 + Settings.HST);
                 currentSheet.Cells[row, column++] = new Cell(ministryNET, "#,##0.00");
 
-                //Ministry Licensing 
-                string sLicenseFee = vehicle.GetValue(PropertyId.SaleLicenseFee);
-                double licenseFee = 0;
-                if (!isForAccounting)
-                {
-                    if (Utilities.StringToDouble(sLicenseFee, out licenseFee))
-                        currentSheet.Cells[row, column] = new Cell(licenseFee, "#,##0.00");
-                    else
-                        currentSheet.Cells[row, column] = new Cell(sLicenseFee);
-                    column++;
-                }
-
+                // Deposit
                 string sDeposit = vehicle.GetValue(PropertyId.SaleCustomerPayment);
                 double deposit = 0;
                 if (Utilities.StringToDouble(sDeposit, out deposit))
@@ -587,9 +576,11 @@ namespace CarDepot.VehicleStore
                     double otherCost = 0;
                     double warrantyCost = 0;
                     double ministryLicensingCost = 0;
+                    double lienPayoutAmount = 0;
                     Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchasePrice), out purchasePrice);
                     Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchaseBuyerFee), out buyerFee);
                     Utilities.StringToDouble(vehicle.GetValue(PropertyId.LicensingCost), out ministryLicensingCost);
+                    Utilities.StringToDouble(vehicle.GetValue(PropertyId.SalePayoutLienOnTradeIn), out lienPayoutAmount);
                     tasksCost = CalculateTasksCost(vehicle);
                     Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchaseOtherCosts), out otherCost);
                     Utilities.StringToDouble(vehicle.GetValue(PropertyId.PurchaseWarrantyCost), out warrantyCost);
@@ -599,7 +590,7 @@ namespace CarDepot.VehicleStore
                     
                     // Net Income
                     double netIncome = 0;
-                    netIncome = saleNet + warrantyPrice + ministryLicensing - ministryLicensingCost + netDealerReserve + tradeIn;
+                    netIncome = saleNet + ministryLicensing + netDealerReserve + (tradeIn - lienPayoutAmount);
                     currentSheet.Cells[row, column++] = new Cell(netIncome, "#,##0.00");
 
                     // Net Profit

@@ -20,6 +20,7 @@ using CarDepot.Pages;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 
 namespace CarDepot
@@ -105,6 +106,20 @@ namespace CarDepot
 
         private void CarDepot_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
+            if (CacheManager.MainTabControl.Items.Count != _user.MainTabPages.Count)
+            {
+                DialogResult result =
+                    MessageBox.Show(
+                        "There are some tabs open that may require saving, are you sure you want to sign out?",
+                        Strings.WARNING, MessageBoxButtons.YesNo);
+                if (result == System.Windows.Forms.DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             LogonPage logon = new LogonPage();
             logon.Show();
         }

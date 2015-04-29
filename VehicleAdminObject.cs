@@ -462,7 +462,7 @@ namespace CarDepot
                     if (list2Item[Settings.MultiValueValueIndex] == list1Item[Settings.MultiValueValueIndex])
                     {
                         found = true;
-                        list2.Remove(list1Item);
+                        list2.Remove(list2Item);
                         break;
                     }
                 }

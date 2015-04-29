@@ -469,9 +469,21 @@ namespace CarDepot.VehicleStore
         {
             List<VehicleAdminObject> sortedList = new List<VehicleAdminObject>();
 
-            sortedList.AddRange(direction == ListSortDirection.Ascending
-                                    ? this.OrderBy(vehicleAdminObject => vehicleAdminObject.GetValue(category))
-                                    : this.OrderByDescending(vehicleAdminObject => vehicleAdminObject.GetValue(category)));
+            int outInteger = 0;
+
+            if (int.TryParse(this[0].GetValue(category), out outInteger))
+            {
+                sortedList.AddRange(direction == ListSortDirection.Ascending
+                    ? this.OrderBy(vehicleAdminObject => int.Parse(vehicleAdminObject.GetValue(category)))
+                    : this.OrderByDescending(vehicleAdminObject => int.Parse(vehicleAdminObject.GetValue(category))));
+            }
+            else
+            {
+                sortedList.AddRange(direction == ListSortDirection.Ascending
+                    ? this.OrderBy(vehicleAdminObject => vehicleAdminObject.GetValue(category))
+                    : this.OrderByDescending(vehicleAdminObject => vehicleAdminObject.GetValue(category)));
+            }
+
 
             this.Clear();
             this.AddRange(sortedList);

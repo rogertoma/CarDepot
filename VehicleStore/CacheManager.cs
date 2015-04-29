@@ -18,6 +18,7 @@ namespace CarDepot.VehicleStore
         private static UserCache _userCache = null;
         private static ActiveVehicleCache _activeVehicleCache = null;
         private static VehicleCache _allVehicleCache = null;
+        private static CustomerCache _allCustomerCache = null;
         private static UserAdminObject _activeUser = null;
         private static TabControl _mainTabControl = null;
 
@@ -44,6 +45,7 @@ namespace CarDepot.VehicleStore
         {
             _userCache = new UserCache();
             _allVehicleCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>());
+            _allCustomerCache = new CustomerCache();
         }
 
         public static VehicleCache ActiveVehicleCache
@@ -65,6 +67,15 @@ namespace CarDepot.VehicleStore
                 return _allVehicleCache;
             }
             set { _allVehicleCache = value; }
+        }
+
+        public static CustomerCache AllCustomerCache
+        {
+            get
+            {
+                return _allCustomerCache;
+            }
+            set { _allCustomerCache = value; }
         }
 
         public static UserCache UserCache

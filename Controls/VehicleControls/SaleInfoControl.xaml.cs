@@ -338,7 +338,7 @@ namespace CarDepot.Controls.VehicleControls
 
             double payoutLien = 0;
 
-            if (!Utilities.StringToDouble(TxtPayoutLienOnTradeIn.Text, out payoutLien) || Math.Abs(payoutLien) == 0.0)
+            if (!Utilities.StringToDouble(_vehicle.GetValue(PropertyId.SalePayoutLienOnTradeIn), out payoutLien) || Math.Abs(payoutLien) == 0.0)
             {
                 foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {

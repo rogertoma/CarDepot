@@ -19,7 +19,7 @@ namespace CarDepot.VehicleStore
         PhoneNumber
     }
 
-    class CustomerCache : List<CustomerAdminObject>, IAdminItemCache
+    public class CustomerCache : List<CustomerAdminObject>, IAdminItemCache
     {
         public UserAdminObject SystemAdminAccount = null;
         List<string> _properties = new List<string>();
@@ -28,6 +28,7 @@ namespace CarDepot.VehicleStore
         {
             Initialize();
 
+           
             string[] customers = Directory.GetDirectories(Settings.CustomerPath);
             foreach (var customer in customers)
             {
@@ -36,26 +37,23 @@ namespace CarDepot.VehicleStore
                     LoadCustomer(file);
                 }
             }
+ 
         }
 
         public CustomerCache(Dictionary<CustomerCacheSearchKey, string> searchParam)
         {
             Initialize();
 
-            string[] customers = Directory.GetDirectories(Settings.CustomerPath);
-            foreach (var customer in customers)
+            foreach (var customer in CacheManager.AllCustomerCache)
             {
-                foreach (string file in Directory.GetFiles(customer, Strings.FILTER_ALL_XML))
-                {
-                    LoadCustomerIfMeetsSearch(file, searchParam);
-                }
+                LoadCustomerIfMeetsSearch(customer, searchParam);
             }
 
         }
 
-        private void LoadCustomerIfMeetsSearch(string filePath, Dictionary<CustomerCacheSearchKey, string> searchParam)
+        private void LoadCustomerIfMeetsSearch(CustomerAdminObject customer, Dictionary<CustomerCacheSearchKey, string> searchParam)
         {
-            CustomerAdminObject customer = new CustomerAdminObject(filePath);
+            //CustomerAdminObject customer = (CustomerAdminObject)cust.Clone();
             customer.Cache = this;
 
             if (customer.GetValue(PropertyId.IsDeleted) == true.ToString())
@@ -75,9 +73,9 @@ namespace CarDepot.VehicleStore
                 if (param.Key == CustomerCacheSearchKey.PhoneNumber)
                 {
                     string searchNumber = StripPhoneNumber(param.Value);
-                    if (!(StripPhoneNumber(customer.GetValue(PropertyId.MobilePhone)) == searchNumber ||
-                        StripPhoneNumber(customer.GetValue(PropertyId.BusinessPhone)) == searchNumber ||
-                        StripPhoneNumber(customer.GetValue(PropertyId.HomePhone)) == searchNumber))
+                    if (!(StripPhoneNumber(customer.GetValue(PropertyId.MobilePhone)).Contains(searchNumber) ||
+                        StripPhoneNumber(customer.GetValue(PropertyId.BusinessPhone)).Contains(searchNumber) ||
+                        StripPhoneNumber(customer.GetValue(PropertyId.HomePhone)).Contains(searchNumber)))
                     {
                         meetsAllRequirements = false;
                         break;
@@ -87,7 +85,7 @@ namespace CarDepot.VehicleStore
                 {
                     PropertyId id = (PropertyId)Enum.Parse(typeof(PropertyId), param.Key.ToString());
                     if (customer != null && customer.GetValue(id) != null &&
-                        customer.GetValue(id).Trim().ToLower() != param.Value.Trim().ToLower())
+                        !customer.GetValue(id).Trim().ToLower().Contains(param.Value.Trim().ToLower()))
                     {
                         meetsAllRequirements = false;
                         break;

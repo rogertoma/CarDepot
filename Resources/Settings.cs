@@ -127,7 +127,8 @@ namespace CarDepot.Resources
                 //tabItem.Focus();
 
                 IAdminItemCache tempCache = vehicle.Cache;
-                vehicle = new VehicleAdminObject(vehicle.ObjectId);
+                //THIS FORCES VEHICLE TO REFRESH
+                //vehicle = new VehicleAdminObject(vehicle.ObjectId);
                 vehicle.Cache = tempCache;
 
                 VehicleInfoWindow window = new VehicleInfoWindow(vehicle, startTab);

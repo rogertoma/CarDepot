@@ -175,7 +175,14 @@ namespace CarDepot.VehicleStore
                 }
 
                 //Hst
-                double hst = netDifference * Settings.HST;
+                double hstPercentage;
+
+                if (!Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTaxPercentage), out hstPercentage))
+                {
+                    hstPercentage = Settings.HST;
+                }
+
+                double hst = netDifference * hstPercentage;
                 string stringHST = hst.ToString("F");
                 e.Graphics.DrawString(stringHST, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 535);
 

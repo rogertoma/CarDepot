@@ -17,11 +17,11 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button x:Name="BtnCreateNewVehicle" Margin="0,0,0,10" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="1" Grid.Column="0" Click="BtnCreateNewVehicle_Click" />
-        <Button x:Name="BtnSearchVehicles" Content="Search Vehicles" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="1" Click="BtnSearchVehicles_Click" />
-        <Button x:Name="BtnSearchTasks" Content="Search Tasks" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="2" Click="BtnSearchTasks_Click"/>
-        <Button x:Name="BtnCreateNewCustomer" Content="Create New Customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="2" Grid.Column="0" Click="BtnCreateNewCustomer_Click"/>
-        <Button x:Name="BtnSearchCustomers" Content="Search Customers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="2" Grid.Column="1" Click="BtnSearchCustomers_Click"/>
+        <Button x:Name="BtnSearchVehicles" Margin="0,0,0,10" Content="Search Vehicles" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="1" Grid.Column="0" Click="BtnSearchVehicles_Click" />
+        <Button x:Name="BtnSearchTasks" Content="Search Tasks" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="1" Click="BtnSearchTasks_Click"/>
+        <Button x:Name="BtnCreateNewVehicle" Margin="10,0,0,0" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="2" Click="BtnCreateNewVehicle_Click" />
+        <Button x:Name="BtnSearchCustomers" Content="Search Customers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="0,0,0,0" Background="ForestGreen"  Height="150" Grid.Row="2" Grid.Column="0" Click="BtnSearchCustomers_Click"/>
+        <Button x:Name="BtnCreateNewCustomer" Margin="10,0,0,0" Content="Create New Customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="2" Grid.Column="1" Click="BtnCreateNewCustomer_Click"/>
     </Grid>
 </UserControl>
 

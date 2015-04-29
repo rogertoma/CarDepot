@@ -35,7 +35,17 @@ namespace CarDepot.Pages
         public CustomerInfoPage(CustomerAdminObject customer)
         {
             InitializeComponent();
-            _customer = customer ?? CreateNewDefaultVehicleObject();
+            if (customer != null)
+            {
+                _customer = customer;
+            }
+            else
+            {
+                _customer = CreateNewDefaultCustomerObject();
+                CacheManager.AllCustomerCache.Add(_customer);
+                _customer.Cache = CacheManager.AllCustomerCache;
+                
+            }
 
             LoadPanel(_customer);
 
@@ -147,7 +157,7 @@ namespace CarDepot.Pages
             return true;
         }
 
-        private CustomerAdminObject CreateNewDefaultVehicleObject()
+        private CustomerAdminObject CreateNewDefaultCustomerObject()
         {
             int lastId = GetNextFolderId();
 

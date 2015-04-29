@@ -296,7 +296,7 @@ namespace CarDepot.Controls.VehicleControls
             if (task == null)
                 return;
 
-            if (!task.AssignedTo.Equals(CacheManager.ActiveUser.Name) && !task.AssignedTo.Equals(CacheManager.UserCache.SystemAdminAccount.Name))
+            if (!task.AssignedTo.Equals(CacheManager.ActiveUser.Name) && !task.AssignedTo.Equals(CacheManager.UserCache.SystemAdminAccount.Name) && !CacheManager.ActiveUser.Name.Equals("Roger Toma") )
             {
                 MessageBox.Show(string.Format(Strings.CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK, task.AssignedTo),
                     Strings.ERROR);
