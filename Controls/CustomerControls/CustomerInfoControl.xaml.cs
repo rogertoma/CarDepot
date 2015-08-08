@@ -12,12 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CarDepot.Resources;
 using CarDepot.VehicleStore;
 
 namespace CarDepot.Controls.CustomerControls
 {
     /// <summary>
     /// Interaction logic for CustomerInfoControl.xaml
+    /// 
     /// </summary>
     public partial class CustomerInfoControl : UserControl, IPropertyPanel
     {
@@ -41,6 +43,12 @@ namespace CarDepot.Controls.CustomerControls
             LoadAllChildren(ContactCardGrid, item);
 
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
+
+            Dictionary<VehicleCacheSearchKey, string> searchParam = new Dictionary<VehicleCacheSearchKey, string>();
+            searchParam.Add(VehicleCacheSearchKey.CustomerId, item.GetValue(PropertyId.Id));
+
+            VehicleCache cache = new VehicleCache(Settings.VehiclePath, searchParam);
+            LstCustomerVehicles.SetContent(cache);
         }
 
         public void ApplyUiMode()

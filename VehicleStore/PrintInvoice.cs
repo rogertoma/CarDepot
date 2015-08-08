@@ -356,8 +356,16 @@ namespace CarDepot.VehicleStore
                 e.Graphics.DrawString("X", font, Brushes.Black, backgroundXPos + 530, backgroundYPos + 281);
 
                 int yPos = 585;
-                string comments = currVehicle.GetValue(PropertyId.SaleComments);
 
+                string warrantyProvider = currVehicle.GetValue(PropertyId.SaleWarrantyProvider);
+                if (string.IsNullOrEmpty(warrantyProvider))
+                {
+                    e.Graphics.DrawString("Warranty declined", font, Brushes.Black, backgroundXPos + 10,
+                        backgroundYPos + yPos);
+                    yPos += 24;
+                }
+
+                string comments = currVehicle.GetValue(PropertyId.SaleComments);
                 if (!string.IsNullOrEmpty(comments))
                 {
                     foreach (string comment in comments.Split(';'))

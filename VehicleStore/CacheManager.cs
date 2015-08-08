@@ -32,7 +32,7 @@ namespace CarDepot.VehicleStore
         {
             System.Timers.Timer updateTasks = null;
             updateTasks = new System.Timers.Timer();
-            updateTasks.Interval = 300000; // Every 5 Minutes
+            updateTasks.Interval = 600000; // Every 5 Minutes
             updateTasks.Elapsed += updateTasks_Elapsed;
             updateTasks.Start();
 
@@ -114,7 +114,11 @@ namespace CarDepot.VehicleStore
 
         public static void UpdateAllVehicleCache()
         {
-            _allVehicleCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>(), true);
+            VehicleCache vehicleTemplCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>(), true);
+            _allVehicleCache = vehicleTemplCache;
+            CustomerCache customerTempCache = new CustomerCache();
+            _allCustomerCache = customerTempCache;
+
             _updateingCache = false;
         }
 

@@ -367,7 +367,26 @@ namespace CarDepot
                 return false;
 
             //Tasks, Images, Basic Info
+/*            foreach (var vehicleTask in VehicleTasks)
+            {
+                bool found = false;
+                for (int i = 0; i < vehicle.VehicleTasks.Count; i++)
+                {
+                    if (vehicleTask.Equals(vehicle.VehicleTasks[i]))
+                    {
+                        found = true;
+                        vehicle.VehicleTasks.RemoveAt(i);
+                        break;
+                    }
+                }
 
+                if (!found)
+                {
+                    return false;
+                }
+            }*/
+
+        
             if (VehicleTasks.Any(vehicleTask => !vehicle.VehicleTasks.Contains(vehicleTask)))
             {
                 return false;

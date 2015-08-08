@@ -26,6 +26,7 @@ namespace CarDepot.VehicleStore
         Year,
         Make,
         Model,
+        CustomerId,
     }
 
     public enum VehicleCacheTaskSearchKey
@@ -36,7 +37,7 @@ namespace CarDepot.VehicleStore
 
     public class VehicleCache : List<VehicleAdminObject>, IAdminItemCache
     {
-        private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
+        //private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
         public VehicleCache(string vehiclePath)
         {
@@ -139,14 +140,13 @@ namespace CarDepot.VehicleStore
 
         public VehicleCache(string vehiclePath, Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
         {
-            if (CacheManager.ActiveVehicleCache != null)
+            while (CacheManager.AllVehicleCache == null)
             {
-                VehicleCacheSearchCache(searchParam);
+                System.Threading.Thread.Sleep(1000);
             }
-            else
-            {
-                VehicleCacheSearchDrive(vehiclePath, searchParam);
-            }
+
+            VehicleCacheSearchCache(searchParam);
+
         }
 
         private void VehicleCacheSearchCache(Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
@@ -243,6 +243,20 @@ namespace CarDepot.VehicleStore
 
                 switch (searchKey)
                 {
+                    case VehicleCacheSearchKey.CustomerId:
+                        string vehicleCustomerID = vehicle.GetValue(PropertyId.SaleCustomerId);
+                        if (!string.IsNullOrEmpty(vehicleCustomerID) &&
+                            vehicleCustomerID.ToLower().Trim().Equals(searchParam[VehicleCacheSearchKey.CustomerId].ToLower().Trim()))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+
+                        break;
                     case VehicleCacheSearchKey.IsAvailable:
                         if (!String.IsNullOrEmpty(sDate) && !searchParam.ContainsKey(VehicleCacheSearchKey.IsSold))
                         {
