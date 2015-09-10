@@ -29,7 +29,8 @@ namespace CarDepot.Controls.VehicleControls
             Manheim,
             ManheimToronto,
             PrivatePurchase,
-            TradeIn
+            TradeIn,
+            Financing
         }
 
         VehicleAdminObject _vehicle = null;

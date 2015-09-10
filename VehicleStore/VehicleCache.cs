@@ -41,13 +41,20 @@ namespace CarDepot.VehicleStore
 
         public VehicleCache(string vehiclePath)
         {
-            string[] vehicles = Directory.GetDirectories(vehiclePath);
-            foreach (var vehicle in vehicles)
+            try
             {
-                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                string[] vehicles = Directory.GetDirectories(vehiclePath);
+                foreach (var vehicle in vehicles)
                 {
-                    LoadVehicle(file);
+                    foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                    {
+                        LoadVehicle(file);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: VehicleCache(string vehiclePath)\n" + ex.StackTrace);
             }
         }
 
@@ -111,30 +118,39 @@ namespace CarDepot.VehicleStore
 
         public void VehicleCacheSearchDrive(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)
         {
-            string[] vehicles = Directory.GetDirectories(vehiclePath);
-            foreach (var vehicle in vehicles)
+            try
             {
-                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                string[] vehicles = Directory.GetDirectories(vehiclePath);
+                foreach (var vehicle in vehicles)
                 {
-                    VehicleAdminObject vehicleAdminObject = new VehicleAdminObject(file);
-                    if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
+                    foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
                     {
-                        continue;
-                    }
-                    if (string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Year)) ||
-                        string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Make)) ||
-                        string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Model)))
-                    {
-                        continue;
-                    }
+                        VehicleAdminObject vehicleAdminObject = new VehicleAdminObject(file);
+                        if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
+                        {
+                            continue;
+                        }
+                        if (string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Year)) ||
+                            string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Make)) ||
+                            string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Model)))
+                        {
+                            continue;
+                        }
 
-                    if (searchParam == null || VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
-                    {
-                        vehicleAdminObject.Cache = this;
-                        this.Add(vehicleAdminObject);
-                    }
+                        if (searchParam == null || VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
+                        {
+                            vehicleAdminObject.Cache = this;
+                            this.Add(vehicleAdminObject);
+                        }
 
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "ERROR: VehicleCacheSearchDrive(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)\n" +
+                    ex.StackTrace);
             }
         }
 
@@ -173,6 +189,7 @@ namespace CarDepot.VehicleStore
             } 
         }
 
+        /*
         private void VehicleCacheSearchDrive(string vehiclePath,
             Dictionary<VehicleCacheTaskSearchKey, string> searchParam)
         {
@@ -202,6 +219,7 @@ namespace CarDepot.VehicleStore
                 }
             }
         }
+        */
 
         private bool VehicleMeetsSearchParam(VehicleAdminObject vehicle, Dictionary<VehicleCacheSearchKey, string> searchParam)
         {
@@ -405,15 +423,6 @@ namespace CarDepot.VehicleStore
 
         public void ModifyItem(IAdminObject item)
         {
-            //_lock.EnterWriteLock();
-            //try
-            //{
-            //    this[item.ObjectId] = item;
-            //}
-            //finally
-            //{
-            //    _lock.ExitWriteLock();
-            //}
 
             if (CacheManager.AllVehicleCache != null)
             {
@@ -428,10 +437,6 @@ namespace CarDepot.VehicleStore
                 ItemUpdate.Invoke(this, new AdminItemCache.UpdateEventArgs(item.ObjectId, AdminItemCache.UpdateType.ModifyItem));
             }
 
-            //var vehicles = from v in this where v.ObjectId == item.ObjectId select v;
-            //VehicleAdminObject vehicle = vehicles.FirstOrDefault();
-            //Remove(vehicle);re
-            //this.Add((VehicleAdminObject) item);
         }
 
         public void Refresh()

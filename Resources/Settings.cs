@@ -11,7 +11,7 @@ using CarDepot.Controls;
 
 namespace CarDepot.Resources
 {
-    static class Settings
+    internal static class Settings
     {
         public static string UserAccountsPath = @"x:\Data\Users";
         public static string VehiclePath = @"x:\Data\Vehicles";
@@ -20,10 +20,16 @@ namespace CarDepot.Resources
         public static string TempFolder = @"x:\Data\Temp";
         public static string DefaultVehicleImagePath = @"x:\Data\Resources\DefaultVehicleImage.jpg";
 
-        public static string CustomerInfoFileName = @"info.xml";        
-        public static string CustomerInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Customer>\n</Customer>";
-        public static string VehicleInfoFileName = @"info.xml";        
-        public static string VehicleInfoDefaultFileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Vehicle>\n</Vehicle>";
+        public static string CustomerInfoFileName = @"info.xml";
+
+        public static string CustomerInfoDefaultFileText =
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Customer>\n</Customer>";
+
+        public static string VehicleInfoFileName = @"info.xml";
+
+        public static string VehicleInfoDefaultFileText =
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Vehicle>\n</Vehicle>";
+
         //public static string VehicleSoldPath = @"x:\Users\rogerto\Dropbox\Apps\wpf\CarDepot\CarDepot\bin\Debug\Data\Users";
         public static string VehicleImageFolder = @"\Images";
         public static string AdditionalFilesFolder = @"\Files";
@@ -61,7 +67,7 @@ namespace CarDepot.Resources
         }
     }
 
-    static class LookAndFeel
+    internal static class LookAndFeel
     {
         public static int TabItemHeight = 40;
         public static Brush VehicleTabColor = Brushes.Cyan;
@@ -71,20 +77,20 @@ namespace CarDepot.Resources
         public static Brush SearchTasksColor = Brushes.LightGreen;
     }
 
-    static class DefaultColors
+    internal static class DefaultColors
     {
         //this.BorderBrush = new LinearGradientBrush(Colors.LimeGreen, Colors.White, new Point(0.5, 0), new Point(0.5, 1));
         public static Color LINEAR_GRADIANT_BRUSH_START = Colors.LimeGreen;
         public static Color LINEAR_GRADIANT_BRUSH_END = Colors.White;
     }
 
-    static class UISettings
+    internal static class UISettings
     {
         public static double ADMINLABELTEXTBOX_GAPSIZE = 130;
         public static double ADMINTEXTBOX_MINSIZE_WHEN_NO_TEXT = 70;
     }
 
-    static class Utilities
+    internal static class Utilities
     {
         public static bool StringToDouble(string input, out double result)
         {
@@ -103,53 +109,46 @@ namespace CarDepot.Resources
             LoadVehicleInfoWindow(vehicle, VehicleInfoWindow.VehicleInfoWindowTabs.Default);
         }
 
-        public static void LoadVehicleInfoWindow(VehicleAdminObject vehicle, VehicleInfoWindow.VehicleInfoWindowTabs startTab)
+        public static void LoadVehicleInfoWindow(VehicleAdminObject vehicle,
+            VehicleInfoWindow.VehicleInfoWindowTabs startTab)
         {
-            if (vehicle == null)
+            try
             {
-                throw new NullReferenceException("Load vehicle info window requires non null vehicle");
-            }
-            else
-            {
-
-                //VehicleSearchPage page = new VehicleSearchPage();
-
-                //if (mainTabControl == null)
-                //{
-                //    throw new NotImplementedException("MainTabControl == null");
-                //}
-
-                //ClosableTab tabItem = new ClosableTab();
-                //tabItem.Height = LookAndFeel.TabItemHeight;
-                //tabItem.Title = page.PageTitle;
-                //tabItem.Content = page;
-                //mainTabControl.Items.Add(tabItem);
-                //tabItem.Focus();
-
-                IAdminItemCache tempCache = vehicle.Cache;
-                //THIS FORCES VEHICLE TO REFRESH
-                //vehicle = new VehicleAdminObject(vehicle.ObjectId);
-                vehicle.Cache = tempCache;
-
-                VehicleInfoWindow window = new VehicleInfoWindow(vehicle, startTab);
-                if (CacheManager.MainTabControl == null)
+                if (vehicle == null)
                 {
-                    throw new NotImplementedException("MainTabControl == null");
+                    throw new NullReferenceException("Load vehicle info window requires non null vehicle");
                 }
+                else
+                {
 
-                ClosableTab tabItem = new ClosableTab();
-                tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
-                window.SetParentTabControl(tabItem);
-                tabItem.Height = LookAndFeel.TabItemHeight;
-                tabItem.Title = vehicle.Year + ": " + vehicle.Make + " - " + vehicle.Model;
-                tabItem.Content = window;
-                CacheManager.MainTabControl.Items.Add(tabItem);
-                tabItem.Focus();
+                    IAdminItemCache tempCache = vehicle.Cache;
+                    //THIS FORCES VEHICLE TO REFRESH
+                    //vehicle = new VehicleAdminObject(vehicle.ObjectId);
+                    vehicle.Cache = tempCache;
 
-                //window.Show();
-                //CacheManager.ActiveUser.AddPage(window);
+                    VehicleInfoWindow window = new VehicleInfoWindow(vehicle, startTab);
+                    if (CacheManager.MainTabControl == null)
+                    {
+                        throw new NotImplementedException("MainTabControl == null");
+                    }
+
+                    ClosableTab tabItem = new ClosableTab();
+                    tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
+                    window.SetParentTabControl(tabItem);
+                    tabItem.Height = LookAndFeel.TabItemHeight;
+                    tabItem.Title = vehicle.Year + ": " + vehicle.Make + " - " + vehicle.Model;
+                    tabItem.Content = window;
+                    CacheManager.MainTabControl.Items.Add(tabItem);
+                    tabItem.Focus();
+
+                    //window.Show();
+                    //CacheManager.ActiveUser.AddPage(window);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: Try to load LoadVehicleInfoWindow again\n" + ex.StackTrace);
             }
         }
-
     }
 }

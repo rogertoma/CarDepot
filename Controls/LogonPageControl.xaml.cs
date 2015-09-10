@@ -46,10 +46,18 @@ namespace CarDepot.Controls
                 user.OpenedPages.Clear();
                 CacheManager.ActiveUser = user;
 
-                MainWindow carDepot = new MainWindow(user);
-                carDepot.Closed += carDepot_Closed;
-                carDepot.Show();
-                this.Visibility = Visibility.Hidden;
+                try
+                {
+                    MainWindow carDepot = new MainWindow(user);
+                    carDepot.Closed += carDepot_Closed;
+                    carDepot.Show();
+                    this.Visibility = Visibility.Hidden;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+
             }
             else
             {

@@ -328,7 +328,12 @@ namespace CarDepot.Controls.VehicleControls
 
             if (result == DialogResult.Yes)
             {
-                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, sender, e);    
+                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, sender, e);
+
+                //if (!string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.SaleTradeInVIN)))
+                //{
+                //    PrintAppraisalForm printAppraisalForm = new PrintAppraisalForm(_vehicle, sender, e);
+                //}
             }
         }
 
@@ -711,5 +716,9 @@ namespace CarDepot.Controls.VehicleControls
         }
 
 
+        private void btnPrintAppraisalForm_Click(object sender, RoutedEventArgs e)
+        {
+            PrintAppraisalForm printCurrentCar = new PrintAppraisalForm(_vehicle, sender, e);
+        }
     }
 }

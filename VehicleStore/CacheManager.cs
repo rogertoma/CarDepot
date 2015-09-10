@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using CarDepot.Resources;
 using System;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace CarDepot.VehicleStore
 {
@@ -43,9 +44,17 @@ namespace CarDepot.VehicleStore
 
         private static void LoadCache()
         {
-            _userCache = new UserCache();
-            _allVehicleCache = new VehicleCache(Settings.VehiclePath, new Dictionary<VehicleCacheSearchKey, string>());
-            _allCustomerCache = new CustomerCache();
+            try
+            {
+                _userCache = new UserCache();
+                _allVehicleCache = new VehicleCache(Settings.VehiclePath,
+                    new Dictionary<VehicleCacheSearchKey, string>());
+                _allCustomerCache = new CustomerCache();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: CacheManager: LoadCache\n" + ex.StackTrace);
+            }
         }
 
         public static VehicleCache ActiveVehicleCache
@@ -124,11 +133,18 @@ namespace CarDepot.VehicleStore
 
         static void updateTasks_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (!_updateingCache)
+            try
             {
-                _updateingCache = true;
-                Thread updateAllVehicleCache = new Thread(new ThreadStart(UpdateAllVehicleCache));
-                updateAllVehicleCache.Start();
+                if (!_updateingCache)
+                {
+                    _updateingCache = true;
+                    Thread updateAllVehicleCache = new Thread(new ThreadStart(UpdateAllVehicleCache));
+                    updateAllVehicleCache.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: CacheManager: updateTasks_Elapsed\n" + ex.StackTrace);
             }
         }
     }

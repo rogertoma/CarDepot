@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using CarDepot.Resources;
 
@@ -186,31 +187,39 @@ namespace CarDepot
         /// </summary>
         public virtual bool Save(object sender)
         {
-            if (!DoesFileVersionAllowSave())
+            try
+            {
+                if (!DoesFileVersionAllowSave())
+                    return false;
+
+                xdoc.Save(objectId);
+
+                System.Diagnostics.Debug.Print("Saving item to policy store");
+                System.Diagnostics.Debug.Print("this.Name = {0}", GetValue(PropertyId.Name));
+
+                bool isNew = Cache == null || !Cache.ContainsKey(objectId);
+
+
+                UpdateData();
+
+                if (isNew)
+                {
+                    System.Diagnostics.Debug.Print("Adding item to cache");
+                    if (Cache != null) Cache.AddItem(this);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.Print("Modifying item in cache");
+                    if (Cache != null) Cache.ModifyItem(this);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: Unable to save Vehicle\n" + ex.StackTrace);
                 return false;
-
-            xdoc.Save(objectId);
-
-            System.Diagnostics.Debug.Print("Saving item to policy store");
-            System.Diagnostics.Debug.Print("this.Name = {0}", GetValue(PropertyId.Name));
-
-            bool isNew = Cache == null || !Cache.ContainsKey(objectId);
-
-
-            UpdateData();
-
-            if (isNew)
-            {
-                System.Diagnostics.Debug.Print("Adding item to cache");
-                if (Cache != null) Cache.AddItem(this);
             }
-            else
-            {
-                System.Diagnostics.Debug.Print("Modifying item in cache");
-                if (Cache != null) Cache.ModifyItem(this);
-            }
-
-            return true;
         }
 
         public void SetValue(PropertyId id, object value)

@@ -131,7 +131,10 @@ namespace CarDepot.Controls.VehicleControls
             }
 
             if (task == null)
+            {
+                LoadUIControls();
                 return;
+            }
 
             txtTaskId.Text = task.Id;
             //Initialize Status ComboBox

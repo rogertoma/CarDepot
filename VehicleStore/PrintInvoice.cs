@@ -360,7 +360,7 @@ namespace CarDepot.VehicleStore
                 string warrantyProvider = currVehicle.GetValue(PropertyId.SaleWarrantyProvider);
                 if (string.IsNullOrEmpty(warrantyProvider))
                 {
-                    e.Graphics.DrawString("Warranty declined", font, Brushes.Black, backgroundXPos + 10,
+                    e.Graphics.DrawString("Extended warranty declined", font, Brushes.Black, backgroundXPos + 10,
                         backgroundYPos + yPos);
                     yPos += 24;
                 }
