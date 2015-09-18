@@ -374,7 +374,7 @@ namespace CarDepot.VehicleStore
 
             #region Populate Vehicle Data
             row = 1;
-            foreach (VehicleAdminObject vehicle in _vehicleCache)
+            foreach (VehicleAdminObject vehicle in vehicles)
             {
                 column = 0;
                 currentSheet.Cells[row, column++] = new Cell(row, "#");
@@ -563,6 +563,8 @@ namespace CarDepot.VehicleStore
                 //Total Balannce
                 double totalBalance = subTotal2 - deposit + goToBankDirectlyLienFee;
                 currentSheet.Cells[row, column] = new Cell(totalBalance, "#,##0.00");
+
+                row++;
             }
 
             
@@ -638,7 +640,7 @@ namespace CarDepot.VehicleStore
 
             #region Populate Vehicle Data
             row = 1;
-            foreach (VehicleAdminObject vehicle in _vehicleCache)
+            foreach (VehicleAdminObject vehicle in vehicles)
             {
                 column = 0;
                 currentSheet.Cells[row, column++] = new Cell(row, "#");
