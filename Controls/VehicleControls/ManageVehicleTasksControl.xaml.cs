@@ -262,6 +262,10 @@ namespace CarDepot.Controls.VehicleControls
             _vehicle.VehicleTasks.Add(task);
             VehicleListView.Items.Add(task);
             VehicleListView.SelectedIndex = VehicleListView.Items.Count - 1;
+
+            VehicleListView.Items.Refresh();
+            VehicleListView.ForceXmlUpdate();
+            VehicleListView.SelectedIndex = -1;
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -307,6 +311,7 @@ namespace CarDepot.Controls.VehicleControls
                 return;
             }
 
+            UpdateTaskBasedOnUi(task);
             task.Comments = txtComments.Text;
             task.ClosedBy = CacheManager.ActiveUser.Name;
             task.Status = VehicleTask.StatusTypes.Completed.ToString();

@@ -70,7 +70,15 @@ namespace CarDepot.VehicleStore
                     continue;
                 }
 
-                if (param.Key == CustomerCacheSearchKey.PhoneNumber)
+                if (param.Key == CustomerCacheSearchKey.Id)
+                {
+                    if (customer.Id != param.Value)
+                    {
+                        meetsAllRequirements = false;
+                        break;
+                    }
+                }
+                else if (param.Key == CustomerCacheSearchKey.PhoneNumber)
                 {
                     string searchNumber = StripPhoneNumber(param.Value);
                     if (!(StripPhoneNumber(customer.GetValue(PropertyId.MobilePhone)).Contains(searchNumber) ||

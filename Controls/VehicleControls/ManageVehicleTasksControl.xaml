@@ -18,12 +18,12 @@
                     <GridViewColumn Header="AssignedTo" Width ="80" DisplayMemberBinding="{Binding AssignedTo}"/>
                     <GridViewColumn Header="Category" Width ="80" DisplayMemberBinding="{Binding Category}"/>
                     <GridViewColumn Header="Cost" Width="80" DisplayMemberBinding="{Binding Cost}"/>
-                    <GridViewColumn Header="MinToComplete" Width="100" DisplayMemberBinding="{Binding Minutes}"/>
-                    <GridViewColumn Header="CreatedDate" Width="80" DisplayMemberBinding="{Binding CreatedDate}"/>
-                    <GridViewColumn Header="DueDate" Width="80" DisplayMemberBinding="{Binding DueDate}"/>
+                    <GridViewColumn Header="Comments" Width="300" DisplayMemberBinding="{Binding Comments}"/>
                     <GridViewColumn Header="CreatedBy" Width="80" DisplayMemberBinding="{Binding CreatedBy}"/>
+                    <GridViewColumn Header="DueDate" Width="80" DisplayMemberBinding="{Binding DueDate}"/>
                     <GridViewColumn Header="CompletedBy" Width="80" DisplayMemberBinding="{Binding ClosedBy}"/>
-                    <GridViewColumn Header="Comments" DisplayMemberBinding="{Binding Comments}"/>
+                    <GridViewColumn Header="CreatedDate" Width="80" DisplayMemberBinding="{Binding CreatedDate}"/>
+                    <GridViewColumn Header="MinToComplete" Width="100" DisplayMemberBinding="{Binding Minutes}"/>
                 </GridView>
             </ListView.View>
         </controls:AdminListView>

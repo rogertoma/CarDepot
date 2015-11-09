@@ -465,9 +465,9 @@ namespace CarDepot.VehicleStore
 
                 //Hst Percentage
                 string sSaleHstPercentage = vehicle.GetValue(PropertyId.SaleTaxPercentage);
-                double saleHstPercentage = 0;
+                double saleHstPercentage = -1;
                 Utilities.StringToDouble(sSaleHstPercentage, out saleHstPercentage);
-                if (Math.Abs(saleHstPercentage) <= 0)
+                if (Math.Abs(saleHstPercentage) <= -1)
                 {
                     saleHstPercentage = Settings.HST;
                 }
@@ -726,9 +726,9 @@ namespace CarDepot.VehicleStore
 
                 //Sale Hst Percentage
                 string sSaleHstPercentage = vehicle.GetValue(PropertyId.SaleTaxPercentage);
-                double saleHstPercentage = 0;
+                double saleHstPercentage = -1;
                 Utilities.StringToDouble(sSaleHstPercentage, out saleHstPercentage);
-                if (Math.Abs(saleHstPercentage) <= 0)
+                if (Math.Abs(saleHstPercentage) < 0)
                 {
                     saleHstPercentage = Settings.HST;
                 }
