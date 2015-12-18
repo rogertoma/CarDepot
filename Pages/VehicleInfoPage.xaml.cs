@@ -127,7 +127,7 @@ namespace CarDepot
             newVehicleOilChange.CreatedDate = DateTime.Today.Date.ToString("d");
             newVehicleOilChange.Status = VehicleTask.StatusTypes.NotStarted.ToString();
             newVehicleOilChange.AssignedTo = "Chris Rome";
-            newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
             newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(newVehicleOilChange);
 
@@ -381,20 +381,29 @@ namespace CarDepot
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
-        { 
-            string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_IMPORTURL_PROMPT, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, Strings.VEHICLEINFOPAGE_IMPORTURL_DATA, -1, -1);
-            if (result == "")
+        {
+            try
             {
-                return;
+                string result = Microsoft.VisualBasic.Interaction.InputBox(Strings.VEHICLEINFOPAGE_IMPORTURL_PROMPT,
+                    Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, Strings.VEHICLEINFOPAGE_IMPORTURL_DATA, -1, -1);
+                if (result == "")
+                {
+                    return;
+                }
+                VehicleUrlImport urlImport = new VehicleUrlImport(_vehicle, result);
+                if (urlImport.ImportStatus == VehicleImportStatus.PASS)
+                {
+                    urlImport.ApplyVehicleValues();
+                }
+                else
+                {
+                    MessageBox.Show(Strings.VEHICLEINFOPAGE_INVALID_URL, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE,
+                        MessageBoxButton.OK);
+                }
             }
-            VehicleUrlImport urlImport = new VehicleUrlImport(_vehicle, result);
-            if (urlImport.ImportStatus == VehicleImportStatus.PASS)
+            catch (Exception ex)
             {
-                urlImport.ApplyVehicleValues();
-            }
-            else
-            {
-                MessageBox.Show(Strings.VEHICLEINFOPAGE_INVALID_URL, Strings.VEHICLEINFOPAGE_IMPORTURL_TITLE, MessageBoxButton.OK);
+                MessageBox.Show("BtnImport: " + ex.Message);
             }
 
             btnRefresh_Click(null, null);

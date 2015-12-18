@@ -163,6 +163,15 @@ namespace CarDepot.Controls.SearchControls
             {
                 cbWasPurchased.Visibility = Visibility.Collapsed;
             }
+
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.SoldCheckBox))
+            {
+                cbSold.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cbSold.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

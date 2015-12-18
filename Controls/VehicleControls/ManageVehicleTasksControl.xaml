@@ -72,8 +72,8 @@
             <Label Visibility="Hidden" Grid.Row="10" Grid.Column="0">Completed By</Label>
             <ComboBox x:Name="cmbCompletedBy" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
             <Button x:Name="btnCompleteTask" Content="Complete Task" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" Width="100" Background="#FF14BB14" Click="btnCompleteTask_Click" Margin="0,0,0,5"/>
-            <Button x:Name="btnCreate" Content="Create" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCreate_Click" Margin="0,0,0,5"/>
-            <Button x:Name="btnUpdate" Content="Update" Grid.Column="2" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,0,5,5" Click="btnUpdate_Click"/>
+            <Button x:Name="btnCreate" Content="_Create" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCreate_Click" Margin="0,0,0,5"/>
+            <Button x:Name="btnUpdate" Content="_Update" Grid.Column="2" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,0,5,5" Click="btnUpdate_Click"/>
             <Button x:Name="btnDelete" Content="Delete" Grid.Column="3" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnDelete_Click" Margin="0,0,0,5" />
         </Grid>
 

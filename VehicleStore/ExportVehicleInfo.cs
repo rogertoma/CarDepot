@@ -846,7 +846,7 @@ namespace CarDepot.VehicleStore
                     
                 // Net Income
                 double netIncome = 0;
-                netIncome = saleNet + ministryLicensing + netDealerReserve + (tradeIn - lienPayoutAmount);
+                netIncome = saleNet + ministryLicensing + netDealerReserve + tradeIn; // (tradeIn - lienPayoutAmount);
                 currentSheet.Cells[row, column++] = new Cell(netIncome, "#,##0.00");
 
                 // Net Profit

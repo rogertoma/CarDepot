@@ -23,7 +23,7 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Assigned To:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <ComboBox x:Name="cmbAssignedTo" Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
 
-        <Label Grid.Row="1" Grid.Column="3" Content="Or" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="3" Content="And" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Category:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <ComboBox x:Name="cmbCategory" Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>

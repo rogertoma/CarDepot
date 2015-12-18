@@ -177,15 +177,30 @@ namespace CarDepot.VehicleStore
                 if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.AssignedTo) &&
                     temp.VehicleTasks.Any(vehicleTask => (vehicleTask.AssignedTo == searchParam[VehicleCacheTaskSearchKey.AssignedTo] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
                 {
-                    temp.Cache = this;
-                    this.Add(temp);
+                    if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category))
+                    {
+                        if (
+                            temp.VehicleTasks.Any(
+                                vehicleTask =>
+                                    (vehicleTask.Category == searchParam[VehicleCacheTaskSearchKey.Category] &&
+                                     vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
+                        {
+                            temp.Cache = this;
+                            this.Add(temp);
+                        }
+                    }
+                    else
+                    {
+                        temp.Cache = this;
+                        this.Add(temp);
+                    }
                 }
-                else if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category) &&
-                    temp.VehicleTasks.Any(vehicleTask => (vehicleTask.Category == searchParam[VehicleCacheTaskSearchKey.Category] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
-                {
-                    temp.Cache = this;
-                    this.Add(temp);
-                }
+                //else if (searchParam.ContainsKey(VehicleCacheTaskSearchKey.Category) &&
+                //    temp.VehicleTasks.Any(vehicleTask => (vehicleTask.Category == searchParam[VehicleCacheTaskSearchKey.Category] && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())))
+                //{
+                //    temp.Cache = this;
+                //    this.Add(temp);
+                //}
             } 
         }
 

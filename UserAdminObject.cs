@@ -31,6 +31,7 @@ namespace CarDepot
             SaleInformation,
             SoldButNotDeliveredCheckBox,
             WarPurchasedCheckBox,
+            SoldCheckBox,
             GenerateReport,
             UpdateSaleTaxPercentage,
         }

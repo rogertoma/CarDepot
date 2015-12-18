@@ -461,7 +461,7 @@ namespace CarDepot.Controls.VehicleControls
             #region Delete Oil Cleaning
             foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
             {
-                if (vehicleTask.Id.Equals(Strings.NEWCAROILCHANGETASK))
+                if (vehicleTask.Id.Equals(Strings.NEWCAROILCHANGETASK) && vehicleTask.Status != VehicleTask.StatusTypes.Completed.ToString())
                 {
                     _vehicle.VehicleTasks.Remove(vehicleTask);
                     break;
@@ -513,7 +513,7 @@ namespace CarDepot.Controls.VehicleControls
                 vehicleDeliveredTask.CreatedDate = DateTime.Today.Date.ToString("d");
                 vehicleDeliveredTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
                 vehicleDeliveredTask.AssignedTo = "Reyad Toma";
-                vehicleDeliveredTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
+                vehicleDeliveredTask.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
                 vehicleDeliveredTask.CreatedBy = CacheManager.ActiveUser.Name;
                 _vehicle.VehicleTasks.Add(vehicleDeliveredTask);
             }
@@ -718,7 +718,14 @@ namespace CarDepot.Controls.VehicleControls
 
         private void btnPrintAppraisalForm_Click(object sender, RoutedEventArgs e)
         {
-            PrintAppraisalForm printCurrentCar = new PrintAppraisalForm(_vehicle, sender, e);
+            try
+            {
+                PrintAppraisalForm printCurrentCar = new PrintAppraisalForm(_vehicle, sender, e);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Printing Appraisal Error: " + ex.Message);
+            }
         }
     }
 }

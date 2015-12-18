@@ -136,7 +136,7 @@ namespace CarDepot.Resources
                     tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
                     window.SetParentTabControl(tabItem);
                     tabItem.Height = LookAndFeel.TabItemHeight;
-                    tabItem.Title = vehicle.Year + ": " + vehicle.Make + " - " + vehicle.Model;
+                    tabItem.Title = vehicle.Year + ": " + vehicle.Make + " " + vehicle.Model;
                     tabItem.Content = window;
                     CacheManager.MainTabControl.Items.Add(tabItem);
                     tabItem.Focus();
