@@ -101,6 +101,12 @@ namespace CarDepot.Resources
             }
             input = input.Replace("$", "");
             input = input.Replace(",", "");
+
+            if (string.IsNullOrEmpty(input))
+            {
+                input = "0";
+            }
+
             return double.TryParse(input, out result);
         }
 

@@ -34,6 +34,7 @@ namespace CarDepot
             SoldCheckBox,
             GenerateReport,
             UpdateSaleTaxPercentage,
+            ShowCheckedOutBy
         }
 
         public UserAdminObject(string objectId)

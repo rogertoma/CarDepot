@@ -629,7 +629,29 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("ENSUREVEHICLEHASTRADEINFORM", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to PAGE_KEYCHECKOUT_TITLE.
+        /// </summary>
+        internal static string PAGE_KEYCHECKOUT_TITLE
+        {
+            get
+            {
+                return ResourceManager.GetString("PAGE_KEYCHECKOUT_TITLE", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROL_KEYCHECKOUT_DIFFERENTUSERATTEMPTSCHECKIN.
+        /// </summary>
+        internal static string CONTROL_KEYCHECKOUT_DIFFERENTUSERATTEMPTSCHECKIN
+        {
+            get
+            {
+                return ResourceManager.GetString("CONTROL_KEYCHECKOUT_DIFFERENTUSERATTEMPTSCHECKIN", resourceCulture);
+            }
+        }
         
-   
+
     }
 }

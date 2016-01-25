@@ -230,15 +230,6 @@ namespace CarDepot.Controls
                     LstSearchResults.Items.Add(item);
                 }
 
-                //if (direction == ListSortDirection.Ascending)
-                //{
-                //    headerClicked.Column.HeaderTemplate = Resources["HeaderTemplateArrowUp"] as DataTemplate;
-                //}
-                //else
-                //{
-                //    headerClicked.Column.HeaderTemplate = Resources["HeaderTemplateArrowDown"] as DataTemplate;
-                //}
-
                 if (lastHeaderClicked != null && lastHeaderClicked != headerClicked)
                 {
                     lastHeaderClicked.Column.HeaderTemplate = null;

@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>85</ApplicationRevision>
+    <ApplicationRevision>90</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -121,6 +121,9 @@
     <Compile Include="Controls\CustomerControls\CustomerInfoControl.xaml.cs">
       <DependentUpon>CustomerInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GeneralControls\KeyCheckoutControl.xaml.cs">
+      <DependentUpon>KeyCheckoutControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageThumbNailControl.xaml.cs">
       <DependentUpon>ImageThumbNailControl.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,9 @@
     </Compile>
     <Compile Include="Pages\CustomerSearchPage.xaml.cs">
       <DependentUpon>CustomerSearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\KeyCheckoutPage.xaml.cs">
+      <DependentUpon>KeyCheckoutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TasksSearchPage.xaml.cs">
       <DependentUpon>TasksSearchPage.xaml</DependentUpon>
@@ -223,6 +229,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\GeneralControls\KeyCheckoutControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ImageThumbNailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -272,6 +282,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\CustomerSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\KeyCheckoutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -361,9 +375,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\GeneralControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="DefaultVehicleImage.ico" />
     <Content Include="ExcelLibrary.dll" />

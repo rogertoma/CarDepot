@@ -126,6 +126,7 @@ namespace CarDepot.Controls.SearchControls
 
         private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
+
             GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
             ListSortDirection direction = ListSortDirection.Ascending;
 

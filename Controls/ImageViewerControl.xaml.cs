@@ -193,5 +193,15 @@ namespace CarDepot.Controls
             LoadPanel(_item);
         }
 
+        private void VehicleImageLarge_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                string imagePath = VehicleImageLarge.Source.ToString();
+                imagePath = imagePath.Replace(@"File://", string.Empty);
+
+                System.Diagnostics.Process.Start(imagePath);
+            }
+        }
     }
 }

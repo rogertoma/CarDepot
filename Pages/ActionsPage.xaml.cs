@@ -172,5 +172,25 @@ namespace CarDepot.Controls.GeneralControls
             }
 
         }
+
+        private void BtnKeyCheckout_Click(object sender, RoutedEventArgs e)
+        {
+            KeyCheckoutPage page = new KeyCheckoutPage();
+            page.HorizontalAlignment = HorizontalAlignment.Stretch;
+            page.VerticalAlignment = VerticalAlignment.Stretch;
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.SearchTasksColor;
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = page.PageTitle;
+            tabItem.Content = page;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+        }
     }
 }

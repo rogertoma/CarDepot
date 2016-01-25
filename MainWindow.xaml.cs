@@ -43,6 +43,7 @@ namespace CarDepot
         public MainWindow(UserAdminObject user)
         {
             InitializeComponent();
+            this.Title += " - " + CacheManager.ActiveUser.Name;
             _user = user;
             LoadUserTabs();
         }

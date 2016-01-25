@@ -126,6 +126,9 @@
   <data name="CONTROL_IMAGETHUMBNAILCONROL_CONFIRMDELETE" xml:space="preserve">
     <value>Are you sure you want to delete this image?</value>
   </data>
+  <data name="CONTROL_KEYCHECKOUT_DIFFERENTUSERATTEMPTSCHECKIN" xml:space="preserve">
+    <value>You are not the user that checked out this key and are not able to check it back in.  </value>
+  </data>
   <data name="CONTROL_MANAGEVEHICLETASKS_CANNOTCOMPLETETASK" xml:space="preserve">
     <value>The following task is assigned to {0}, they are the only ones able to complete it.</value>
   </data>
@@ -224,6 +227,9 @@
   </data>
   <data name="PAGE_CUSTOMERSEARCHPAGE_TITLE" xml:space="preserve">
     <value>Search Customers</value>
+  </data>
+  <data name="PAGE_KEYCHECKOUT_TITLE" xml:space="preserve">
+    <value>Key Checkout</value>
   </data>
   <data name="PAGE_VEHICLESEARCHPAGE_TITLE" xml:space="preserve">
     <value>Search Vehicles</value>

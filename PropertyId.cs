@@ -32,6 +32,7 @@ namespace CarDepot
         FileVersion,
         Id,
         IsDeleted,
+        CheckOutBy,
 
         //User PropertyId's
         Name,

@@ -23,6 +23,7 @@ namespace CarDepot.Controls.VehicleControls
         public BasicVehicleInfoControl()
         {
             InitializeComponent();
+            ApplyActiveUserPermissions();
         }
 
         public void LoadPanel(IAdminObject item)
@@ -39,7 +40,26 @@ namespace CarDepot.Controls.VehicleControls
 
         public void ApplyActiveUserPermissions()
         {
-            throw new System.NotImplementedException();
+            if (CacheManager.ActiveUser.Permissions.Contains(UserAdminObject.PermissionTypes.ShowCheckedOutBy))
+            {
+                AdminLabelTextbox checkedOutByLabelItem = new AdminLabelTextbox();
+                checkedOutByLabelItem.PropertyId = PropertyId.CheckOutBy;
+                checkedOutByLabelItem.SetMinGapSize = UISettings.ADMINLABELTEXTBOX_GAPSIZE;
+                checkedOutByLabelItem.IsEditable = false;
+
+                RowDefinition checkedOutByRowDefinition = new RowDefinition();
+                checkedOutByRowDefinition.Height = GridLength.Auto;
+                BasicIdsGrid.RowDefinitions.Add(checkedOutByRowDefinition);
+
+                Grid.SetRow(checkedOutByLabelItem, basicIds.Count());
+
+                bool checkedOutByAlreadyExists =
+                    BasicIdsGrid.Children.Cast<AdminLabelTextbox>()
+                        .Any(textbox => textbox.PropertyId == PropertyId.CheckOutBy);
+
+                if (!checkedOutByAlreadyExists)
+                    BasicIdsGrid.Children.Add(checkedOutByLabelItem);
+            }
         }
 
         private void LoadBasicIds(IAdminObject item)

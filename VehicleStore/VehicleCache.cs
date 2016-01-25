@@ -27,6 +27,7 @@ namespace CarDepot.VehicleStore
         Make,
         Model,
         CustomerId,
+        IsCheckedOut,
     }
 
     public enum VehicleCacheTaskSearchKey
@@ -276,6 +277,18 @@ namespace CarDepot.VehicleStore
 
                 switch (searchKey)
                 {
+                    case VehicleCacheSearchKey.IsCheckedOut:
+                        string checkedOutBy = vehicle.GetValue(PropertyId.CheckOutBy);
+                        if (string.IsNullOrEmpty(checkedOutBy))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+
+                        break;
                     case VehicleCacheSearchKey.CustomerId:
                         string vehicleCustomerID = vehicle.GetValue(PropertyId.SaleCustomerId);
                         if (!string.IsNullOrEmpty(vehicleCustomerID) &&
@@ -504,12 +517,47 @@ namespace CarDepot.VehicleStore
             List<VehicleAdminObject> sortedList = new List<VehicleAdminObject>();
 
             int outInteger = 0;
+            double outDouble = 0;
 
             if (int.TryParse(this[0].GetValue(category), out outInteger))
             {
                 sortedList.AddRange(direction == ListSortDirection.Ascending
                     ? this.OrderBy(vehicleAdminObject => int.Parse(vehicleAdminObject.GetValue(category)))
                     : this.OrderByDescending(vehicleAdminObject => int.Parse(vehicleAdminObject.GetValue(category))));
+            }
+            else if (Utilities.StringToDouble(this[0].GetValue(category), out outDouble))
+            {
+                List<VehicleAdminObject> currentList = new List<VehicleAdminObject>();
+                currentList = this;
+                while (currentList.Count > 0)
+                {
+                    VehicleAdminObject lowest = null;
+                    double lowestHighestDouble = 0;
+                    double currentDouble = 0;
+                    foreach (VehicleAdminObject vehicleAdminObject in currentList)
+                    {
+                        if (lowest == null)
+                        {
+                            lowest = vehicleAdminObject;
+                            continue;
+                        }
+
+                        Utilities.StringToDouble(lowest.GetValue(category), out lowestHighestDouble);
+                        Utilities.StringToDouble(vehicleAdminObject.GetValue(category), out currentDouble);
+
+                        if (direction == ListSortDirection.Ascending && currentDouble < lowestHighestDouble)
+                        {
+                            lowest = vehicleAdminObject;
+                        }
+                        else if (direction != ListSortDirection.Ascending && currentDouble > lowestHighestDouble)
+                        {
+                            lowest = vehicleAdminObject;
+                        }
+                    }
+
+                    sortedList.Add(lowest);
+                    currentList.Remove(lowest);
+                }
             }
             else
             {

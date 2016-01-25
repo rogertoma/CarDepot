@@ -107,7 +107,7 @@ namespace CarDepot
             emissionVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
             emissionVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
             emissionVehicleTask.AssignedTo = "Filip Mitrofanov";
-            emissionVehicleTask.Category = VehicleTask.TaskCategoryTypes.Mechanic.ToString();
+            emissionVehicleTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
             emissionVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(emissionVehicleTask);
 

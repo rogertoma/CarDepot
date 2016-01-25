@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="CarDepot.Controls.GeneralControls.KeyCheckoutControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarDepot.Controls.GeneralControls"
+             xmlns:controls="clr-namespace:CarDepot.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Name="Title" Height="50"/>
+            <RowDefinition Name="Headings" Height="Auto"/>
+            <RowDefinition Name="Inputs" Height="Auto"/>
+            <RowDefinition Name="ListMenuButtons" Height="Auto"/>
+            <RowDefinition Name="VehicleListView" Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Vehicle Search" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="4"/>
+
+        <!--VIN-->
+        <Label Content="VIN Last 6:" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="txtVinSearch" Margin="5,5,0,5" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center" TextChanged="txtVinSearch_TextChanged"/>
+
+        <!--Results Label-->
+        <Label x:Name="lblVinSearchResults" Content="" Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        
+        <!--Check out-->
+        <Button x:Name="btnCheckOut" Content="_Check Out" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5,6,0,0"  VerticalAlignment="Top" Width="75" Click="btnCheckOut_Click" IsDefault="True"/>
+
+        <!--Check in-->
+        <Button x:Name="btnCheckIn" Content="_Check In" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" Margin="5,6,0,0"  VerticalAlignment="Top" Width="75" Click="btnCheckIn_Click" IsDefault="True"/>
+
+        
+        <!--Refresh-->
+        <Button x:Name="btnRefresh" Content="_Refresh" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="5,6,0,0"  VerticalAlignment="Top" Width="75" Height="40" Click="btnRefresh_Click" />
+        <controls:VehicleListView x:Name="LstSearchResults" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="4"/>
+
+    </Grid>
+</UserControl>
