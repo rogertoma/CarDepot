@@ -72,6 +72,7 @@ namespace CarDepot.Controls.VehicleControls
             txtTaskId.Text = "";
             cmbStatus.Items.Clear();
             cmbAssignedTo.Items.Clear();
+            cmbPriority.Items.Clear();
             cmbCategory.Items.Clear();
             cmbCreatedBy.Items.Clear();
             cmbCompletedBy.Items.Clear();
@@ -93,6 +94,13 @@ namespace CarDepot.Controls.VehicleControls
             {
                 Label lblRow = new Label { Content = user.Name };
                 cmbAssignedTo.Items.Add(lblRow);
+            }
+
+            //Initialize Category Ugent
+            foreach (VehicleTask.TaskPriority priority in Enum.GetValues(typeof(VehicleTask.TaskPriority)))
+            {
+                Label lblRow = new Label { Content = priority };
+                cmbPriority.Items.Add(lblRow);
             }
 
             //Initialize Category ComboBox
@@ -158,6 +166,17 @@ namespace CarDepot.Controls.VehicleControls
                     selectedIndex = cmbAssignedTo.Items.Count - 1;
             }
             cmbAssignedTo.SelectedIndex = selectedIndex;
+
+            //Initialize Priority ComboBox
+            selectedIndex = Enum.GetNames(typeof(VehicleTask.TaskPriority)).Length - 1;
+            foreach (VehicleTask.TaskPriority priority in Enum.GetValues(typeof(VehicleTask.TaskPriority)))
+            {
+                Label lblRow = new Label { Content = priority };
+                cmbPriority.Items.Add(lblRow);
+                if (priority.ToString() == task.Priority)
+                    selectedIndex = cmbPriority.Items.Count - 1;
+            }
+            cmbPriority.SelectedIndex = selectedIndex;
 
             //Initialize Category ComboBox
             selectedIndex = -1;
@@ -359,6 +378,16 @@ namespace CarDepot.Controls.VehicleControls
             else
             {
                 task.AssignedTo = ((Label)cmbAssignedTo.SelectedItem).Content.ToString();
+            }
+
+            if (cmbPriority.SelectedIndex == -1)
+            {
+                task.Category = VehicleTask.TaskPriority.Priority2.ToString();
+                UpdateComboBoxWithSelection(cmbCategory, VehicleTask.TaskPriority.Priority2.ToString());
+            }
+            else
+            {
+                task.Priority = ((Label)cmbPriority.SelectedItem).Content.ToString();
             }
 
             if (cmbCategory.SelectedIndex == -1)

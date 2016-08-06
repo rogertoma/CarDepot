@@ -120,7 +120,7 @@ namespace CarDepot.VehicleStore
 
                 //Warranty
                 double warranty = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleWarrantyCost), out warranty))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleWarrantyCost), out warranty) && warranty != 0)
                 {
                     string stringWarranty = warranty.ToString("F");
                     e.Graphics.DrawString(stringWarranty, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 306);
@@ -128,7 +128,7 @@ namespace CarDepot.VehicleStore
 
                 // Finance Fee
                 double financeFee = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFinanceCost), out financeFee))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleFinanceCost), out financeFee) && financeFee != 0)
                 {
                     using (Font infoFont = new Font("Calibri", 10))
                     {
@@ -141,7 +141,7 @@ namespace CarDepot.VehicleStore
 
                 // Accessories Fee
                 double accessories = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleAccessoryCost), out accessories))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleAccessoryCost), out accessories) && accessories != 0)
                 {
                     using (Font infoFont = new Font("Calibri", 10))
                     {
@@ -159,7 +159,7 @@ namespace CarDepot.VehicleStore
 
                 // Trade In Allowance
                 double tradeInAllowance = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTradeInCost), out tradeInAllowance))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTradeInCost), out tradeInAllowance) && tradeInAllowance != 0)
                 {
                     string stringTradeInAllowance = tradeInAllowance.ToString("F");
                     e.Graphics.DrawString(stringTradeInAllowance, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 490);
@@ -177,7 +177,7 @@ namespace CarDepot.VehicleStore
                 //Hst
                 double hstPercentage;
 
-                if (!Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTaxPercentage), out hstPercentage))
+                if (!Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleTaxPercentage), out hstPercentage) && hstPercentage != 0)
                 {
                     hstPercentage = Settings.HST;
                 }
@@ -188,7 +188,7 @@ namespace CarDepot.VehicleStore
 
                 //Licensing Fee
                 double licensingFee = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLicenseFee), out licensingFee))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLicenseFee), out licensingFee) && licensingFee != 0)
                 {
                     string stringLicenseFee = licensingFee.ToString("F");
                     e.Graphics.DrawString(stringLicenseFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 577);
@@ -196,7 +196,7 @@ namespace CarDepot.VehicleStore
 
                 //Payout Lien on Trade
                 double payOutLien = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePayoutLienOnTradeIn), out payOutLien))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SalePayoutLienOnTradeIn), out payOutLien) && payOutLien != 0)
                 {
                     string stringPayOutLien = payOutLien.ToString("F");
                     e.Graphics.DrawString(stringPayOutLien, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 626);
@@ -229,7 +229,7 @@ namespace CarDepot.VehicleStore
 
                 //BankAdminFee
                 double bankAdminFee = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleBankAdminFee), out bankAdminFee))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleBankAdminFee), out bankAdminFee) && bankAdminFee != 0)
                 {
                     using (Font infoFont = new Font("Calibri", 7))
                     {
@@ -242,7 +242,7 @@ namespace CarDepot.VehicleStore
 
                 //Lien Registration Fee
                 double lienRegistrationFee = 0;
-                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLienRegistrationFee), out lienRegistrationFee))
+                if (Utilities.StringToDouble(currVehicle.GetValue(PropertyId.SaleLienRegistrationFee), out lienRegistrationFee) && lienRegistrationFee != 0)
                 {
                     string stringLienRegistrationFee = lienRegistrationFee.ToString("F");
                     e.Graphics.DrawString(stringLienRegistrationFee, font, Brushes.Black, backgroundXPos + 715, backgroundYPos + 809);

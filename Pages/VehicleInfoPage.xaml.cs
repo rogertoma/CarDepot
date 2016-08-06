@@ -126,7 +126,7 @@ namespace CarDepot
             newVehicleOilChange.TaskVehicleId = vehicle.Id;
             newVehicleOilChange.CreatedDate = DateTime.Today.Date.ToString("d");
             newVehicleOilChange.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            newVehicleOilChange.AssignedTo = "Chris Rome";
+            newVehicleOilChange.AssignedTo = "Jordan McKinnon";
             newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
             newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(newVehicleOilChange);
@@ -266,7 +266,7 @@ namespace CarDepot
 
             return true;
         }
-        
+
         /// <summary>
         /// Return bool determines of cancellation of closing should occur
         /// True means cancel close

@@ -246,6 +246,9 @@
   <data name="SOLDCARCLEANINGTASK" xml:space="preserve">
     <value>Clean Sold Car</value>
   </data>
+  <data name="SOLDCARMINISTRYTASK" xml:space="preserve">
+    <value>Sold vehicle ministry paperwork</value>
+  </data>
   <data name="SYSTEMADMINACCOUNTNAME" xml:space="preserve">
     <value>SystemAdminAccount</value>
   </data>

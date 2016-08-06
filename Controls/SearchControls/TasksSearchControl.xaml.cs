@@ -118,7 +118,36 @@ namespace CarDepot.Controls.SearchControls
                     }
                 }
             }
-            
+
+            //Priority0
+            int insertPosition = 0;
+            for (int i = 0; i < Enum.GetNames(typeof(VehicleTask.TaskPriority)).Length; i++)
+            {
+                for (int j = 0; j < lstTasks.Items.Count; j++)
+                {
+                    //object currentItem = (object)lstTasks.Items[j];
+                    ListBoxItem item = lstTasks.Items.GetItemAt(j) as ListBoxItem;
+
+                    VehicleTask task = item.Content as VehicleTask;
+                    if (task.Priority != null &&
+                        task.Priority.ToLower() == "priority" + i.ToString())
+                    {
+                        if (task.Priority.ToLower() == "priority0")
+                        {
+                            item.Foreground = Brushes.Red;
+                            item.FontWeight = FontWeights.ExtraBold;
+                        }
+                        else if (task.Priority.ToLower() == "priority1")
+                        {
+                            item.FontWeight = FontWeights.Bold;
+                        }
+
+                        this.lstTasks.Items.RemoveAt(j);
+                        this.lstTasks.Items.Insert(insertPosition, item);
+                        insertPosition++;
+                    }
+                }
+            }
         }
 
         private void lstTasks_SelectionChanged(object sender, SelectionChangedEventArgs e)

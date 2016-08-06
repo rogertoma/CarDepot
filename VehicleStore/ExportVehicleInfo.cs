@@ -159,7 +159,11 @@ namespace CarDepot.VehicleStore
             currentSheet.Cells[row, column++] = new Cell("Total Cost");
             currentSheet.Cells[row, column++] = new Cell("Total HST");
             currentSheet.Cells[row, column++] = new Cell("Total");
-            currentSheet.Cells[row, column] = new Cell("Cheque Number");
+            currentSheet.Cells[row, column++] = new Cell("Cheque Number");
+            if (!isForAccounting)
+            {
+                currentSheet.Cells[row, column] = new Cell("List Price");
+            }
 
             #endregion
 
@@ -269,6 +273,11 @@ namespace CarDepot.VehicleStore
 
                 currentSheet.Cells[row, column++] = new Cell(vehicle.GetValue(PropertyId.PurchaseCheckNumber));
 
+                if (!isForAccounting)
+                {
+                    currentSheet.Cells[row, column] = new Cell(vehicle.GetValue(PropertyId.ListPrice), "#,##0.00");
+            }
+
                 row++;
             }
 
@@ -288,7 +297,7 @@ namespace CarDepot.VehicleStore
             currentSheet.Cells[row, column++] = new Cell(otherCostTotal, "#,##0.00");
             currentSheet.Cells[row, column++] = new Cell(totalCostTotal, "#,##0.00");
             currentSheet.Cells[row, column++] = new Cell(hstTotal, "#,##0.00");
-            currentSheet.Cells[row, column] = new Cell(totalTotal, "#,##0.00");
+            currentSheet.Cells[row, column++] = new Cell(totalTotal, "#,##0.00");
 
             #endregion
 

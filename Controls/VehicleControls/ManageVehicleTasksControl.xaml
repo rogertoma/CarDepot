@@ -42,6 +42,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -55,26 +56,28 @@
             <ComboBox x:Name="cmbStatus" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
             <Label Grid.Row="2" Grid.Column="0">Assigned To</Label>
             <ComboBox x:Name="cmbAssignedTo" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
-            <Label Grid.Row="3" Grid.Column="0">Category</Label>
-            <ComboBox x:Name="cmbCategory" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
-            <Label Grid.Row="4" Grid.Column="0">Cost</Label>
-            <TextBox x:Name="txtCost" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
-            <Label Grid.Row="5" Grid.Column="0">Comments</Label>
-            <TextBox x:Name="txtComments" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
-            <Label Grid.Row="6" Grid.Column="0">Mins To Complete</Label>
-            <TextBox x:Name="txtMinutes" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
-            <Label Grid.Row="7" Grid.Column="0">Created Date</Label>
-            <DatePicker x:Name="dpCreatedDate" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
-            <Label Grid.Row="8" Grid.Column="0">Due Date</Label>
-            <DatePicker x:Name="dpDueDate" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
-            <Label Grid.Row="9" Grid.Column="0">Created By</Label>
-            <ComboBox x:Name="cmbCreatedBy" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
-            <Label Visibility="Hidden" Grid.Row="10" Grid.Column="0">Completed By</Label>
-            <ComboBox x:Name="cmbCompletedBy" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
-            <Button x:Name="btnCompleteTask" Content="Complete Task" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" Width="100" Background="#FF14BB14" Click="btnCompleteTask_Click" Margin="0,0,0,5"/>
-            <Button x:Name="btnCreate" Content="_Create" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCreate_Click" Margin="0,0,0,5"/>
-            <Button x:Name="btnUpdate" Content="_Update" Grid.Column="2" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,0,5,5" Click="btnUpdate_Click"/>
-            <Button x:Name="btnDelete" Content="Delete" Grid.Column="3" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnDelete_Click" Margin="0,0,0,5" />
+            <Label Grid.Row="3" Grid.Column="0">Priority</Label>
+            <ComboBox x:Name="cmbPriority" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
+            <Label Grid.Row="4" Grid.Column="0">Category</Label>
+            <ComboBox x:Name="cmbCategory" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
+            <Label Grid.Row="5" Grid.Column="0">Cost</Label>
+            <TextBox x:Name="txtCost" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
+            <Label Grid.Row="6" Grid.Column="0">Comments</Label>
+            <TextBox x:Name="txtComments" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
+            <Label Grid.Row="7" Grid.Column="0">Mins To Complete</Label>
+            <TextBox x:Name="txtMinutes" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
+            <Label Grid.Row="8" Grid.Column="0">Created Date</Label>
+            <DatePicker x:Name="dpCreatedDate" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
+            <Label Grid.Row="9" Grid.Column="0">Due Date</Label>
+            <DatePicker x:Name="dpDueDate" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></DatePicker>
+            <Label Grid.Row="10" Grid.Column="0">Created By</Label>
+            <ComboBox x:Name="cmbCreatedBy" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
+            <Label Visibility="Hidden" Grid.Row="11" Grid.Column="0">Completed By</Label>
+            <ComboBox x:Name="cmbCompletedBy" Visibility="Hidden" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="3" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
+            <Button x:Name="btnCompleteTask" Content="Complete Task" Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" Width="100" Background="#FF14BB14" Click="btnCompleteTask_Click" Margin="0,0,0,5"/>
+            <Button x:Name="btnCreate" Content="_Create" Grid.Column="1" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCreate_Click" Margin="0,0,0,5"/>
+            <Button x:Name="btnUpdate" Content="_Update" Grid.Column="2" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,0,5,5" Click="btnUpdate_Click"/>
+            <Button x:Name="btnDelete" Content="Delete" Grid.Column="3" Grid.Row="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnDelete_Click" Margin="0,0,0,5" />
         </Grid>
 
     </Grid>

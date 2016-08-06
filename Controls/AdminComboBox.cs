@@ -35,6 +35,9 @@ namespace CarDepot.Controls
 
         void AdminComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (SelectedItem == null)
+                return;
+
             _item.SetValue(PropertyId, SelectedItem.ToString());
         }
 

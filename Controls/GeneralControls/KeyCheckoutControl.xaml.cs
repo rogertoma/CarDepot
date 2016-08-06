@@ -111,7 +111,7 @@ namespace CarDepot.Controls.GeneralControls
 
         private void btnCheckIn_Click(object sender, RoutedEventArgs e)
         {
-            if (_foundVehicle.GetValue(PropertyId.CheckOutBy) != CacheManager.ActiveUser.Name && CacheManager.ActiveUser.Name != "Roger Toma")
+            if (_foundVehicle.GetValue(PropertyId.CheckOutBy) != CacheManager.ActiveUser.Name && CacheManager.ActiveUser.Name != "Roger Toma" && CacheManager.ActiveUser.Name != "Filip Mitrofanov")
             {
                 MessageBox.Show(Strings.CONTROL_KEYCHECKOUT_DIFFERENTUSERATTEMPTSCHECKIN, Strings.ERROR);
                 return;

@@ -8,6 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using CarDepot.Resources;
 using System.ComponentModel;
+using System.Windows;
 
 namespace CarDepot.VehicleStore
 {
@@ -43,6 +44,12 @@ namespace CarDepot.VehicleStore
         public CustomerCache(Dictionary<CustomerCacheSearchKey, string> searchParam)
         {
             Initialize();
+
+            if (CacheManager.AllCustomerCache == null)
+            {
+                MessageBox.Show("Customer information has not yet loaded you may have a poor user experience until this is loaded.", "Warning");
+                return;
+            }
 
             foreach (var customer in CacheManager.AllCustomerCache)
             {

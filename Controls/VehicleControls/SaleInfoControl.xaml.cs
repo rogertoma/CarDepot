@@ -65,6 +65,8 @@ namespace CarDepot.Controls.VehicleControls
             TxtCustomerId.Text = "";
             _vehicle = item as VehicleAdminObject;
 
+            ClearFormState();
+
             LoadAllChildren(SaleInfoGrid, item);
             LoadAllChildren(WarrantyGrid, item);
             LoadAllChildren(TradeInGrid, item);
@@ -82,6 +84,13 @@ namespace CarDepot.Controls.VehicleControls
             {
                 txtSalesTaxPercentage.Text = Settings.HST.ToString(CultureInfo.InvariantCulture);
             }
+        }
+
+        private void ClearFormState()
+        {
+            cmbSaleDepositeType.Items.Clear();
+            cmbBrand.Items.Clear();
+            cmbSafetyCertificate.Items.Clear();
         }
 
         private void LoadComboBoxes()
@@ -454,6 +463,15 @@ namespace CarDepot.Controls.VehicleControls
                     }
                 }
 
+                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+                {
+                    if (vehicleTask.Id.Equals(Strings.SOLDCARMINISTRYTASK))
+                    {
+                        _vehicle.VehicleTasks.Remove(vehicleTask);
+                        break;
+                    }
+                }
+
                 _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
                 return;
             }
@@ -469,28 +487,34 @@ namespace CarDepot.Controls.VehicleControls
             }
             #endregion
 
-            #region AddSoldCarCleaning
-            //bool soldCarCleaningTaskFound = false;
-            //foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
-            //{
-            //    if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
-            //    {
-            //        soldCarCleaningTaskFound = true;
-            //    }
-            //}
+            #region Sold Car Ministry task
 
-            //if (!soldCarCleaningTaskFound)
-            //{
-            //    VehicleTask newCarCleaningTask = new VehicleTask();
-            //    newCarCleaningTask.Id = Strings.SOLDCARCLEANINGTASK;
-            //    newCarCleaningTask.TaskVehicleId = _vehicle.Id;
-            //    newCarCleaningTask.CreatedDate = DateTime.Today.Date.ToString("d");
-            //    newCarCleaningTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            //    newCarCleaningTask.AssignedTo = "Mike Wilson";
-            //    newCarCleaningTask.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
-            //    newCarCleaningTask.CreatedBy = CacheManager.ActiveUser.Name;
-            //    _vehicle.VehicleTasks.Add(newCarCleaningTask);
-            //}
+            bool soldCarMinistryTaskFound = false;
+            foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
+            {
+                if (vehicleTask.Id.Equals(Strings.SOLDCARMINISTRYTASK))
+                {
+                    soldCarMinistryTaskFound = true;
+                    break;
+                }
+            }
+
+            DateTime June2016 = new DateTime(2016, 06, 01);
+
+            if (!soldCarMinistryTaskFound && saleDate != null && saleDate > June2016)
+            {
+                VehicleTask vehicleSoldMinistryTask = new VehicleTask();
+                vehicleSoldMinistryTask.Id = Strings.SOLDCARMINISTRYTASK;
+                vehicleSoldMinistryTask.TaskVehicleId = _vehicle.Id;
+                vehicleSoldMinistryTask.Priority = VehicleTask.TaskPriority.Priority0.ToString();
+                vehicleSoldMinistryTask.CreatedDate = DateTime.Today.Date.ToString("d");
+                vehicleSoldMinistryTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
+                vehicleSoldMinistryTask.AssignedTo = "Filip Mitrofanov";
+                vehicleSoldMinistryTask.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
+                vehicleSoldMinistryTask.CreatedBy = CacheManager.ActiveUser.Name;
+                _vehicle.VehicleTasks.Add(vehicleSoldMinistryTask);
+            }
+
             #endregion
 
             #region Car Delivery Task
@@ -676,6 +700,10 @@ namespace CarDepot.Controls.VehicleControls
         private void cmbSafetyCertificate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             double tradeIn = 0;
+
+            if (cmbSafetyCertificate.SelectedItem == null)
+                return;
+            
 
             if (cmbSafetyCertificate.SelectedItem.ToString() == Certified.No.ToString())
             {

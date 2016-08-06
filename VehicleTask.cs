@@ -14,6 +14,7 @@ namespace CarDepot
     [PropertyId(PropertyId.TaskCompletedBy)]
     [PropertyId(PropertyId.TaskCost)]
     [PropertyId(PropertyId.TaskCreatedBy)]
+    [PropertyId(PropertyId.TaskPriority)]
     [PropertyId(PropertyId.TaskName)]
     [PropertyId(PropertyId.TaskStatus)]
     [PropertyId(PropertyId.TaskCreatedDate)]
@@ -45,6 +46,13 @@ namespace CarDepot
             Finance,
             Mechanic,
             Other
+        }
+
+        public enum TaskPriority
+        {
+            Priority0 = 0,
+            Priority1 = 1,
+            Priority2 = 2
         }
 
         #region SettingProperties
@@ -93,6 +101,11 @@ namespace CarDepot
         {
             get { return GetPropertyIdValue(PropertyId.TaskAssignedTo); }
             set { ApplyValue(PropertyId.TaskAssignedTo, value); }
+        }
+        public string Priority
+        {
+            get { return GetPropertyIdValue(PropertyId.TaskPriority); }
+            set { ApplyValue(PropertyId.TaskPriority, value); }
         }
         public string Category
         {

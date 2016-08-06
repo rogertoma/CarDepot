@@ -651,7 +651,17 @@ namespace CarDepot.Resources
                 return ResourceManager.GetString("CONTROL_KEYCHECKOUT_DIFFERENTUSERATTEMPTSCHECKIN", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to SOLDCARMINISTRYTASK.
+        /// </summary>
+        internal static string SOLDCARMINISTRYTASK
+        {
+            get
+            {
+                return ResourceManager.GetString("SOLDCARMINISTRYTASK", resourceCulture);
+            }
+        }
 
     }
 }

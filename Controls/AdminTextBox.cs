@@ -29,6 +29,13 @@ namespace CarDepot.Controls
             if (_item == null)
                 return;
 
+            if (PropertyId == PropertyId.VinNumber)
+            {
+                int cursorPosition = this.SelectionStart;
+                Text = Text.ToUpper();
+                this.SelectionStart = cursorPosition;
+            }
+
             _item.SetValue(PropertyId, Text);
 
             if (Text == string.Empty || Text == "")

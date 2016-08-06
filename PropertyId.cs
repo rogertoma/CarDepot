@@ -150,6 +150,7 @@ namespace CarDepot
         TaskCompletedBy,
         TaskAssignedTo,
         TaskCategory,
+        TaskPriority,
         TaskCreatedDate,
         TaskDueDate,
         TaskMinutes,

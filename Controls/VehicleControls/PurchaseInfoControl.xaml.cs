@@ -43,6 +43,8 @@ namespace CarDepot.Controls.VehicleControls
         {
             _vehicle = item as VehicleAdminObject;
 
+            ClearFormState();
+
             LoadAllChildren(PurchaseInfoGrid, item);
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
 
@@ -73,6 +75,11 @@ namespace CarDepot.Controls.VehicleControls
             }
 
             CalculateTasksCost();
+        }
+
+        private void ClearFormState()
+        {
+            cmbVendor.Items.Clear();
         }
 
         public void ApplyUiMode()
