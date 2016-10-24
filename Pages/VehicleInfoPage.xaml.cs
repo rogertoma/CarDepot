@@ -146,6 +146,12 @@ namespace CarDepot
 
         public VehicleInfoWindow(VehicleAdminObject vehicle, VehicleInfoWindowTabs startTab)
         {
+            if (!File.Exists(Settings.DefaultVehicleImagePath))
+            {
+                MessageBox.Show("ERROR: Experiencing connectivity issues can't load vehicle");
+                return;
+            }
+
             InitializeComponent();
             _vehicle = vehicle ?? CreateNewDefaultVehicleObject();
 
@@ -153,6 +159,8 @@ namespace CarDepot
             propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
             propertyPanels.Add(PurchaseInfoControlPropertyPanel);
             propertyPanels.Add(SaleInfoControlPropertyPanel);
+            propertyPanels.Add(SafetyInspectionControlPropertyPanel);
+            propertyPanels.Add(DeliveryCheckListControlPropertyPanel);
 
             ApplyUiMode();
             ApplyActiveUserPermissions();

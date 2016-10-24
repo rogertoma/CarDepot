@@ -29,7 +29,19 @@ namespace CarDepot.Controls
         {
             if (SelectedItem != null)
             {
-                _item.SetValue(PropertyId, SelectedItem.ToString());    
+                string value;
+                Label lblSelectedItem = SelectedItem as Label;
+
+                if (lblSelectedItem != null)
+                {
+                    value = lblSelectedItem.Content.ToString(); 
+                }
+                else
+                {
+                    value = SelectedItem.ToString();
+                }
+
+                _item.SetValue(PropertyId, value);    
             }
         }
 
@@ -38,7 +50,19 @@ namespace CarDepot.Controls
             if (SelectedItem == null)
                 return;
 
-            _item.SetValue(PropertyId, SelectedItem.ToString());
+            string value;
+            Label lblSelectedItem = SelectedItem as Label;
+
+            if (lblSelectedItem != null)
+            {
+                value = lblSelectedItem.Content.ToString();
+            }
+            else
+            {
+                value = SelectedItem.ToString();
+            }
+
+            _item.SetValue(PropertyId, value);
         }
 
         public void ApplyUiMode()

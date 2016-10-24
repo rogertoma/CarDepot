@@ -1,0 +1,464 @@
+﻿<UserControl x:Class="CarDepot.Controls.VehicleControls.SafetyInfoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:CarDepot.Controls"
+             mc:Ignorable="d" Height="Auto" Width="Auto">
+    <Grid x:Name="SafetyInfoGrid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="SAFETY INSPECTION" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" FontWeight="ExtraBlack"/>
+
+        <!--Units of Measurement-->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="UNITS OF MEASUREMENT" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Controls:AdminCheckBox x:Name="mmsCheckbox" PropertyId="SafetyUnitMeasurementMMS" Content="mms" Grid.Row="0" Grid.Column="0"/>
+                <Controls:AdminCheckBox x:Name="inchesCheckbox" PropertyId="SafetyUnitMeasurementInches" Content="inches" Grid.Row="1" Grid.Column="0"/>
+            </Grid>
+        </Grid>
+
+        <!--Front Left Side-->
+        <GroupBox Header="FRONT LEFT" Margin="0,15,0,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="3">
+            <Grid x:Name="FrontLeftGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="DISK BREAKS" Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="ROTOR THICKNESS" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontLeftRotorThickness" PropertyId="SafetyFrontLeftRotorThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS INNER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontLeftPadThicknessMaterialThicknessInner" PropertyId="SafetyFrontLeftPadThicknessMaterialThicknessInner" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS OUTER" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontLeftPadThicknessMaterialThicknessOuter" PropertyId="SafetyFrontLeftPadThicknessMaterialThicknessOuter" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="BREAK DRUMS" Margin="0,15,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="211"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="SHOE LINING THICKNESS" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,0,1"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontLeftShoeLiningThickness" PropertyId="SafetyFrontLeftShoeLiningThickness" Grid.Row="0" Grid.Column="2" Margin="0,4,0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="DRUM DIAMETER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontLeftDrumDiameter" PropertyId="SafetyFrontLeftDrumDiameter" Grid.Row="1" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="TIRE" Margin="0,15,0,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="211"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="TREAD DEPTH" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,0,1"/>
+                        <Controls:AdminTextBox x:Name="txtTreadDepth" PropertyId="SafetyFrontLeftTireTreadDepth" Grid.Row="0" Grid.Column="2" Margin="0,4,0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="INFLATION PRESSURE" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtInflationPressure" PropertyId="SafetyFrontLeftTireInflationPressure" Grid.Row="1" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="CORRECTED > 5 PSI" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtTirePressureCorrectedGreaterFivePsi" PropertyId="SafetyFrontLeftTireCorrectedAboveFivePsi" Grid.Row="2" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="FINAL READING" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtTirePressureFinalReading" PropertyId="SafetyFrontLeftTireFinalReading" Grid.Row="3" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+                
+            </Grid>
+        </GroupBox>
+
+        <!--Front Right Side-->
+        <GroupBox Header="FRONT RIGHT" Margin="0,15,0,0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="3">
+            <Grid x:Name="FrontRightGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="DISK BREAKS" Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="ROTOR THICKNESS" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontRightRotorThickness" PropertyId="SafetyFrontRightRotorThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS INNER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontRightPadThicknessMaterialThicknessInner" PropertyId="SafetyFrontRightPadThicknessMaterialThicknessInner" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS OUTER" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontRightPadThicknessMaterialThicknessOuter" PropertyId="SafetyFrontRightPadThicknessMaterialThicknessOuter" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="BREAK DRUMS" Margin="0,15,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="SHOE LINING THICKNESS" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontRightShoeLiningThickness" PropertyId="SafetyFrontRightShoeLiningThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="DRUM DIAMETER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontRightDrumDiameter" PropertyId="SafetyFrontRightDrumDiameter" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="TIRE" Margin="0,15,0,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="211"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="TREAD DEPTH" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,0,1"/>
+                        <Controls:AdminTextBox x:Name="txtFrontRightTreadDepth" PropertyId="SafetyFrontRightTireTreadDepth" Grid.Row="0" Grid.Column="2" Margin="0,4,0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="INFLATION PRESSURE" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtFrontRightInflationPressure" PropertyId="SafetyFrontRightTireInflationPressure" Grid.Row="1" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="CORRECTED > 5 PSI" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtFrontRightTirePressureCorrectedGreaterFivePsi" PropertyId="SafetyFrontRightTireCorrectedAboveFivePsi" Grid.Row="2" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="FINAL READING" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtFrontRightTirePressureFinalReading" PropertyId="SafetyFrontRightTireFinalReading" Grid.Row="3" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
+        </GroupBox>
+
+        <!--Rear Left Side-->
+        <GroupBox Header="REAR LEFT" Margin="0,15,0,0" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="3">
+            <Grid x:Name="RearLeftGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="DISK BREAKS" Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="ROTOR THICKNESS" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxRearLeftRotorThickness" PropertyId="SafetyRearLeftRotorThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS INNER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearLeftPadThicknessMaterialThicknessInner" PropertyId="SafetyRearLeftPadThicknessMaterialThicknessInner" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS OUTER" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearLeftPadThicknessMaterialThicknessOuter" PropertyId="SafetyRearLeftPadThicknessMaterialThicknessOuter" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="BREAK DRUMS" Margin="0,15,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="SHOE LINING THICKNESS" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearLeftShoeLiningThickness" PropertyId="SafetyRearLeftShoeLiningThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="DRUM DIAMETER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearLeftDrumDiameter" PropertyId="SafetyRearLeftDrumDiameter" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="TIRE" Margin="0,15,0,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="211"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="TREAD DEPTH" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,0,1"/>
+                        <Controls:AdminTextBox x:Name="txtRearLeftTreadDepth" PropertyId="SafetyRearLeftTireTreadDepth" Grid.Row="0" Grid.Column="2" Margin="0,4,0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="INFLATION PRESSURE" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtRearLeftInflationPressure" PropertyId="SafetyRearLeftTireInflationPressure" Grid.Row="1" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="CORRECTED > 5 PSI" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtRearLeftTirePressureCorrectedGreaterFivePsi" PropertyId="SafetyRearLeftTireCorrectedAboveFivePsi" Grid.Row="2" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="FINAL READING" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtRearLeftTirePressureFinalReading" PropertyId="SafetyRearLeftTireFinalReading" Grid.Row="3" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
+        </GroupBox>
+
+        <!--Rear Right Side-->
+        <GroupBox Header="REAR RIGHT" Margin="0,15,0,0" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="3">
+            <Grid x:Name="RearRightGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="DISK BREAKS" Margin="0,15,0,0" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="ROTOR THICKNESS" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearRightRotorThickness" PropertyId="SafetyRearRightRotorThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS INNER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtFrontPadThicknessMaterialThicknessInner" PropertyId="SafetyRearRightPadThicknessMaterialThicknessInner" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="PAD THICKNESS MATERIAL THICKNESS OUTER" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearRightPadThicknessMaterialThicknessOuter" PropertyId="SafetyRearRightPadThicknessMaterialThicknessOuter" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="BREAK DRUMS" Margin="0,15,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="SHOE LINING THICKNESS" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearRightShoeLiningThickness" PropertyId="SafetyRearRightShoeLiningThickness" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="DRUM DIAMETER" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Controls:AdminTextBox x:Name="TxtRearRightDrumDiameter" PropertyId="SafetyRearRightDrumDiameter" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="TIRE" Margin="0,15,0,0" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="211"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="TREAD DEPTH" Grid.Row="0" Grid.Column="0" Width="256" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,0,0,1"/>
+                        <Controls:AdminTextBox x:Name="txtRearRightTreadDepth" PropertyId="SafetyRearRightTireTreadDepth" Grid.Row="0" Grid.Column="2" Margin="0,4,0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="INFLATION PRESSURE" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtRearRightInflationPressure" PropertyId="SafetyRearRightTireInflationPressure" Grid.Row="1" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="CORRECTED > 5 PSI" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtRearRightTirePressureCorrectedGreaterFivePsi" PropertyId="SafetyRearRightTireCorrectedAboveFivePsi" Grid.Row="2" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+
+                        <Label Content="FINAL READING" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                        <Controls:AdminTextBox x:Name="txtRearRightTirePressureFinalReading" PropertyId="SafetyRearRightTireFinalReading" Grid.Row="3" Grid.Column="2" Margin="0,3" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+                </GroupBox>
+                
+            </Grid>
+        </GroupBox>
+
+        <!--GasTankLevel-->
+        <Grid Grid.Row="4" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="266"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="GAS TANK" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Controls:AdminComboBox x:Name="cmbGasTank" Grid.Row="0" Grid.Column="1" Width="120" PropertyId="SafetyGasTankLevel"/>
+        </Grid>
+
+        <!--Inspection Results Pass/Fail-->
+        <Grid Grid.Row="5" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="266"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="INSPECTION RESULTS" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Controls:AdminCheckBox x:Name="inspectionPassCheckbox" PropertyId="SafetyInspectionPass" Content="PASS" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"/>
+            <Controls:AdminCheckBox x:Name="inspectionFailCheckbox" Margin="5,0,0,0"  PropertyId="SafetyInspectionFail" Content="FAIL" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center"/>
+        </Grid>
+
+        <!--Inspection Date-->
+        <Grid Grid.Row="6" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="264"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="INSPECTION DATE" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Controls:AdminDatePicker x:Name="dtSafetyInspectionDate" PropertyId="SafetyInspectionDate" Grid.Row="0" Grid.Column="1" Width="120"/>
+        </Grid>
+
+        <!--Safety Inspected By-->
+        <Grid Grid.Row="7" Grid.Column="0" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="264"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="INSPECTED BY" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Controls:AdminComboBox x:Name="cmbInspectedBy" Grid.Row="0" Grid.Column="1" Width="120" PropertyId="SafetyInspectedBy"/>
+        </Grid>
+
+        <!--Safety Inspection Comments-->
+        <Grid Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="264"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="INSPECTION COMMENTS" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Controls:AdminTextBox x:Name="txtInspectionComments" PropertyId="SafetyComments" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="70" Width="530" TextWrapping="Wrap" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto"/>
+        </Grid>
+
+        <!--Safety Certificate Numbers Issued-->
+        <Grid Grid.Row="9" Grid.Column="0" Margin="0,3,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="264"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="SAFETY CERTIFICATE NUMBERS ISSUED" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Controls:AdminTextBox x:Name="txtSafetyCertificateNumbersIssued" PropertyId="SafetyCertificateNumbersIssued" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        </Grid>
+
+        <Button x:Name="btnPrintSafetyInspectionReport" Content="Print" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="10" VerticalAlignment="Top" Width="75" Height="40" Click="btnPrintSafetyInspectionReport_Click"/>
+
+    </Grid>
+</UserControl>

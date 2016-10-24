@@ -27,18 +27,23 @@ namespace CarDepot.VehicleStore
 
         public CustomerCache()
         {
-            Initialize();
-
-           
-            string[] customers = Directory.GetDirectories(Settings.CustomerPath);
-            foreach (var customer in customers)
+            try
             {
-                foreach (string file in Directory.GetFiles(customer, Strings.FILTER_ALL_XML))
+                Initialize();
+
+                string[] customers = Directory.GetDirectories(Settings.CustomerPath);
+                foreach (var customer in customers)
                 {
-                    LoadCustomer(file);
+                    foreach (string file in Directory.GetFiles(customer, Strings.FILTER_ALL_XML))
+                    {
+                        LoadCustomer(file);
+                    }
                 }
             }
- 
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR: Failed to load customer information probably due to connectivity issues with error: " + ex.Message);
+            }
         }
 
         public CustomerCache(Dictionary<CustomerCacheSearchKey, string> searchParam)
@@ -176,7 +181,9 @@ namespace CarDepot.VehicleStore
 
             int outInteger = 0;
 
-            if (int.TryParse(this[0].GetValue(category), out outInteger))
+            if (category != PropertyId.FirstName &&
+                category != PropertyId.LastName &&
+                int.TryParse(this[0].GetValue(category), out outInteger))
             {
                 sortedList.AddRange(direction == ListSortDirection.Ascending
                     ? this.OrderBy(customerAdminObject => int.Parse(customerAdminObject.GetValue(category)))

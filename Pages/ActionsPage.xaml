@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="550">
+             mc:Ignorable="d" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="560">
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -20,10 +21,16 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="BtnSearchVehicles" Margin="0,0,0,10" Content="Search Vehicles" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="1" Grid.Column="0" Click="BtnSearchVehicles_Click" />
         <Button x:Name="BtnSearchTasks" Content="Search Tasks" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="1" Click="BtnSearchTasks_Click"/>
-        <Button x:Name="BtnCreateNewVehicle" Margin="10,0,0,0" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="2" Click="BtnCreateNewVehicle_Click" />
+        <Button x:Name="BtnSearchSold" Content="Search Sold" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="2" Click="BtnSearchSold_Click"/>
+        <Button x:Name="BtnCreateNewVehicle" Margin="10,0,0,0" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="3" Click="BtnCreateNewVehicle_Click" />
         <Button x:Name="BtnSearchCustomers" Content="Search Customers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="0,0,0,0" Background="ForestGreen"  Height="150" Grid.Row="2" Grid.Column="0" Click="BtnSearchCustomers_Click"/>
         <Button x:Name="BtnCreateNewCustomer" Margin="10,0,0,0" Content="Create New Customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="2" Grid.Column="1" Click="BtnCreateNewCustomer_Click"/>
         <Button x:Name="BtnKeyCheckout" Margin="0,10,0,0" Content="Key Checkout" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="3" Grid.Column="0" Click="BtnKeyCheckout_Click" />
+        
+        <Label x:Name="label" Content="Latest ID to Load" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="4" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtIDToLoad" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="5,10,0,5" Grid.Row="4" TextWrapping="Wrap" Text="-2" VerticalAlignment="Top" Width="120" TextChanged="txtIDToLoad_TextChanged"/>
+
+
     </Grid>
 </UserControl>
 

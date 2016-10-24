@@ -16,6 +16,7 @@ namespace CarDepot
         public string Name { get; set; }
         public string Password { get; set; }
         public string RegistrationNumer { get; set; }
+        public List<UserCategory> Category = new List<UserCategory>();
         public string PicturePath { get; set; }
         List<IPropertyPanel> _openedPages = new List<IPropertyPanel>();
         List<PermissionTypes> _permissions = new List<PermissionTypes>();
@@ -35,6 +36,15 @@ namespace CarDepot
             GenerateReport,
             UpdateSaleTaxPercentage,
             ShowCheckedOutBy
+        }
+
+        public enum UserCategory
+        {
+            Detail,
+            Mechanic,
+            Sales,
+            Documentation,
+            Administrator
         }
 
         public UserAdminObject(string objectId)

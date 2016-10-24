@@ -75,6 +75,7 @@ namespace CarDepot.Resources
         public static Brush CustomerTabColor = Brushes.LightBlue;
         public static Brush SearchCustomerColor = Brushes.LightGreen;
         public static Brush SearchTasksColor = Brushes.LightGreen;
+        public static Brush SearchSoldVehiclesColor = Brushes.LightGreen;
     }
 
     internal static class DefaultColors
@@ -118,42 +119,41 @@ namespace CarDepot.Resources
         public static void LoadVehicleInfoWindow(VehicleAdminObject vehicle,
             VehicleInfoWindow.VehicleInfoWindowTabs startTab)
         {
-            try
+            if (!File.Exists(Settings.DefaultVehicleImagePath))
             {
-                if (vehicle == null)
-                {
-                    throw new NullReferenceException("Load vehicle info window requires non null vehicle");
-                }
-                else
-                {
-
-                    IAdminItemCache tempCache = vehicle.Cache;
-                    //THIS FORCES VEHICLE TO REFRESH
-                    //vehicle = new VehicleAdminObject(vehicle.ObjectId);
-                    vehicle.Cache = tempCache;
-
-                    VehicleInfoWindow window = new VehicleInfoWindow(vehicle, startTab);
-                    if (CacheManager.MainTabControl == null)
-                    {
-                        throw new NotImplementedException("MainTabControl == null");
-                    }
-
-                    ClosableTab tabItem = new ClosableTab();
-                    tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
-                    window.SetParentTabControl(tabItem);
-                    tabItem.Height = LookAndFeel.TabItemHeight;
-                    tabItem.Title = vehicle.Year + ": " + vehicle.Make + " " + vehicle.Model;
-                    tabItem.Content = window;
-                    CacheManager.MainTabControl.Items.Add(tabItem);
-                    tabItem.Focus();
-
-                    //window.Show();
-                    //CacheManager.ActiveUser.AddPage(window);
-                }
+                MessageBox.Show("ERROR: Experiencing connectivity issues can't load vehicle");
+                return;
             }
-            catch (Exception ex)
+
+            if (vehicle == null)
             {
-                MessageBox.Show("ERROR: Try to load LoadVehicleInfoWindow again\n" + ex.StackTrace);
+                throw new NullReferenceException("Load vehicle info window requires non null vehicle");
+            }
+            else
+            {
+
+                IAdminItemCache tempCache = vehicle.Cache;
+                //THIS FORCES VEHICLE TO REFRESH
+                //vehicle = new VehicleAdminObject(vehicle.ObjectId);
+                vehicle.Cache = tempCache;
+
+                VehicleInfoWindow window = new VehicleInfoWindow(vehicle, startTab);
+                if (CacheManager.MainTabControl == null)
+                {
+                    throw new NotImplementedException("MainTabControl == null");
+                }
+
+                ClosableTab tabItem = new ClosableTab();
+                tabItem.BackGroundColor = LookAndFeel.VehicleTabColor;
+                window.SetParentTabControl(tabItem);
+                tabItem.Height = LookAndFeel.TabItemHeight;
+                tabItem.Title = vehicle.Year + ": " + vehicle.Make + " " + vehicle.Model;
+                tabItem.Content = window;
+                CacheManager.MainTabControl.Items.Add(tabItem);
+                tabItem.Focus();
+
+                //window.Show();
+                //CacheManager.ActiveUser.AddPage(window);
             }
         }
     }

@@ -36,6 +36,17 @@
                     <VehicleControls:SaleInfoControl x:Name="SaleInfoControlPropertyPanel" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </ScrollViewer>
             </TabItem>
+            <TabItem Header="Safety Inspection">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <VehicleControls:SafetyInfoControl x:Name="SafetyInspectionControlPropertyPanel" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Delivery Checklist">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <VehicleControls:DeliveryChecklistControl x:Name="DeliveryCheckListControlPropertyPanel" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </ScrollViewer>
+            </TabItem>
+
         </TabControl>
         <Button x:Name="BtnDelete" Content="Delete" Width="75" Height="40" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" Background="Red" Click="btnDelete_Click"/>
         <Button x:Name="BtnImport" Content="Import" Width="75" Height="40" Grid.Row="1" Grid.Column="3" Margin="10,10,0,0" Background="Cyan" Click="BtnImport_Click"/>

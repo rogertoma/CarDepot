@@ -30,6 +30,7 @@ namespace CarDepot.Controls.VehicleControls
             ManheimToronto,
             PrivatePurchase,
             TradeIn,
+            Dealer,
             Financing
         }
 

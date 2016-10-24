@@ -327,10 +327,13 @@ namespace CarDepot.VehicleStore
                 e.Graphics.DrawString(currVehicle.GetValue(PropertyId.SaleWarrantyKMs), font, Brushes.Black, backgroundXPos + 440, backgroundYPos + 500);
 
                 int yPos = 545;
-                foreach (string description in currVehicle.GetValue(PropertyId.SaleWarrantyDescription).Split(';'))
+                if (!string.IsNullOrEmpty(currVehicle.GetValue(PropertyId.SaleWarrantyDescription)))
                 {
-                    e.Graphics.DrawString(description, font, Brushes.Black, backgroundXPos + 320, backgroundYPos + yPos);
-                    yPos += 20;
+                    foreach (string description in currVehicle.GetValue(PropertyId.SaleWarrantyDescription).Split(';'))
+                    {
+                        e.Graphics.DrawString(description, font, Brushes.Black, backgroundXPos + 320, backgroundYPos + yPos);
+                        yPos += 20;
+                    }
                 }
             }
         }
@@ -505,8 +508,8 @@ namespace CarDepot.VehicleStore
                 DateTime deliveryDate = DateTime.Now;
                 if (DateTime.TryParse(stringDeliveryDate, out deliveryDate))
                 {
-                    e.Graphics.DrawString(deliveryDate.DayOfWeek.ToString(), font, Brushes.Black,
-                        backgroundXPos + 620, backgroundYPos + 210);
+                    e.Graphics.DrawString(deliveryDate.DayOfWeek + ", " + deliveryDate.ToLongDateString(), font, Brushes.Black,
+                        backgroundXPos + 600, backgroundYPos + 210);
                 }
 
                 // Certified

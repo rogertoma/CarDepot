@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="CarDepot.Pages.DeliveryVehicleSearchPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CarDepot.Pages"
+      mc:Ignorable="d" 
+      xmlns:SearchControls="clr-namespace:CarDepot.Controls.SearchControls"
+      xmlns:VehicleControls="clr-namespace:CarDepot.Controls.VehicleControls"
+      MinHeight="300" MinWidth="500" Height="Auto" Width="Auto">
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <SearchControls:DeliveryVehicleSearchControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
+        </ScrollViewer>
+    </Grid>
+    
+</UserControl>

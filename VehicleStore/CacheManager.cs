@@ -22,6 +22,7 @@ namespace CarDepot.VehicleStore
         private static CustomerCache _allCustomerCache = null;
         private static UserAdminObject _activeUser = null;
         private static TabControl _mainTabControl = null;
+        public static int LatestVehicleIdToLoad = 0;
 
         public enum UIMode
         {
@@ -31,9 +32,20 @@ namespace CarDepot.VehicleStore
 
         static CacheManager()
         {
+            try
+            {
+                string latestToLoadPath = Settings.VehiclePath + @"\latest\LatestIDToLoad.txt";
+                string content = System.IO.File.ReadAllText(latestToLoadPath);
+                int.TryParse(content, out LatestVehicleIdToLoad);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unable to load latest ID information, all data will load.  Error: " + e.Message);
+            }
+
             System.Timers.Timer updateTasks = null;
             updateTasks = new System.Timers.Timer();
-            updateTasks.Interval = 600000; // Every 5 Minutes
+            updateTasks.Interval = 1200000; // Every 20 Minutes
             updateTasks.Elapsed += updateTasks_Elapsed;
             updateTasks.Start();
 
@@ -44,17 +56,10 @@ namespace CarDepot.VehicleStore
 
         private static void LoadCache()
         {
-            try
-            {
-                _userCache = new UserCache();
-                _allVehicleCache = new VehicleCache(Settings.VehiclePath,
-                    new Dictionary<VehicleCacheSearchKey, string>());
-                _allCustomerCache = new CustomerCache();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ERROR: CacheManager: LoadCache\n" + ex.StackTrace);
-            }
+            _userCache = new UserCache();
+            _allVehicleCache = new VehicleCache(Settings.VehiclePath,
+                new Dictionary<VehicleCacheSearchKey, string>());
+            _allCustomerCache = new CustomerCache();
         }
 
         public static VehicleCache ActiveVehicleCache
@@ -133,18 +138,12 @@ namespace CarDepot.VehicleStore
 
         static void updateTasks_Elapsed(object sender, ElapsedEventArgs e)
         {
-            try
+
+            if (!_updateingCache)
             {
-                if (!_updateingCache)
-                {
-                    _updateingCache = true;
-                    Thread updateAllVehicleCache = new Thread(new ThreadStart(UpdateAllVehicleCache));
-                    updateAllVehicleCache.Start();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("ERROR: CacheManager: updateTasks_Elapsed\n" + ex.StackTrace);
+                _updateingCache = true;
+                Thread updateAllVehicleCache = new Thread(new ThreadStart(UpdateAllVehicleCache));
+                updateAllVehicleCache.Start();
             }
         }
     }

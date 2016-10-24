@@ -28,6 +28,7 @@ namespace CarDepot.Controls.GeneralControls
         {
             InitializeComponent();
             ApplyActiveUserPermissions();
+            txtIDToLoad.Text = CacheManager.LatestVehicleIdToLoad.ToString();
         }
 
         public string PageTitle
@@ -191,6 +192,33 @@ namespace CarDepot.Controls.GeneralControls
             tabItem.Content = page;
             CacheManager.MainTabControl.Items.Add(tabItem);
             tabItem.Focus();
+        }
+
+        private void BtnSearchSold_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryVehicleSearchPage page = new DeliveryVehicleSearchPage();
+            page.HorizontalAlignment = HorizontalAlignment.Stretch;
+            page.VerticalAlignment = VerticalAlignment.Stretch;
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.SearchSoldVehiclesColor;
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = page.PageTitle;
+            tabItem.Content = page;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+        }
+
+        private void txtIDToLoad_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtIDToLoad.Text != "-2")
+                int.TryParse(txtIDToLoad.Text, out CacheManager.LatestVehicleIdToLoad);
+                
         }
     }
 }

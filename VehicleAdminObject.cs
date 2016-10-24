@@ -100,6 +100,61 @@ namespace CarDepot
             get { return GetValue(PropertyId.PurchaseDate); }
             set { ApplyValue(PropertyId.PurchaseDate, value); }
         }
+        public string DeliveryCheckListMechanical
+        {
+            get
+            {
+                string result = GetValue(PropertyId.DeliveryCheckListMechanical);
+                if (string.IsNullOrEmpty(result))
+                {
+                    result = "false";
+                }
+                return result;
+            }
+            set { ApplyValue(PropertyId.DeliveryCheckListMechanical, value); }
+        }
+        public string DeliveryCheckListDetailing
+        {
+            get
+            {
+                string result = GetValue(PropertyId.DeliveryCheckListDetailing);
+                if (string.IsNullOrEmpty(result))
+                {
+                    result = "false";
+                }
+                return result;
+            }
+            set { ApplyValue(PropertyId.DeliveryCheckListDetailing, value); }
+        }
+        public string DeliveryCheckListMinistry
+        {
+            get
+            {
+                string result = GetValue(PropertyId.DeliveryCheckListMinistry);
+                if (string.IsNullOrEmpty(result))
+                {
+                    result = "false";
+                }
+                return result;
+            }
+            set { ApplyValue(PropertyId.DeliveryCheckListMinistry, value); }
+        }
+        public string MechanicalComments
+        {
+            get { return GetValue(PropertyId.DeliveryCheckListMechanicalComments); }
+            set { ApplyValue(PropertyId.DeliveryCheckListMechanicalComments, value); }
+        }
+        public string DetailingComments
+        {
+            get { return GetValue(PropertyId.DeliveryCheckListDetailingComments); }
+            set { ApplyValue(PropertyId.DeliveryCheckListDetailingComments, value); }
+        }
+        public string MinistryComments
+        {
+            get { return GetValue(PropertyId.DeliveryCheckListMinistryComments); }
+            set { ApplyValue(PropertyId.DeliveryCheckListMinistryComments, value); }
+        }
+
         public string IsDeleted
         {
             get { return GetValue(PropertyId.IsDeleted); }
@@ -110,56 +165,6 @@ namespace CarDepot
             get { return GetValue(PropertyId.Profit); }
             set { ApplyValue(PropertyId.Profit, value); }
         }
-        //public string MinistryLicense
-        //{
-        //    get { return GetValue(PropertyId.MinistryLicense); }
-        //    set { ApplyValue(PropertyId.MinistryLicense, value); }
-        //}
-        //public string SaleTotal
-        //{
-        //    get { return GetValue(PropertyId.SaleTotal); }
-        //    set { ApplyValue(PropertyId.SaleTotal, value); }
-        //}
-        //public string CustomerDeposit
-        //{
-        //    get { return GetValue(PropertyId.CustomerDeposit); }
-        //    set { ApplyValue(PropertyId.CustomerDeposit, value); }
-        //}
-        //public string CustomerPayments
-        //{ 
-        //    get { return GetValue(PropertyId.CustomerPayments); } 
-        //    set { ApplyValue(PropertyId.CustomerPayments, value); }
-        //}
-        //public string DealerReserve
-        //{
-        //    get { return GetValue(PropertyId.DealerReserve); }
-        //    set { ApplyValue(PropertyId.DealerReserve, value); }
-        //}
-        //public string FinancialFeeHst
-        //{
-        //    get { return GetValue(PropertyId.FinancialFeeHst); }
-        //    set { ApplyValue(PropertyId.FinancialFeeHst, value); }
-        //}
-        //public string NetDealerReserve
-        //{
-        //    get { return GetValue(PropertyId.NetDealerReserve); }
-        //    set { ApplyValue(PropertyId.NetDealerReserve, value); }
-        //}
-        //public string TotalIncomeLessMinistryLicense
-        //{
-        //    get { return GetValue(PropertyId.TotalIncomeLessMinistryLicense); }
-        //    set { ApplyValue(PropertyId.TotalIncomeLessMinistryLicense, value); }
-        //}
-        //public string TotalHst
-        //{
-        //    get { return GetValue(PropertyId.TotalHst); }
-        //    set { ApplyValue(PropertyId.TotalHst, value); }
-        //}
-        //public string NetIncomeLessMinistryLicense
-        //{
-        //    get { return GetValue(PropertyId.NetIncomeLessMinistryLicense); }
-        //    set { ApplyValue(PropertyId.NetIncomeLessMinistryLicense, value); }
-        //}
         #endregion
         public VehicleAdminObject() 
             : base() 
