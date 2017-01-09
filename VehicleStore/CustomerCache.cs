@@ -50,6 +50,11 @@ namespace CarDepot.VehicleStore
         {
             Initialize();
 
+            //while (CacheManager.AllCustomerCache == null)
+            //{
+            //    System.Threading.Thread.Sleep(1000);
+            //}
+
             if (CacheManager.AllCustomerCache == null)
             {
                 MessageBox.Show("Customer information has not yet loaded you may have a poor user experience until this is loaded.", "Warning");

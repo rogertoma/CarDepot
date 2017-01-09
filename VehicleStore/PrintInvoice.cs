@@ -87,15 +87,35 @@ namespace CarDepot.VehicleStore
 
         private void printUserInformation(PrintPageEventArgs e)
         {
+            string soldBy = currVehicle.GetValue(PropertyId.SaleSoldBy);
+            if (string.IsNullOrEmpty(soldBy))
+                return;
+
+            UserAdminObject foundUser = null;
+            foreach (UserAdminObject user in CacheManager.UserCache)
+            {
+                if (user.Name == soldBy)
+                {
+                    foundUser = user;
+                    break;
+                }
+            }
+
+            if (foundUser == null)
+            {
+                MessageBox.Show("Unable to find the soldby user in the user cache");
+                return;
+            }
+            
             using (Font font = new Font("Calibri (Body)", 10))
             {
-                e.Graphics.DrawString(CacheManager.ActiveUser.Name, font, Brushes.Black, backgroundXPos + 15,
+                e.Graphics.DrawString(foundUser.Name, font, Brushes.Black, backgroundXPos + 15,
                     backgroundYPos + 860);
 
-                e.Graphics.DrawString(CacheManager.ActiveUser.RegistrationNumer, font, Brushes.Black, backgroundXPos + 225,
+                e.Graphics.DrawString(foundUser.RegistrationNumer, font, Brushes.Black, backgroundXPos + 225,
                     backgroundYPos + 860);
 
-                e.Graphics.DrawString(CacheManager.ActiveUser.Name, font, Brushes.Black, backgroundXPos + 140,
+                e.Graphics.DrawString(foundUser.Name, font, Brushes.Black, backgroundXPos + 140,
                     backgroundYPos + 940);
 
                 string sDate = currVehicle.GetValue(PropertyId.SaleDate);

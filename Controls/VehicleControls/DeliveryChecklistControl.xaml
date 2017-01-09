@@ -48,7 +48,7 @@
 
             </Grid.ColumnDefinitions>
             <Label Content="MECHANICAL" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" FontWeight="ExtraBlack"/>
-            <Controls:AdminTextBox x:Name="txtMechanical" PropertyId="DeliveryCheckListMechanicalComments" Margin="0,0,5,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Height="70" TextWrapping="Wrap" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontSize="16"/>
+            <Controls:AdminTextBox x:Name="txtMechanical" PropertyId="DeliveryCheckListMechanicalComments" Margin="0,0,5,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Height="Auto" MinHeight="70" TextWrapping="Wrap" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontSize="16"/>
             <Rectangle x:Name="MechanicalCheckRectangle" Fill="Red" IsHitTestVisible="False" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"/>
             <Controls:AdminCheckBox x:Name="cbMechanical" PropertyId="DeliveryCheckListMechanical" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="cbMechanical_Checked" Unchecked="cbMechanical_Unchecked"/>
         </Grid>

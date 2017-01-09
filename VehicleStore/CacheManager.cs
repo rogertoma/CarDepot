@@ -138,7 +138,6 @@ namespace CarDepot.VehicleStore
 
         static void updateTasks_Elapsed(object sender, ElapsedEventArgs e)
         {
-
             if (!_updateingCache)
             {
                 _updateingCache = true;

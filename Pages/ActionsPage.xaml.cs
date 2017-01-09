@@ -23,13 +23,35 @@ namespace CarDepot.Controls.GeneralControls
     /// </summary>
     public partial class ActionsControl : UserControl, IPropertyPage, IPropertyPanel
     {
+        private System.Timers.Timer switchToLoadAllVehicles = null;
 
         public ActionsControl()
         {
             InitializeComponent();
             ApplyActiveUserPermissions();
             txtIDToLoad.Text = CacheManager.LatestVehicleIdToLoad.ToString();
+
+            switchToLoadAllVehicles = new System.Timers.Timer();
+            switchToLoadAllVehicles.Interval = 900000; //15 minutes 5 minutes before a new full refresh should happen
+            switchToLoadAllVehicles.Elapsed += SwitchToLoadAllVehicles_Elapsed;
+            switchToLoadAllVehicles.Start();
         }
+
+        private void SwitchToLoadAllVehicles_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                txtIDToLoad.Text = "0";
+
+                switchToLoadAllVehicles.Stop();
+            });
+        }
+
+        public void UpdateLatestIDToLoad(string value)
+        {
+            txtIDToLoad.Text = value;
+        }
+
 
         public string PageTitle
         {

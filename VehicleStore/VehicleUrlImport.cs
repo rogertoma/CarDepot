@@ -116,8 +116,8 @@ namespace CarDepot.VehicleStore
                 dataMap.Add(PropertyId.Mileage, foundMileage.Trim());
 
 
-                string Price = "<strong class=\"h1 price\">";
-                startIndex = page.IndexOf(Price, System.StringComparison.Ordinal);
+                string Price = "<strong class=\"h1 price\" >";
+                startIndex = page.LastIndexOf(Price, System.StringComparison.Ordinal);
                 length = page.IndexOf("<", startIndex + Price.Length, System.StringComparison.Ordinal) - startIndex - Price.Length;
                 string foundPrice = page.Substring(startIndex + Price.Length, length);
                 dataMap.Add(PropertyId.ListPrice, foundPrice.Trim());
