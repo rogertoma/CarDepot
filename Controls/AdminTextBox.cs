@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using CarDepot.Resources;
 using CarDepot.VehicleStore;
+using System.Windows.Media;
 
 namespace CarDepot.Controls
 {
@@ -95,7 +96,7 @@ namespace CarDepot.Controls
                 return;
             //BorderThickness = new Thickness(0);
         }
-
+       
         void AdminTextBox_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (_hasFocus)

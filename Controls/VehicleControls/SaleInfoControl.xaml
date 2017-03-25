@@ -32,6 +32,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -113,8 +114,11 @@
         <Label Content="SOLD BY" Grid.Row="21" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Controls:AdminComboBox x:Name="cmbSoldBy" Grid.Column="1" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.Row="21" VerticalAlignment="Top" Width="125" PropertyId="SaleSoldBy"/>
 
-        <Label Content="SALE FILES" Grid.Row="22" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1"/>
-        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="SaleAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="23" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Content="MANAGER" Grid.Row="22" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Controls:AdminComboBox x:Name="cmbSaleManager" Grid.Column="1" HorizontalAlignment="Left" Margin="0,14,0,0" Grid.Row="22" VerticalAlignment="Top" Width="125" PropertyId="SaleManager"/>
+
+        <Label Content="SALE FILES" Grid.Row="23" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1"/>
+        <Controls:AdditionalContentControl x:Name="addtionalContentControl" PropertyId="SaleAssociatedFiles" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="24" Grid.Column="0" Grid.ColumnSpan="2"/>
 
         <GroupBox Grid.Row="2" Grid.RowSpan="10" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid x:Name="WarrantyGrid">
@@ -191,7 +195,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="23" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0">
+        <GroupBox Grid.Row="24" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0">
             <Grid x:Name="PrintingGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>

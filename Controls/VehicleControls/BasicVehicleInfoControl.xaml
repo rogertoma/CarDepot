@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -23,16 +24,24 @@
             <Grid.RowDefinitions><RowDefinition/></Grid.RowDefinitions>
             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>        
 
-            <local:AdminLabelTextbox FontSize="18" PropertyId="Year" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"/>
-            <local:AdminLabelTextbox FontSize="18" PropertyId="Make" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="1" VerticalAlignment="Top"/>
-            <local:AdminLabelTextbox FontSize="18" PropertyId="Model" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="1" VerticalAlignment="Top"/>
-            <local:AdminLabelTextbox FontSize="18" PropertyId="Trim" Grid.Column="4" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="1" VerticalAlignment="Top"/>        
+            <local:AdminLabelTextbox x:Name="txtYear" FontSize="18" PropertyId="Year" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"/>
+            <local:AdminLabelTextbox x:Name="txtMake" FontSize="18" PropertyId="Make" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="1" VerticalAlignment="Top"/>
+            <local:AdminLabelTextbox x:Name="txtModel" FontSize="18" PropertyId="Model" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="1" VerticalAlignment="Top"/>
+            <local:AdminLabelTextbox x:Name="txtTrim" FontSize="18" PropertyId="Trim" Grid.Column="4" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="1" VerticalAlignment="Top"/>        
         </Grid>
 
         <local:AdminLabelTextbox FontSize="18" PropertyId="ListPrice" HorizontalAlignment="Right" Margin="0,0,15,10" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
         <local:ImageViewerControl x:Name="ImageViewer" PropertyId="Images" HorizontalAlignment="Left" Margin="0,0,10,0" Grid.RowSpan="1" Grid.Row="3" VerticalAlignment="Top" Grid.Column="0"/>
         <Grid x:Name="BasicIdsGrid" MinHeight="50" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,0,0,0" Grid.Row="3" VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
-        <Button x:Name="btnPrintBrochure" Content="Brochure" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="4" VerticalAlignment="Top" Width="75" Height="40" Click="btnPrintBrochure_Click"/>
+
+        <Grid x:Name="ExtraIdsGrid" Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,10,0,0" Grid.Row="4" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <local:AdminCheckBox PropertyId="IsOffProperty" Content="Vehicle Is Off Property" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" />
+        </Grid>
+
+        <Button x:Name="btnPrintBrochure" Content="Brochure" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="75" Height="40" Click="btnPrintBrochure_Click"/>
     </Grid>
 </UserControl>

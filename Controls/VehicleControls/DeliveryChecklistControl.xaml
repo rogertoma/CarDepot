@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -25,8 +26,20 @@
 
         <Label Content="DELIVERY CHECKLIST" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" FontWeight="ExtraBlack" FontSize="30"/>
 
+        <!--SoldBy-->
+        <Grid x:Name="SoldByGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Sold By" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" FontWeight="ExtraBlack"/>
+            <Label x:Name="lblSoldBy" Content="Name" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+       </Grid>
+
         <!--GeneralGrid-->
-        <Grid x:Name="GeneralGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
+        <Grid x:Name="GeneralGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -37,7 +50,7 @@
         </Grid>
 
         <!--SafetyGrid-->
-        <Grid x:Name="MechanicalGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
+        <Grid x:Name="MechanicalGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -54,7 +67,7 @@
         </Grid>
 
         <!--DetailingGrid-->
-        <Grid x:Name="DetailingGrid" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
+        <Grid x:Name="DetailingGrid" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -71,7 +84,7 @@
         </Grid>
 
         <!--MinistryGrid-->
-        <Grid x:Name="MinistryGrid" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
+        <Grid x:Name="MinistryGrid" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Width="Auto">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -87,7 +100,7 @@
             <Controls:AdminCheckBox x:Name="cbMinistry" PropertyId="DeliveryCheckListMinistry" Content="" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="cbMinistry_Checked" Unchecked="cbMinistry_Unchecked"/>
         </Grid>
 
-        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3">
+        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
             <Rectangle x:Name="DeliveredRectangle" Fill="Red" IsHitTestVisible="False" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Height="50"/>
             <Controls:AdminCheckBox x:Name="cbDelivered" PropertyId="DeliveryCheckListDelivered" Content="Delivered" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="cbDelivered_Checked" Unchecked="cbDelivered_Unchecked"/>
         </Grid>

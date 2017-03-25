@@ -33,6 +33,7 @@ namespace CarDepot.Controls.VehicleControls
             _vehicle = item as VehicleAdminObject;
 
             LoadAllChildren(DeliveryInfoGrid, item);
+            lblSoldBy.Content = _vehicle.GetValue(PropertyId.SaleSoldBy);
 
             ApplyPermissions();
         }

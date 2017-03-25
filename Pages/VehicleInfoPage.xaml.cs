@@ -102,7 +102,7 @@ namespace CarDepot
             vehicle.VehicleTasks.Add(processVehicleTask);
 
             VehicleTask emissionVehicleTask = new VehicleTask();
-            emissionVehicleTask.Id = "Emission test";
+            emissionVehicleTask.Id = "Create folder & tag key";
             emissionVehicleTask.TaskVehicleId = vehicle.Id;
             emissionVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
             emissionVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
@@ -126,7 +126,7 @@ namespace CarDepot
             newVehicleOilChange.TaskVehicleId = vehicle.Id;
             newVehicleOilChange.CreatedDate = DateTime.Today.Date.ToString("d");
             newVehicleOilChange.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            newVehicleOilChange.AssignedTo = "Jordan McKinnon";
+            newVehicleOilChange.AssignedTo = "Kevin Kokoski";
             newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
             newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(newVehicleOilChange);

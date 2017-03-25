@@ -31,6 +31,15 @@ namespace CarDepot.Controls.VehicleControls
             _item = item;
             LoadBasicIds(item);
             LoadAllChildren(BasicVehicleInfo, item);
+
+            string isOffProperty = _item.GetValue(PropertyId.IsOffProperty);
+            if (!string.IsNullOrEmpty(isOffProperty) && isOffProperty.ToLower() == "true")
+            {
+                txtYear.FontColor = System.Windows.Media.Brushes.Pink;
+                txtMake.FontColor = System.Windows.Media.Brushes.Pink;
+                txtModel.FontColor = System.Windows.Media.Brushes.Pink;
+                txtTrim.FontColor = System.Windows.Media.Brushes.Pink;
+            }
         }
 
         public void ApplyUiMode()
@@ -60,6 +69,17 @@ namespace CarDepot.Controls.VehicleControls
                 if (!checkedOutByAlreadyExists)
                     BasicIdsGrid.Children.Add(checkedOutByLabelItem);
             }
+
+            //AdminCheckBox checkbox = new AdminCheckBox();
+            //checkbox.PropertyId = PropertyId.IsOnProperty;
+            //checkbox.IsChecked = false;
+
+            //RowDefinition isOnProperty = new RowDefinition();
+            //isOnProperty.Height = GridLength.Auto;
+            //BasicIdsGrid.RowDefinitions.Add(isOnProperty);
+            //Grid.SetRow(checkbox, basicIds.Count());
+            //BasicIdsGrid.Children.Add(checkbox);
+
         }
 
         private void LoadBasicIds(IAdminObject item)

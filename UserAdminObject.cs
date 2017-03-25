@@ -35,7 +35,8 @@ namespace CarDepot
             SoldCheckBox,
             GenerateReport,
             UpdateSaleTaxPercentage,
-            ShowCheckedOutBy
+            ShowCheckedOutBy,
+            IsManager
         }
 
         public enum UserCategory

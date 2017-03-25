@@ -91,6 +91,10 @@ namespace CarDepot.VehicleStore
             if (string.IsNullOrEmpty(soldBy))
                 return;
 
+            string saleManager = currVehicle.GetValue(PropertyId.SaleManager);
+            if (string.IsNullOrEmpty(saleManager))
+                return;
+
             UserAdminObject foundUser = null;
             foreach (UserAdminObject user in CacheManager.UserCache)
             {
@@ -115,7 +119,7 @@ namespace CarDepot.VehicleStore
                 e.Graphics.DrawString(foundUser.RegistrationNumer, font, Brushes.Black, backgroundXPos + 225,
                     backgroundYPos + 860);
 
-                e.Graphics.DrawString(foundUser.Name, font, Brushes.Black, backgroundXPos + 140,
+                e.Graphics.DrawString(saleManager, font, Brushes.Black, backgroundXPos + 140,
                     backgroundYPos + 940);
 
                 string sDate = currVehicle.GetValue(PropertyId.SaleDate);

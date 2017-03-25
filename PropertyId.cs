@@ -87,6 +87,7 @@ namespace CarDepot
         ModelCode,
         VinNumber,
         ListPrice,
+        IsOffProperty,
         SaleDate,
         SalePrice,
         SaleCustomerId,
@@ -123,6 +124,7 @@ namespace CarDepot
         SaleAssociatedFiles,
         SaleTaxPercentage,
         SaleSoldBy,
+        SaleManager,
 
         PurchasePrice,
         PurchaseBuyerFee,

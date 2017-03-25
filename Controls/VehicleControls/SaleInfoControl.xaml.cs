@@ -93,6 +93,7 @@ namespace CarDepot.Controls.VehicleControls
             cmbBrand.Items.Clear();
             cmbSafetyCertificate.Items.Clear();
             cmbSoldBy.Items.Clear();
+            cmbSaleManager.Items.Clear();
         }
 
         private void LoadComboBoxes()
@@ -220,6 +221,44 @@ namespace CarDepot.Controls.VehicleControls
             {
                 cmbSoldBy.IsEnabled = false;
             }
+            if (CacheManager.ActiveUser.Name == soldBy)
+            {
+                cmbSoldBy.IsEnabled = true;
+            }
+
+            #endregion
+
+            #region Manager
+
+            selectedIndex = -1;
+            string saleManager = _vehicle.GetValue(PropertyId.SaleManager);
+
+            System.Windows.Controls.Label lblSaleManagerEmptyRow = new System.Windows.Controls.Label { Content = string.Empty };
+            cmbSaleManager.Items.Add(lblSaleManagerEmptyRow);
+
+            foreach (UserAdminObject user in CacheManager.UserCache)
+            {
+                if (!user.Permissions.Contains(UserAdminObject.PermissionTypes.IsManager))
+                    continue;
+
+                System.Windows.Controls.Label lblRow = new System.Windows.Controls.Label { Content = user.Name };
+                cmbSaleManager.Items.Add(lblRow);
+                if (user.Name == saleManager)
+                    selectedIndex = cmbSaleManager.Items.Count - 1;
+            }
+
+            if (selectedIndex != -1)
+                cmbSaleManager.SelectedIndex = selectedIndex;
+
+            if (selectedIndex != -1 && CacheManager.ActiveUser.Name != "Roger Toma")
+            {
+                cmbSaleManager.IsEnabled = false;
+            }
+
+            if (string.IsNullOrEmpty(soldBy))
+            {
+                cmbSaleManager.IsEnabled = true;
+            }
 
             #endregion
         }
@@ -346,6 +385,12 @@ namespace CarDepot.Controls.VehicleControls
                 if (string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.SaleSoldBy)))
                 {
                     System.Windows.Forms.MessageBox.Show("No sales person selected, can not finalize this sale.", Strings.ERROR);
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.SaleManager)))
+                {
+                    System.Windows.Forms.MessageBox.Show("No manager selected, can not finalize this sale.", Strings.ERROR);
                     return;
                 }
 

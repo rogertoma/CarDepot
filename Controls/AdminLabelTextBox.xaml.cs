@@ -64,6 +64,17 @@ namespace CarDepot.Controls
             get { return PropertyLabel.FontSize; }
         }
 
+        public Brush FontColor
+        {
+            get { return PropertyValueTextBox.Foreground; }
+
+            set
+            {
+                PropertyValueTextBox.Foreground = value;
+                PropertyLabel.Foreground = value;
+            }
+        }
+
         public double SetMinGapSize
         {
             set { PropertyLabel.MinWidth = value; }

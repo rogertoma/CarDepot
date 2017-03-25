@@ -100,6 +100,23 @@ namespace CarDepot
             get { return GetValue(PropertyId.PurchaseDate); }
             set { ApplyValue(PropertyId.PurchaseDate, value); }
         }
+        public bool IsOffProperty
+        {
+            get
+            {
+                string isOffProperty = GetValue(PropertyId.IsOffProperty);
+                if (string.IsNullOrEmpty(isOffProperty))
+                {
+                    return false;
+                }
+                else
+                {
+                    return isOffProperty.ToLower() == "true";
+                }
+            }
+
+            set { ApplyValue(PropertyId.PurchaseDate, value.ToString()); }
+        }
         public string DeliveryCheckListMechanical
         {
             get
