@@ -84,6 +84,7 @@ namespace CarDepot.Controls.VehicleControls
             {
                 txtSalesTaxPercentage.Text = Settings.HST.ToString(CultureInfo.InvariantCulture);
             }
+
         }
 
         private void ClearFormState()
@@ -91,6 +92,8 @@ namespace CarDepot.Controls.VehicleControls
             cmbSaleDepositeType.Items.Clear();
             cmbBrand.Items.Clear();
             cmbSafetyCertificate.Items.Clear();
+            cmbSoldBy.Items.Clear();
+            cmbSaleManager.Items.Clear();
         }
 
         private void LoadComboBoxes()
@@ -178,6 +181,86 @@ namespace CarDepot.Controls.VehicleControls
                 cmbSafetyCertificate.SelectedIndex = foundIndex;
             }
             #endregion
+
+            #region SoldBy
+
+            int selectedIndex = -1;
+            string soldBy = _vehicle.GetValue(PropertyId.SaleSoldBy);
+
+            System.Windows.Controls.Label lblEmptyRow = new System.Windows.Controls.Label { Content = string.Empty };
+            cmbSoldBy.Items.Add(lblEmptyRow);
+
+            if (CacheManager.ActiveUser.Name == "Roger Toma")
+            {
+                foreach (UserAdminObject user in CacheManager.UserCache)
+                {
+                    System.Windows.Controls.Label lblRow = new System.Windows.Controls.Label { Content = user.Name };
+                    cmbSoldBy.Items.Add(lblRow);
+                    if (user.Name == soldBy)
+                        selectedIndex = cmbSoldBy.Items.Count - 1;
+                }
+            }
+            else
+            {
+                System.Windows.Controls.Label lblRow = new System.Windows.Controls.Label { Content = CacheManager.ActiveUser.Name };
+                cmbSoldBy.Items.Add(lblRow);
+                if (CacheManager.ActiveUser.Name == soldBy)
+                    selectedIndex = cmbSoldBy.Items.Count - 1;
+            }
+            
+            if (selectedIndex == -1 && !string.IsNullOrEmpty(soldBy))
+            {
+                System.Windows.Controls.Label lblRow = new System.Windows.Controls.Label { Content = soldBy };
+                cmbSoldBy.Items.Add(lblRow);
+                selectedIndex = cmbSoldBy.Items.Count - 1;
+            }
+
+            cmbSoldBy.SelectedIndex = selectedIndex;
+
+            if (!string.IsNullOrEmpty(soldBy) && CacheManager.ActiveUser.Name != "Roger Toma")
+            {
+                cmbSoldBy.IsEnabled = false;
+            }
+            if (CacheManager.ActiveUser.Name == soldBy)
+            {
+                cmbSoldBy.IsEnabled = true;
+            }
+
+            #endregion
+
+            #region Manager
+
+            selectedIndex = -1;
+            string saleManager = _vehicle.GetValue(PropertyId.SaleManager);
+
+            System.Windows.Controls.Label lblSaleManagerEmptyRow = new System.Windows.Controls.Label { Content = string.Empty };
+            cmbSaleManager.Items.Add(lblSaleManagerEmptyRow);
+
+            foreach (UserAdminObject user in CacheManager.UserCache)
+            {
+                if (!user.Permissions.Contains(UserAdminObject.PermissionTypes.IsManager))
+                    continue;
+
+                System.Windows.Controls.Label lblRow = new System.Windows.Controls.Label { Content = user.Name };
+                cmbSaleManager.Items.Add(lblRow);
+                if (user.Name == saleManager)
+                    selectedIndex = cmbSaleManager.Items.Count - 1;
+            }
+
+            if (selectedIndex != -1)
+                cmbSaleManager.SelectedIndex = selectedIndex;
+
+            if (selectedIndex != -1 && CacheManager.ActiveUser.Name != "Roger Toma")
+            {
+                cmbSaleManager.IsEnabled = false;
+            }
+
+            if (string.IsNullOrEmpty(soldBy))
+            {
+                cmbSaleManager.IsEnabled = true;
+            }
+
+            #endregion
         }
 
         public void ApplyUiMode()
@@ -214,8 +297,6 @@ namespace CarDepot.Controls.VehicleControls
 
             }
         }
-
-
 
         private void TxtCustomerId_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -301,6 +382,18 @@ namespace CarDepot.Controls.VehicleControls
             {
                 double tradeInAmount = 0;
 
+                if (string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.SaleSoldBy)))
+                {
+                    System.Windows.Forms.MessageBox.Show("No sales person selected, can not finalize this sale.", Strings.ERROR);
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.SaleManager)))
+                {
+                    System.Windows.Forms.MessageBox.Show("No manager selected, can not finalize this sale.", Strings.ERROR);
+                    return;
+                }
+
                 if (Utilities.StringToDouble(TxtTradeInCost.Text, out tradeInAmount) && tradeInAmount != 0)
                 {
                     if (string.IsNullOrEmpty(txtTradeInYear.Text))
@@ -381,10 +474,11 @@ namespace CarDepot.Controls.VehicleControls
                 payoutLienTask.AssignedTo = "Reyad Toma";
                 payoutLienTask.Category = VehicleTask.TaskCategoryTypes.Finance.ToString();
                 payoutLienTask.CreatedBy = CacheManager.ActiveUser.Name;
+                payoutLienTask.Priority = VehicleTask.TaskPriority.Priority0.ToString();
                 _vehicle.VehicleTasks.Add(payoutLienTask);    
             }
 
-            _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
+            _vehicle.SetValue(PropertyId.Tasks, _vehicle.VehicleTasks);
         }
 
         private void LienRegistrationFee_TextChanged(object sender, TextChangedEventArgs e)
@@ -463,6 +557,8 @@ namespace CarDepot.Controls.VehicleControls
                     }
                 }
 
+                /*
+                Ministry Paper Work
                 foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {
                     if (vehicleTask.Id.Equals(Strings.SOLDCARMINISTRYTASK))
@@ -471,7 +567,7 @@ namespace CarDepot.Controls.VehicleControls
                         break;
                     }
                 }
-
+                */
                 _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
                 return;
             }
@@ -488,7 +584,7 @@ namespace CarDepot.Controls.VehicleControls
             #endregion
 
             #region Sold Car Ministry task
-
+            /*
             bool soldCarMinistryTaskFound = false;
             foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
             {
@@ -498,7 +594,8 @@ namespace CarDepot.Controls.VehicleControls
                     break;
                 }
             }
-
+            
+            // Only 
             DateTime June2016 = new DateTime(2016, 06, 01);
 
             if (!soldCarMinistryTaskFound && saleDate != null && saleDate > June2016)
@@ -514,7 +611,7 @@ namespace CarDepot.Controls.VehicleControls
                 vehicleSoldMinistryTask.CreatedBy = CacheManager.ActiveUser.Name;
                 _vehicle.VehicleTasks.Add(vehicleSoldMinistryTask);
             }
-
+            */
             #endregion
 
             #region Car Delivery Task

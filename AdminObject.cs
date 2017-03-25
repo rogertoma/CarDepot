@@ -224,6 +224,10 @@ namespace CarDepot
 
         public void SetValue(PropertyId id, object value)
         {
+            if(id == PropertyId.Tasks)
+            {
+                string hello = "hello";
+            }
             var elements = from node in xdoc.Descendants() where node.Name.LocalName == id.ToString() select node;
             XElement element = elements.FirstOrDefault() as XElement;
             
@@ -249,6 +253,10 @@ namespace CarDepot
 
         public void SetMultiValue(PropertyId id, object value)
         {
+            if (id == PropertyId.Tasks)
+            {
+                string hello = "hello";
+            }
             XElement newElement = null;
             switch (id)
             {

@@ -115,6 +115,14 @@ namespace CarDepot.VehicleStore
                     case PropertyId.RegistrationNumber:
                         user.RegistrationNumer = element.Value;
                         break;
+                    case PropertyId.UserCategory:
+                        foreach (string item in element.Value.Split(';'))
+                        {
+                            UserAdminObject.UserCategory category = (UserAdminObject.UserCategory)Enum.Parse(typeof(UserAdminObject.UserCategory), item);
+                            user.Category.Add(category);
+                        }
+                        
+                        break;
                     case PropertyId.Picture:
                         if (element.Value.StartsWith("\\"))
                         {

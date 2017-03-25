@@ -44,13 +44,19 @@ namespace CarDepot.Controls
                 propertyLabel.LoadPanel(_vehicle);
             }
 
-            if (_vehicle.Images.Count > 0)
+            try
             {
-                BitmapImage icon = new BitmapImage();
-                icon.BeginInit();
-                icon.UriSource = new Uri(_vehicle.Images[Settings.MultiValueKeyIndex][Settings.MultiValueValueIndex]);
-                icon.EndInit();
-                VehicleImage.Source = icon;
+                if (_vehicle.Images.Count > 0)
+                {
+                    BitmapImage icon = new BitmapImage();
+                    icon.BeginInit();
+                    icon.UriSource = new Uri(_vehicle.Images[Settings.MultiValueKeyIndex][Settings.MultiValueValueIndex]);
+                    icon.EndInit();
+                    VehicleImage.Source = icon;
+                }
+            } catch (Exception ex)
+            {
+                //TODO: Should log here in the future 
             }
         }
 

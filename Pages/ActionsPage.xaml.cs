@@ -23,12 +23,35 @@ namespace CarDepot.Controls.GeneralControls
     /// </summary>
     public partial class ActionsControl : UserControl, IPropertyPage, IPropertyPanel
     {
+        private System.Timers.Timer switchToLoadAllVehicles = null;
 
         public ActionsControl()
         {
             InitializeComponent();
             ApplyActiveUserPermissions();
+            txtIDToLoad.Text = CacheManager.LatestVehicleIdToLoad.ToString();
+
+            switchToLoadAllVehicles = new System.Timers.Timer();
+            switchToLoadAllVehicles.Interval = 900000; //15 minutes 5 minutes before a new full refresh should happen
+            switchToLoadAllVehicles.Elapsed += SwitchToLoadAllVehicles_Elapsed;
+            switchToLoadAllVehicles.Start();
         }
+
+        private void SwitchToLoadAllVehicles_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                txtIDToLoad.Text = "0";
+
+                switchToLoadAllVehicles.Stop();
+            });
+        }
+
+        public void UpdateLatestIDToLoad(string value)
+        {
+            txtIDToLoad.Text = value;
+        }
+
 
         public string PageTitle
         {
@@ -191,6 +214,33 @@ namespace CarDepot.Controls.GeneralControls
             tabItem.Content = page;
             CacheManager.MainTabControl.Items.Add(tabItem);
             tabItem.Focus();
+        }
+
+        private void BtnSearchSold_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryVehicleSearchPage page = new DeliveryVehicleSearchPage();
+            page.HorizontalAlignment = HorizontalAlignment.Stretch;
+            page.VerticalAlignment = VerticalAlignment.Stretch;
+
+            if (CacheManager.MainTabControl == null)
+            {
+                throw new NotImplementedException("MainTabControl == null");
+            }
+
+            ClosableTab tabItem = new ClosableTab();
+            tabItem.BackGroundColor = LookAndFeel.SearchSoldVehiclesColor;
+            tabItem.Height = LookAndFeel.TabItemHeight;
+            tabItem.Title = page.PageTitle;
+            tabItem.Content = page;
+            CacheManager.MainTabControl.Items.Add(tabItem);
+            tabItem.Focus();
+        }
+
+        private void txtIDToLoad_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtIDToLoad.Text != "-2")
+                int.TryParse(txtIDToLoad.Text, out CacheManager.LatestVehicleIdToLoad);
+                
         }
     }
 }

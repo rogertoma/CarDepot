@@ -102,7 +102,7 @@ namespace CarDepot
             vehicle.VehicleTasks.Add(processVehicleTask);
 
             VehicleTask emissionVehicleTask = new VehicleTask();
-            emissionVehicleTask.Id = "Emission test";
+            emissionVehicleTask.Id = "Create folder & tag key";
             emissionVehicleTask.TaskVehicleId = vehicle.Id;
             emissionVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
             emissionVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
@@ -126,7 +126,7 @@ namespace CarDepot
             newVehicleOilChange.TaskVehicleId = vehicle.Id;
             newVehicleOilChange.CreatedDate = DateTime.Today.Date.ToString("d");
             newVehicleOilChange.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            newVehicleOilChange.AssignedTo = "Jordan McKinnon";
+            newVehicleOilChange.AssignedTo = "Kevin Kokoski";
             newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
             newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
             vehicle.VehicleTasks.Add(newVehicleOilChange);
@@ -146,6 +146,12 @@ namespace CarDepot
 
         public VehicleInfoWindow(VehicleAdminObject vehicle, VehicleInfoWindowTabs startTab)
         {
+            if (!File.Exists(Settings.DefaultVehicleImagePath))
+            {
+                MessageBox.Show("ERROR: Experiencing connectivity issues can't load vehicle");
+                return;
+            }
+
             InitializeComponent();
             _vehicle = vehicle ?? CreateNewDefaultVehicleObject();
 
@@ -153,6 +159,8 @@ namespace CarDepot
             propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);
             propertyPanels.Add(PurchaseInfoControlPropertyPanel);
             propertyPanels.Add(SaleInfoControlPropertyPanel);
+            propertyPanels.Add(SafetyInspectionControlPropertyPanel);
+            propertyPanels.Add(DeliveryCheckListControlPropertyPanel);
 
             ApplyUiMode();
             ApplyActiveUserPermissions();

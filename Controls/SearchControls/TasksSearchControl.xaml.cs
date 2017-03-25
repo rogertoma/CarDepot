@@ -242,7 +242,10 @@ namespace CarDepot.Controls.SearchControls
                 }
                 else
                 {
-                    listViewItem.Background = Brushes.White;    
+                    if (vehicleItem.IsOffProperty)
+                        listViewItem.Background = Brushes.Pink;
+                    else
+                        listViewItem.Background = Brushes.White;    
                 }
                 
             }

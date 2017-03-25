@@ -87,15 +87,39 @@ namespace CarDepot.VehicleStore
 
         private void printUserInformation(PrintPageEventArgs e)
         {
+            string soldBy = currVehicle.GetValue(PropertyId.SaleSoldBy);
+            if (string.IsNullOrEmpty(soldBy))
+                return;
+
+            string saleManager = currVehicle.GetValue(PropertyId.SaleManager);
+            if (string.IsNullOrEmpty(saleManager))
+                return;
+
+            UserAdminObject foundUser = null;
+            foreach (UserAdminObject user in CacheManager.UserCache)
+            {
+                if (user.Name == soldBy)
+                {
+                    foundUser = user;
+                    break;
+                }
+            }
+
+            if (foundUser == null)
+            {
+                MessageBox.Show("Unable to find the soldby user in the user cache");
+                return;
+            }
+            
             using (Font font = new Font("Calibri (Body)", 10))
             {
-                e.Graphics.DrawString(CacheManager.ActiveUser.Name, font, Brushes.Black, backgroundXPos + 15,
+                e.Graphics.DrawString(foundUser.Name, font, Brushes.Black, backgroundXPos + 15,
                     backgroundYPos + 860);
 
-                e.Graphics.DrawString(CacheManager.ActiveUser.RegistrationNumer, font, Brushes.Black, backgroundXPos + 225,
+                e.Graphics.DrawString(foundUser.RegistrationNumer, font, Brushes.Black, backgroundXPos + 225,
                     backgroundYPos + 860);
 
-                e.Graphics.DrawString(CacheManager.ActiveUser.Name, font, Brushes.Black, backgroundXPos + 140,
+                e.Graphics.DrawString(saleManager, font, Brushes.Black, backgroundXPos + 140,
                     backgroundYPos + 940);
 
                 string sDate = currVehicle.GetValue(PropertyId.SaleDate);
@@ -327,10 +351,13 @@ namespace CarDepot.VehicleStore
                 e.Graphics.DrawString(currVehicle.GetValue(PropertyId.SaleWarrantyKMs), font, Brushes.Black, backgroundXPos + 440, backgroundYPos + 500);
 
                 int yPos = 545;
-                foreach (string description in currVehicle.GetValue(PropertyId.SaleWarrantyDescription).Split(';'))
+                if (!string.IsNullOrEmpty(currVehicle.GetValue(PropertyId.SaleWarrantyDescription)))
                 {
-                    e.Graphics.DrawString(description, font, Brushes.Black, backgroundXPos + 320, backgroundYPos + yPos);
-                    yPos += 20;
+                    foreach (string description in currVehicle.GetValue(PropertyId.SaleWarrantyDescription).Split(';'))
+                    {
+                        e.Graphics.DrawString(description, font, Brushes.Black, backgroundXPos + 320, backgroundYPos + yPos);
+                        yPos += 20;
+                    }
                 }
             }
         }
@@ -505,8 +532,8 @@ namespace CarDepot.VehicleStore
                 DateTime deliveryDate = DateTime.Now;
                 if (DateTime.TryParse(stringDeliveryDate, out deliveryDate))
                 {
-                    e.Graphics.DrawString(deliveryDate.DayOfWeek.ToString(), font, Brushes.Black,
-                        backgroundXPos + 620, backgroundYPos + 210);
+                    e.Graphics.DrawString(deliveryDate.DayOfWeek + ", " + deliveryDate.ToLongDateString(), font, Brushes.Black,
+                        backgroundXPos + 600, backgroundYPos + 210);
                 }
 
                 // Certified

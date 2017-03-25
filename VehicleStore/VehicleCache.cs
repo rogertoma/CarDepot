@@ -40,22 +40,20 @@ namespace CarDepot.VehicleStore
     {
         //private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
 
+        public VehicleCache()
+        {
+
+        }
+
         public VehicleCache(string vehiclePath)
         {
-            try
-            {
                 string[] vehicles = Directory.GetDirectories(vehiclePath);
-                foreach (var vehicle in vehicles)
-                {
-                    foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
-                    {
-                        LoadVehicle(file);
-                    }
-                }
-            }
-            catch (Exception ex)
+            foreach (var vehicle in vehicles)
             {
-                MessageBox.Show("ERROR: VehicleCache(string vehiclePath)\n" + ex.StackTrace);
+                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                {
+                    LoadVehicle(file);
+                }
             }
         }
 
@@ -65,7 +63,14 @@ namespace CarDepot.VehicleStore
 
             if (CacheManager.AllVehicleCache == null || forceRefresh)
             {
-                VehicleCacheSearchDrive(vehiclePath, searchParam);
+                try
+                {
+                    VehicleCacheSearchDrive(vehiclePath, searchParam);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("ERROR: VehicleCache VehicleCacheSearchDrive Failed probably due to poor connectivity with error:" + ex.Message);
+                }
             }
             else
             {
@@ -119,39 +124,39 @@ namespace CarDepot.VehicleStore
 
         public void VehicleCacheSearchDrive(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)
         {
-            try
+            string[] vehicles = Directory.GetDirectories(vehiclePath);
+            foreach (var vehicle in vehicles)
             {
-                string[] vehicles = Directory.GetDirectories(vehiclePath);
-                foreach (var vehicle in vehicles)
+                foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
                 {
-                    foreach (string file in Directory.GetFiles(vehicle, Strings.FILTER_ALL_XML))
+                    string sId = file.Replace(vehiclePath + @"\", string.Empty);
+                    sId = sId.Substring(0, sId.IndexOf(@"\"));
+                    int id = -1;
+                    int.TryParse(sId, out id);
+                    if (id < CacheManager.LatestVehicleIdToLoad)
                     {
-                        VehicleAdminObject vehicleAdminObject = new VehicleAdminObject(file);
-                        if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
-                        {
-                            continue;
-                        }
-                        if (string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Year)) ||
-                            string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Make)) ||
-                            string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Model)))
-                        {
-                            continue;
-                        }
-
-                        if (searchParam == null || VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
-                        {
-                            vehicleAdminObject.Cache = this;
-                            this.Add(vehicleAdminObject);
-                        }
-
+                        continue;
                     }
+
+                    VehicleAdminObject vehicleAdminObject = new VehicleAdminObject(file);
+                    if (vehicleAdminObject.GetValue(PropertyId.IsDeleted) == true.ToString())
+                    {
+                        continue;
+                    }
+                    if (string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Year)) ||
+                        string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Make)) ||
+                        string.IsNullOrEmpty(vehicleAdminObject.GetValue(PropertyId.Model)))
+                    {
+                        continue;
+                    }
+
+                    if (searchParam == null || VehicleMeetsSearchParam(vehicleAdminObject, searchParam))
+                    {
+                        vehicleAdminObject.Cache = this;
+                        this.Add(vehicleAdminObject);
+                    }
+
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "ERROR: VehicleCacheSearchDrive(string vehiclePath, Dictionary<VehicleCacheSearchKey, string> searchParam)\n" +
-                    ex.StackTrace);
             }
         }
 

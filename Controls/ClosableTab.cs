@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CarDepot.Resources;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +89,12 @@ namespace CarDepot.Controls
         // an event indicating a "CloseTab" event has occurred)
         public void button_close_Click(object sender, RoutedEventArgs e)
         {
+            if (!File.Exists(Settings.DefaultVehicleImagePath))
+            {
+                MessageBox.Show("ERROR: Can't close or save vehicle, experiencing connectivity issues");
+                return;
+            }
+
             bool cancel = false;
             if (TabClosing != null)
             {

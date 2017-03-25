@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="CarDepot.Controls.SearchControls.DeliveryDateVehicleControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarDepot.Controls.SearchControls"
+             mc:Ignorable="d" MinHeight="300" MinWidth="500" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Label x:Name="lblTitle" Content="DATE" Grid.Row="0" Grid.ColumnSpan="6" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="18.667" />
+        
+        <Label x:Name="lblTotal" Content="Total: " Grid.Row="1" HorizontalAlignment="Left" FontWeight="Bold" />
+        <Label x:Name="lblTotalResult" Content="Total Result" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" />
+
+        <Label x:Name="lblMechanic" Content="Mechanic Completed: " Grid.Row="2" HorizontalAlignment="Left" FontWeight="Bold" />
+        <Label x:Name="lblMechanicResult" Content="Mechanic Result" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" />
+
+        <Label x:Name="lblDetail" Content="Details Completed: " Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" FontWeight="Bold" />
+        <Label x:Name="lblDetailResult" Content="Details Result" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" />
+
+        <Label x:Name="lblMinistry" Content="Ministry Completed: " Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" FontWeight="Bold" />
+        <Label x:Name="lblMinistryResult" Content="Ministry Result" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Left" />
+
+        <ListView x:Name="lstVehicleForDate" Grid.Row="3" Grid.ColumnSpan="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="S C" Width ="40" DisplayMemberBinding="{Binding DeliveryCheckListMechanical}"/>
+                    <GridViewColumn Header="D C" Width ="40" DisplayMemberBinding="{Binding DeliveryCheckListDetailing}"/>
+                    <GridViewColumn Header="M I" Width ="40" DisplayMemberBinding="{Binding DeliveryCheckListMinistry}"/>
+                    <GridViewColumn Header="Id" Width="80" DisplayMemberBinding="{Binding VehicleId}"/>
+                    <GridViewColumn Header="Year" Width="80" DisplayMemberBinding="{Binding Year}"/>
+                    <GridViewColumn Header="Make" Width="80" DisplayMemberBinding="{Binding Make}"/>
+                    <GridViewColumn Header="Model" Width ="80" DisplayMemberBinding="{Binding Model}"/>
+                    <GridViewColumn Header="ExtColor" Width ="80" DisplayMemberBinding="{Binding ExtColor}"/>
+                    <GridViewColumn Header="Mileage" Width ="80" DisplayMemberBinding="{Binding Mileage}"/>
+                    <GridViewColumn Header="VinNumber" Width ="150" DisplayMemberBinding="{Binding VinNumber}"/>
+                    <GridViewColumn Header="SaleDate" Width ="80" DisplayMemberBinding="{Binding SaleDate}"/>
+                    <GridViewColumn Header="Mechanical Comments" Width ="200" DisplayMemberBinding="{Binding MechanicalComments}"/>
+                    <GridViewColumn Header="Detailing Comments" Width ="200" DisplayMemberBinding="{Binding DetailingComments}"/>
+                    <GridViewColumn Header="Ministry Comments" Width ="200" DisplayMemberBinding="{Binding MinistryComments}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

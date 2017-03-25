@@ -63,6 +63,12 @@ namespace CarDepot.Controls
                 item.MouseEnter += item_MouseEnter;
                 item.MouseMove += item_MouseMove;
                 item.MouseLeave += item_MouseLeave;
+
+                if (vehicle.IsOffProperty)
+                {
+                    item.Background = Brushes.Pink;
+                }
+
                 LstSearchResults.Items.Add(item);
             }
         }

@@ -32,6 +32,7 @@ namespace CarDepot.Controls
         private List<string[]> _images;
         private Timer imageTimer = null;
         private int imageLoadIndex = 0;
+        private int attemptedLoad = 0;
 
         public ImageViewerControl()
         {
@@ -108,11 +109,11 @@ namespace CarDepot.Controls
 
         private void LoadVehicleImageLarge(string path)
         {
-            if (!File.Exists(path))
-                LoadDefaultImage();
-
             try
             {
+                if (!File.Exists(path)) //If it's trying to load the default image and it's not working then connectivity is lost
+                    LoadDefaultImage();
+
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
                 img.UriSource = new Uri(path);
@@ -171,8 +172,13 @@ namespace CarDepot.Controls
 
         private void LoadDefaultImage()
         {
-            LoadVehicleImageLarge(Settings.DefaultVehicleImagePath);
+            attemptedLoad++;
             imageTimer.Stop();
+
+            if (attemptedLoad >= 1)
+                return;
+            else
+                LoadVehicleImageLarge(Settings.DefaultVehicleImagePath);
         }
 
         private void UserControl_Drop(object sender, DragEventArgs e)

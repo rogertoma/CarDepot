@@ -61,10 +61,10 @@ namespace CarDepot.VehicleStore
                 res.Close();
 
                 //Exterior Color
-                string exteriorColor = "Exterior Colour:\n</strong>\n<span class=\"value\">";
+                string exteriorColor = "Exterior Colour\n</span>\n<span class=\"separator\">:</span>\n<span class=\"value\">";
                 int startIndex = page.IndexOf(exteriorColor, System.StringComparison.Ordinal);
                 int length = page.IndexOf("</", startIndex + exteriorColor.Length, System.StringComparison.Ordinal) - startIndex - exteriorColor.Length;
-                string foundExteriorColor = page.Substring(startIndex + exteriorColor.Length, length);
+                string foundExteriorColor = page.Substring(startIndex + exteriorColor.Length, length).Trim();
                 dataMap.Add(PropertyId.ExtColor, foundExteriorColor.Trim());
 
                 string bodyStyle = "bodyStyle: '";
@@ -91,40 +91,40 @@ namespace CarDepot.VehicleStore
                 string foundModel = page.Substring(startIndex + Model.Length, length);
                 dataMap.Add(PropertyId.Model, foundModel.Trim());
 
-                string Transmission = "Transmission:\n</strong>\n<span class=\"value\">";
+                string Transmission = "\"transmission\": \"";
                 startIndex = page.IndexOf(Transmission, System.StringComparison.Ordinal);
-                length = page.IndexOf("<", startIndex + Transmission.Length, System.StringComparison.Ordinal) - startIndex - Transmission.Length;
+                length = page.IndexOf("\"", startIndex + Transmission.Length, System.StringComparison.Ordinal) - startIndex - Transmission.Length;
                 string foundTransmission = page.Substring(startIndex + Transmission.Length, length);
                 dataMap.Add(PropertyId.Transmission, foundTransmission.Trim());
 
-                string Engine = "Engine:\n</strong>\n<span class=\"value\">";
+                string Engine = "\"engine\": \"";
                 startIndex = page.IndexOf(Engine, System.StringComparison.Ordinal);
-                length = page.IndexOf("<", startIndex + Engine.Length, System.StringComparison.Ordinal) - startIndex - Engine.Length;
+                length = page.IndexOf("\"", startIndex + Engine.Length, System.StringComparison.Ordinal) - startIndex - Engine.Length;
                 string foundEngine = page.Substring(startIndex + Engine.Length, length);
                 dataMap.Add(PropertyId.Engine, foundEngine.Trim());
 
-                string StockNumber = "Stock #:\n</strong>\n<span class=\"value\">";
+                string StockNumber = "stockNumber: '";
                 startIndex = page.IndexOf(StockNumber, System.StringComparison.Ordinal);
-                length = page.IndexOf("<", startIndex + StockNumber.Length, System.StringComparison.Ordinal) - startIndex - StockNumber.Length;
+                length = page.IndexOf("'", startIndex + StockNumber.Length, System.StringComparison.Ordinal) - startIndex - StockNumber.Length;
                 string foundStockNumber = page.Substring(startIndex + StockNumber.Length, length);
                 dataMap.Add(PropertyId.StockNumber, foundStockNumber.Trim());
 
-                string Mileage = "Kilometres:\n</strong>\n<span class=\"value\">";
+                string Mileage = "\"odometer\": \"";
                 startIndex = page.IndexOf(Mileage, System.StringComparison.Ordinal);
-                length = page.IndexOf(" km", startIndex + Mileage.Length, System.StringComparison.Ordinal) - startIndex - Mileage.Length;
+                length = page.IndexOf("\"", startIndex + Mileage.Length, System.StringComparison.Ordinal) - startIndex - Mileage.Length;
                 string foundMileage = page.Substring(startIndex + Mileage.Length, length);
                 dataMap.Add(PropertyId.Mileage, foundMileage.Trim());
 
 
-                string Price = "<strong class=\"h1 price\">";
-                startIndex = page.IndexOf(Price, System.StringComparison.Ordinal);
+                string Price = "<strong class=\"h1 price\" >";
+                startIndex = page.LastIndexOf(Price, System.StringComparison.Ordinal);
                 length = page.IndexOf("<", startIndex + Price.Length, System.StringComparison.Ordinal) - startIndex - Price.Length;
                 string foundPrice = page.Substring(startIndex + Price.Length, length);
                 dataMap.Add(PropertyId.ListPrice, foundPrice.Trim());
 
-                string Trim = "<h1> " + foundYear + " " + foundMake + " " + foundModel;
+                string Trim = "\"trim\": \"";
                 startIndex = page.IndexOf(Trim, System.StringComparison.Ordinal);
-                length = page.IndexOf("<", startIndex + Trim.Length, System.StringComparison.Ordinal) - startIndex - Trim.Length;
+                length = page.IndexOf("\"", startIndex + Trim.Length, System.StringComparison.Ordinal) - startIndex - Trim.Length;
                 string foundTrim = page.Substring(startIndex + Trim.Length, length);
                 dataMap.Add(PropertyId.Trim, foundTrim.Trim());
 
