@@ -139,12 +139,13 @@ namespace CarDepot.VehicleStore
                                        linkHeader.Length;
 
                     string foundLink = page.Substring(foundIndex + linkHeader.Length, stringLength);
-                    if (foundLink.EndsWith(".jpg"))
+                    if (foundLink.Contains(".jpg"))
                     {
                         if (foundLink.StartsWith("//"))
                         {
+                            string imageExension = ".jpg";
                             foundLink = foundLink.Substring(2);
-                            foundLink = "http://" + foundLink;
+                            foundLink = "http://" + foundLink.Substring(0, foundLink.IndexOf(imageExension) + imageExension.Length);
                         }
 
                         WebClient downloadClient = new WebClient();
