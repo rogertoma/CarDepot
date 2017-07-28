@@ -775,6 +775,7 @@ namespace CarDepot.Controls.VehicleControls
                 createTradeInTask.AssignedTo = CacheManager.ActiveUser.Name.ToString(CultureInfo.InvariantCulture);
                 createTradeInTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
                 createTradeInTask.CreatedBy = CacheManager.ActiveUser.Name;
+                createTradeInTask.Priority = VehicleTask.TaskPriority.Priority1.ToString();
                 _vehicle.VehicleTasks.Add(createTradeInTask);
             }
             else

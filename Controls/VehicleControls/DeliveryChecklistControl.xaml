@@ -46,7 +46,7 @@
             </Grid.RowDefinitions>
 
             <Label Content="GENERAL COMMENTS" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" FontWeight="ExtraBlack"/>
-            <Controls:AdminTextBox x:Name="txtGeneralComments" PropertyId="DeliveryCheckListGeneralComments" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Height="70" TextWrapping="Wrap" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontSize="16"/>
+            <Controls:AdminTextBox x:Name="txtGeneralComments" PropertyId="DeliveryCheckListGeneralComments" Margin="0,0,0,0" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Height="Auto" MinHeight="70" TextWrapping="Wrap" VerticalAlignment="Center" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" FontSize="16"/>
         </Grid>
 
         <!--SafetyGrid-->
