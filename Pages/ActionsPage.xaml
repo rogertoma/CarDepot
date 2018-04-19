@@ -17,12 +17,16 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Button x:Name="BtnSearchVehicles" Margin="0,0,0,10" Content="Search Vehicles" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="1" Grid.Column="0" Click="BtnSearchVehicles_Click" />
         <Button x:Name="BtnSearchTasks" Content="Search Tasks" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="1" Click="BtnSearchTasks_Click"/>
         <Button x:Name="BtnSearchSold" Content="Search Sold" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="10,0,0,0" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="2" Click="BtnSearchSold_Click"/>
         <Button x:Name="BtnCreateNewVehicle" Margin="10,0,0,0" Content="Create New Vehicle" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="1" Grid.Column="3" Click="BtnCreateNewVehicle_Click" />
+        <Button x:Name="BtnBatchManheimImport" Margin="10,0,0,0" Content="Manheim import" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="70" Grid.Row="1" Grid.Column="4" Click="BtnBatchManheimImport_Click" />
+        <Button x:Name="BtnBatchAdesaImport" Margin="10,0,0,10" Content="Adesa import" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Background="YellowGreen"  Height="70" Grid.Row="1" Grid.Column="4" Click="BtnBatchAdesaImport_Click" />
+
         <Button x:Name="BtnSearchCustomers" Content="Search Customers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Margin="0,0,0,0" Background="ForestGreen"  Height="150" Grid.Row="2" Grid.Column="0" Click="BtnSearchCustomers_Click"/>
         <Button x:Name="BtnCreateNewCustomer" Margin="10,0,0,0" Content="Create New Customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="YellowGreen"  Height="150" Grid.Row="2" Grid.Column="1" Click="BtnCreateNewCustomer_Click"/>
         <Button x:Name="BtnKeyCheckout" Margin="0,10,0,0" Content="Key Checkout" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Background="ForestGreen"  Height="150" Grid.Row="3" Grid.Column="0" Click="BtnKeyCheckout_Click" />

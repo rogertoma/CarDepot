@@ -49,6 +49,17 @@ namespace CarDepot.VehicleStore
             if (validURL.IsMatch(url))
             {
                 imagePaths = new List<string[]>();
+
+                string urlAddress = url;
+                string page = "";
+
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11");
+                    page = client.DownloadString(url);
+                }
+
+                /*
                 Regex hostPattern = new Regex(@"[a-z][a-z0-9+\-.]*://([a-z0-9\-._~%]+|\[[a-z0-9\-._~%!$&'()*+,;=:]+\])", RegexOptions.IgnoreCase);
                 Match host = hostPattern.Match(url);
 
@@ -56,9 +67,10 @@ namespace CarDepot.VehicleStore
                 HttpWebResponse res = (HttpWebResponse)req.GetResponse();
                 StreamReader inStream = new StreamReader(res.GetResponseStream());
 
-                string page = inStream.ReadToEnd();
+                page = inStream.ReadToEnd();
                 inStream.Close();
                 res.Close();
+                */
 
                 //Exterior Color
                 string exteriorColor = "Exterior Colour\n</span>\n<span class=\"separator\">:</span>\n<span class=\"value\">";
@@ -101,6 +113,8 @@ namespace CarDepot.VehicleStore
                 startIndex = page.IndexOf(Engine, System.StringComparison.Ordinal);
                 length = page.IndexOf("\"", startIndex + Engine.Length, System.StringComparison.Ordinal) - startIndex - Engine.Length;
                 string foundEngine = page.Substring(startIndex + Engine.Length, length);
+                foundEngine = foundEngine.Replace("\\x2D", "-");
+                foundEngine = foundEngine.Replace("\\x20", " ");
                 dataMap.Add(PropertyId.Engine, foundEngine.Trim());
 
                 string StockNumber = "stockNumber: '";
@@ -126,6 +140,12 @@ namespace CarDepot.VehicleStore
                 startIndex = page.IndexOf(Trim, System.StringComparison.Ordinal);
                 length = page.IndexOf("\"", startIndex + Trim.Length, System.StringComparison.Ordinal) - startIndex - Trim.Length;
                 string foundTrim = page.Substring(startIndex + Trim.Length, length);
+                foundTrim = foundTrim.Replace("\\x2D", "-");
+                foundTrim = foundTrim.Replace("\\x20", " ");
+                if (foundTrim.StartsWith("-"))
+                {
+                    foundTrim = foundTrim.Substring(1);
+                }
                 dataMap.Add(PropertyId.Trim, foundTrim.Trim());
 
                 // Load Images
@@ -147,6 +167,8 @@ namespace CarDepot.VehicleStore
                             foundLink = foundLink.Substring(2);
                             foundLink = "http://" + foundLink.Substring(0, foundLink.IndexOf(imageExension) + imageExension.Length);
                         }
+
+                        foundLink = foundLink.Substring(0, foundLink.IndexOf(".jpg") + 4);
 
                         WebClient downloadClient = new WebClient();
                         string tempOutputFile = Resources.Settings.TempFolder + "\\Image" + DateTime.Now.ToFileTimeUtc().ToString() + ".jpg";

@@ -53,6 +53,13 @@ namespace CarDepot
             get { return GetValue(PropertyId.HomePhone); }
             set { ApplyValue(PropertyId.HomePhone, value); }
         }
+
+        public string Email
+        {
+            get { return GetValue(PropertyId.EMail); }
+            set { ApplyValue(PropertyId.EMail, value); }
+        }
+
         #endregion
 
         public CustomerAdminObject() 

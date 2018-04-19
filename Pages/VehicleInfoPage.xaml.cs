@@ -58,91 +58,7 @@ namespace CarDepot
 
         }
 
-        private int GetNextFolderId()
-        {
-            int largestId = 0;
-            List<string> directories = Directory.GetDirectories(Settings.VehiclePath).ToList();
-
-            foreach (var directory in directories)
-            {
-                DirectoryInfo dir = new DirectoryInfo(directory);
-                int id = 0;
-                if (int.TryParse(dir.Name, out id))
-                {
-                    if (id > largestId)
-                        largestId = id;
-                }
-            }
-
-            return largestId;
-        }
-
-        private VehicleAdminObject CreateNewDefaultVehicleObject()
-        {
-            int lastId = GetNextFolderId();
-
-            DirectoryInfo newDirectory = Directory.CreateDirectory(Settings.VehiclePath + "\\" + (lastId + 1));
-            FileStream newfile = File.Create(newDirectory.FullName + "\\" + Settings.VehicleInfoFileName);
-            string fileName = newfile.Name;
-            newfile.Close();
-
-            File.WriteAllText(fileName, Settings.VehicleInfoDefaultFileText);
-
-            VehicleAdminObject vehicle = new VehicleAdminObject(fileName);
-            vehicle.SetValue(PropertyId.PurchaseDate, ((DateTime)DateTime.Now).ToString("d"));
-
-            VehicleTask processVehicleTask = new VehicleTask();
-            processVehicleTask.Id = "Process Vehicle";
-            processVehicleTask.TaskVehicleId = vehicle.Id;
-            processVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
-            processVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            processVehicleTask.AssignedTo = "Mathew Toma";
-            processVehicleTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
-            processVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
-            vehicle.VehicleTasks.Add(processVehicleTask);
-
-            VehicleTask emissionVehicleTask = new VehicleTask();
-            emissionVehicleTask.Id = "Create folder & tag key";
-            emissionVehicleTask.TaskVehicleId = vehicle.Id;
-            emissionVehicleTask.CreatedDate = DateTime.Today.Date.ToString("d");
-            emissionVehicleTask.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            emissionVehicleTask.AssignedTo = "Filip Mitrofanov";
-            emissionVehicleTask.Category = VehicleTask.TaskCategoryTypes.Documentation.ToString();
-            emissionVehicleTask.CreatedBy = CacheManager.ActiveUser.Name;
-            vehicle.VehicleTasks.Add(emissionVehicleTask);
-
-            VehicleTask newVehicleClean = new VehicleTask();
-            newVehicleClean.Id = Strings.NEWCARCLEANINGTASK;
-            newVehicleClean.TaskVehicleId = vehicle.Id;
-            newVehicleClean.CreatedDate = DateTime.Today.Date.ToString("d");
-            newVehicleClean.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            newVehicleClean.AssignedTo = "Mike Wilson";
-            newVehicleClean.Category = VehicleTask.TaskCategoryTypes.Detail.ToString();
-            newVehicleClean.CreatedBy = CacheManager.ActiveUser.Name;
-            vehicle.VehicleTasks.Add(newVehicleClean);
-
-            VehicleTask newVehicleOilChange = new VehicleTask();
-            newVehicleOilChange.Id = Strings.NEWCAROILCHANGETASK;
-            newVehicleOilChange.TaskVehicleId = vehicle.Id;
-            newVehicleOilChange.CreatedDate = DateTime.Today.Date.ToString("d");
-            newVehicleOilChange.Status = VehicleTask.StatusTypes.NotStarted.ToString();
-            newVehicleOilChange.AssignedTo = "Kevin Kokoski";
-            newVehicleOilChange.Category = VehicleTask.TaskCategoryTypes.Other.ToString();
-            newVehicleOilChange.CreatedBy = CacheManager.ActiveUser.Name;
-            vehicle.VehicleTasks.Add(newVehicleOilChange);
-
-            vehicle.SetValue(PropertyId.Tasks, vehicle.VehicleTasks);
-            vehicle.Save(null);
-
-            vehicle.Cache = CacheManager.AllVehicleCache;
-            CacheManager.AllVehicleCache.Add(vehicle);
-
-            return vehicle;
-
-            //TODO: add this vehicle to some cache.
-            
-
-        }
+  
 
         public VehicleInfoWindow(VehicleAdminObject vehicle, VehicleInfoWindowTabs startTab)
         {
@@ -153,7 +69,7 @@ namespace CarDepot
             }
 
             InitializeComponent();
-            _vehicle = vehicle ?? CreateNewDefaultVehicleObject();
+            _vehicle = vehicle ?? Utilities.CreateNewDefaultVehicleObject();
 
             propertyPanels.Add(BasicVehicleControlPropertyPanel);
             propertyPanels.Add(ManageVehicleTasksControlPropertyPanel);

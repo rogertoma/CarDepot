@@ -219,5 +219,27 @@ namespace CarDepot.Controls
             }
         }
 
+        public void AddFiles(List<string> filePaths)
+        {
+            foreach (var fileName in filePaths)
+            {
+                MoveToAdditionalFilesFolder(fileName);
+            }
+
+            files.Clear();
+            foreach (var item in FileList.Items)
+            {
+                files.Add(new string[] { PropertyId.File.ToString(), item.ToString() });
+            }
+
+            _item.SetValue(PropertyId, files);
+
+            // If it's a customer we need to update the list here as well.
+            if (ListChanged != null)
+            {
+                ListChanged(files);
+            }
+        }
+
     }
 }

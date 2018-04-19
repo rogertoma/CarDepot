@@ -23,6 +23,10 @@ using CarDepot.Pages;
 using Panel = System.Windows.Controls.Panel;
 using PrintDialog = System.Windows.Controls.PrintDialog;
 using UserControl = System.Windows.Controls.UserControl;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.IO;
 
 namespace CarDepot.Controls.VehicleControls
 {
@@ -31,6 +35,7 @@ namespace CarDepot.Controls.VehicleControls
     /// </summary>
     public partial class SaleInfoControl : UserControl, IPropertyPanel
     {
+        DigitalSignature digitalSignature = null;
         public enum DepositTypes
         {
             Cash,
@@ -53,6 +58,7 @@ namespace CarDepot.Controls.VehicleControls
         }
 
         VehicleAdminObject _vehicle = null;
+        CustomerAdminObject customer = null;
 
         public SaleInfoControl()
         {
@@ -70,6 +76,7 @@ namespace CarDepot.Controls.VehicleControls
             LoadAllChildren(SaleInfoGrid, item);
             LoadAllChildren(WarrantyGrid, item);
             LoadAllChildren(TradeInGrid, item);
+            LoadAllChildren(EmailGrid, item);
 
             addtionalContentControl.ListChanged += addtionalContentControl_ListChanged;
 
@@ -316,6 +323,7 @@ namespace CarDepot.Controls.VehicleControls
             {
                 CustomerAdminObject customer = cache[0];
                 lblCustomerFound.Content = customer.FirstName + " " + customer.LastName;
+                this.customer = customer;
             }
             else
             {
@@ -430,7 +438,7 @@ namespace CarDepot.Controls.VehicleControls
 
             if (result == DialogResult.Yes)
             {
-                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, sender, e);
+                PrintInvoice printCurrentCar = new PrintInvoice(_vehicle, false, sender, e);
 
                 //if (!string.IsNullOrEmpty(_vehicle.GetValue(PropertyId.SaleTradeInVIN)))
                 //{
@@ -530,14 +538,6 @@ namespace CarDepot.Controls.VehicleControls
 
             if (!DateTime.TryParse(_vehicle.GetValue(PropertyId.SaleDate), out saleDate) )
             {
-                //foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
-                //{
-                    //if (vehicleTask.Id.Equals(Strings.SOLDCARCLEANINGTASK))
-                    //{
-                    //    _vehicle.VehicleTasks.Remove(vehicleTask);
-                    //    break;
-                    //}
-                //}
 
                 foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
                 {
@@ -557,17 +557,6 @@ namespace CarDepot.Controls.VehicleControls
                     }
                 }
 
-                /*
-                Ministry Paper Work
-                foreach (VehicleTask vehicleTask in _vehicle.VehicleTasks)
-                {
-                    if (vehicleTask.Id.Equals(Strings.SOLDCARMINISTRYTASK))
-                    {
-                        _vehicle.VehicleTasks.Remove(vehicleTask);
-                        break;
-                    }
-                }
-                */
                 _vehicle.SetMultiValue(PropertyId.Tasks, _vehicle.VehicleTasks);
                 return;
             }
@@ -717,7 +706,6 @@ namespace CarDepot.Controls.VehicleControls
         {
             Dictionary<CustomerCacheSearchKey, string> searchParam = new Dictionary<CustomerCacheSearchKey, string>();
             CustomerCache cache = null;
-            CustomerAdminObject customer = null;
             if (!string.IsNullOrEmpty(TxtCustomerId.Text))
             {
                 searchParam.Add(CustomerCacheSearchKey.Id, TxtCustomerId.Text);
@@ -852,6 +840,138 @@ namespace CarDepot.Controls.VehicleControls
             {
                 System.Windows.MessageBox.Show("Printing Appraisal Error: " + ex.Message);
             }
+        }
+
+        private void btnDigitalSignature_Click(object sender, RoutedEventArgs e)
+        {
+            digitalSignature = new DigitalSignature(_vehicle, sender, e);
+            //digitalSignature.DigitalSignatureDocumentsDownloaded += DigitalSignature_DigitalSignatureDocumentsDownloaded;
+            digitalSignature.SignDocument(customer);
+        }
+
+        private void DigitalSignature_DigitalSignatureDocumentsDownloaded(List<string> filePaths)
+        {
+            addtionalContentControl.AddFiles(filePaths);
+        }
+
+        private void btnDownloadDigitalSignature_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> digitalSignatureFiles;
+            if (digitalSignature != null)
+            {
+                digitalSignatureFiles = digitalSignature.DownloadDocuments();
+                addtionalContentControl.AddFiles(digitalSignatureFiles);
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Looks like there are no files signed, please complete the digital signature first", "Error");
+            }
+        }
+
+        private void EmailCustomer()
+        {
+            try
+            {
+                var fromAddress = new MailAddress("info@rogersmotors.ca", "Roger's Motors");
+                var toAddress = new MailAddress(customer.Email, string.Format("{0} {1}", customer.FirstName, customer.LastName));
+                const string fromPassword = "aJesus11";
+                string subject = string.Format(@"Congratulations on your new {0} {1} {2}", _vehicle.Year, _vehicle.Make, _vehicle.Model);
+
+                string billOfSaleFilePath = new FileInfo(_vehicle.ObjectId).Directory.FullName + "\\" + PropertyId.SaleAssociatedFiles + "\\Digitally Signed Bill of Sale.pdf";
+
+                string sSaleDeliveryDate = _vehicle.GetValue(PropertyId.SaleDeliveryDate);
+                DateTime saleDeliveryDate;
+                DateTime.TryParse(sSaleDeliveryDate, out saleDeliveryDate);
+
+                string mailBody = "";
+                mailBody += string.Format(@"<h1>Congratulations on your new {0} {1} {2} </h1>", _vehicle.Year, _vehicle.Make, _vehicle.Model);
+                mailBody += string.Format("Hey {0}", customer.FirstName);
+                mailBody += @"<br />";
+                mailBody += @"<p>Thank you for choosing Roger's Motors for this exciting chapter in your life.  For your convenience we have attached the bill of sale.</p>";
+
+                if (!string.IsNullOrEmpty(sSaleDeliveryDate))
+                {
+                    mailBody += string.Format(@"<p>We are working hard to get your vehicle ready for you and aim to have it ready for you on <b>{0}</b></p>",saleDeliveryDate.ToLongDateString());
+                }
+
+                if (chkSaleEmailBringInsurance.IsChecked == true || chkSaleEmailBringPlates.IsChecked == true || chkSaleEmailBringVoidCheque.IsChecked == true 
+                    || !string.IsNullOrEmpty(txtSaleEmailBalanceOwing.Text) || !string.IsNullOrEmpty(txtSaleEmailNotes.Text) || chkSaleEmailGoogleReviewRequest.IsChecked == true)
+                {
+                    mailBody += @"<br /><br />";
+                    mailBody += @"<h2>A few things you need to do</h2>";
+
+                    if (!string.IsNullOrEmpty(txtSaleEmailBalanceOwing.Text))
+                    {
+                        mailBody += @"<br /><h3>Balance Owing</h3><br />";
+                        double balance;
+                        Utilities.StringToDouble(txtSaleEmailBalanceOwing.Text, out balance);
+                        
+                        mailBody += String.Format(@"Please bring with you the balance of <b>${0}</b>, payment can be made with either Cash, Bank Draft, Money Order, Certified Check all of which can be made out to <b>Roger's Motors Ontario Inc.</b>", balance);
+                    }
+
+                    if (chkSaleEmailBringInsurance.IsChecked == true)
+                    {
+                        mailBody += @"<br /><br /><h3>Insurance</h3>";
+                        mailBody += "You need to set up insurance, please let your insurance broker know that we need to see a temporary liability slip which can be emailed to info@rogersmotors.ca or faxed to 905-618-3150";
+                    }
+
+                    if (chkSaleEmailBringVoidCheque.IsChecked == true)
+                    {
+                        mailBody += @"<br /><br /><h3>Financing</h3>";
+                        mailBody += "Since you appear to be financing we will need you to bring with you on the day of pick up either a VOID check or Preauthorized debit form.  <b>Must be a chequing account</b>";
+                    }
+
+                    if (chkSaleEmailBringPlates.IsChecked == true)
+                    {
+                        mailBody += @"<br /><br /><h3>Plates</h3>";
+                        mailBody += "Don't forget to bring your plates with you on the day of pickup.  Without them, you won't be able to drive home";
+                    }
+
+                    if (!string.IsNullOrEmpty(txtSaleEmailNotes.Text))
+                    {
+                        mailBody += String.Format(@"<br /><br /><h3>Notes from {0}</h3>", _vehicle.GetValue(PropertyId.SaleSoldBy));
+                        mailBody += txtSaleEmailNotes.Text;
+                    }
+
+                    if (chkSaleEmailGoogleReviewRequest.IsChecked == true)
+                    {
+                        mailBody += "<br /><br /><br /><br />If you enjoyed your experience at Roger's Motors we would love it if you share your thoughts on <a href=<a href=\"https://www.google.com/search?q=Rogers%20Motors&ludocid=7292081216556538409#lrd=0x0:0x6532ad3b3a269a29,1\">Google</a>";
+                    }
+
+                    mailBody += "<br /><br />";
+                }
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+                
+                var loggedInUseToAddress = new MailAddress(CacheManager.ActiveUser.Email, CacheManager.ActiveUser.Name);
+                MailMessage message = new MailMessage(fromAddress, toAddress);
+                message.To.Add(loggedInUseToAddress);
+                message.IsBodyHtml = true;
+                message.Body = mailBody;
+                message.Subject = subject;
+                message.Attachments.Add(new Attachment(billOfSaleFilePath));
+
+                {
+                    smtp.Send(message);
+                    System.Windows.Forms.MessageBox.Show("Congrats, the customer has been emailed everything they need", "Congrats");
+                }
+            } catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("EmailCustomer: " + ex.Message);
+            }
+        }
+
+        private void btnEmailSaleContract_Click(object sender, RoutedEventArgs e)
+        {
+            EmailCustomer();
         }
     }
 }

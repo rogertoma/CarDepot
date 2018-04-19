@@ -21,8 +21,9 @@ namespace CarDepot.VehicleStore
         float backgroundYPos = 10;
         private int numOfPages = 3;
         private int currentPage = 1;
+        public string PrintToPDFFilePath = "";
 
-        public PrintInvoice(VehicleAdminObject vehicle, Object sender, EventArgs e)
+        public PrintInvoice(VehicleAdminObject vehicle, bool printSilentToPDF, Object sender, EventArgs e)
         {
             currVehicle = vehicle;
 
@@ -38,8 +39,38 @@ namespace CarDepot.VehicleStore
 
             PrintDialog printDialog = new PrintDialog();
             printDialog.Document = invoice;
+            string path;
+            if (printSilentToPDF)
+            {
+                int i = 0;
+                while (true)
+                {
+                    path = new FileInfo(currVehicle.ObjectId).Directory.FullName + "\\" + PropertyId.SaleAssociatedFiles + "\\DigitalSignatureRequestPDF" + i + ".pdf";
+                    if (!File.Exists(path))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
 
-            if (printDialog.ShowDialog() == DialogResult.OK)
+                string directory = new FileInfo(path).Directory.FullName;
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                PrinterSettings printerSettings = new PrinterSettings();
+                printerSettings.PrintToFile = true;
+                printerSettings.PrinterName = "Microsoft Print to PDF";
+                string billOfSaleFilePath = path;
+                PrintToPDFFilePath = billOfSaleFilePath;
+                printerSettings.PrintFileName = PrintToPDFFilePath;
+
+                invoice.PrinterSettings = printerSettings;
+                invoice.Print();
+            }
+            else if (printDialog.ShowDialog() == DialogResult.OK)
             {
                 invoice.Print();
             }

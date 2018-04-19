@@ -106,6 +106,9 @@ namespace CarDepot.VehicleStore
                     case PropertyId.Password:
                         user.Password = element.Value;
                         break;
+                    case PropertyId.UserEmail:
+                        user.Email = element.Value;
+                        break;
                     case PropertyId.MainTabPages:
                         user.MainTabPages.Add(element.Value);
                         break;

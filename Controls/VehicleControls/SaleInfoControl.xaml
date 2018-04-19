@@ -155,7 +155,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="9" Grid.RowSpan="10" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <GroupBox Grid.Row="9" Grid.RowSpan="7" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid x:Name="TradeInGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -195,6 +195,42 @@
             </Grid>
         </GroupBox>
 
+        <GroupBox Grid.Row="17" Grid.RowSpan="9" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid x:Name="EmailGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="135"/>
+
+                </Grid.ColumnDefinitions>
+
+
+                <Label Content="EMAIL INFORMATION" Grid.Row="0" Grid.ColumnSpan="4" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <Label Content="BALANCE" Grid.Row="1" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Controls:AdminTextBox x:Name="txtSaleEmailBalanceOwing" PropertyId="SaleEmailBalanceOwing" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+                <Controls:AdminCheckBox x:Name="chkSaleEmailBringInsurance" PropertyId="SaleEmailBringInsurance"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" Content="Bring Insurance" VerticalAlignment="Top" Width="120"/>
+                <Controls:AdminCheckBox x:Name="chkSaleEmailBringVoidCheque" PropertyId="SaleEmailBringVoidCheque"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" Content="Bring Void Cheque" IsChecked="False" VerticalAlignment="Top" Width="120"/>
+
+                <Controls:AdminCheckBox x:Name="chkSaleEmailBringPlates" PropertyId="SaleEmailBringPlates"  Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" Content="Bring Plates" IsChecked="False" VerticalAlignment="Top" Width="120"/>
+                <Controls:AdminCheckBox x:Name="chkSaleEmailGoogleReviewRequest" PropertyId="SaleEmailGoogleReview"  Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" Content="Google Review" IsChecked="False" VerticalAlignment="Top" Width="120"/>
+
+                <Label Content="Additional Notes" Grid.Row="4" Grid.Column="0" Margin="0,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <Controls:AdminTextBox x:Name="txtSaleEmailNotes" PropertyId="SaleEmailNotes" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="20" Margin="10,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="270"/>
+
+                <Button Margin="0,10,10,0"  x:Name="btnEmailSaleContract" Content="Email Customer" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" Height="40" Click="btnEmailSaleContract_Click" Visibility="Visible"/>
+            </Grid>
+        </GroupBox>
+
         <GroupBox Grid.Row="24" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0">
             <Grid x:Name="PrintingGrid">
                 <Grid.RowDefinitions>
@@ -202,12 +238,15 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                
-                <Button Margin="0,0,10,0" x:Name="btnPrintAppraisalForm" Content="Appraisal Form" Grid.Column="0" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Bottom" Width="90" Height="40" Click="btnPrintAppraisalForm_Click"/>
-                <Button x:Name="btnPrint" Content="Print" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Bottom" Width="70" Height="40" Click="btnPrint_Click"/>
+                <Button Margin="0,0,10,0"  x:Name="btnDigitalSignature" Content="Digital Signature" Grid.Column="0" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Bottom" Width="100" Height="40" Click="btnDigitalSignature_Click" Visibility="Visible"/>
+                <Button Margin="0,0,10,0"  x:Name="btnDownloadDigitalSignature" Content="Download Signature" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Bottom" Width="130" Height="40" Click="btnDownloadDigitalSignature_Click" Visibility="Visible"/>
+                <Button Margin="0,0,10,0" x:Name="btnPrintAppraisalForm" Content="Appraisal Form" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Bottom" Width="90" Height="40" Click="btnPrintAppraisalForm_Click"/>
+                <Button x:Name="btnPrint" Content="Print" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="0" VerticalAlignment="Bottom" Width="70" Height="40" Click="btnPrint_Click"/>
 
             </Grid>
         </GroupBox>

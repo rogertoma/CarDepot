@@ -37,6 +37,7 @@ namespace CarDepot
         //User PropertyId's
         Name,
         Password,
+        UserEmail,
         Picture,
         MainTabPages,
         Permissions,
@@ -125,6 +126,14 @@ namespace CarDepot
         SaleTaxPercentage,
         SaleSoldBy,
         SaleManager,
+
+        //SaleEmail
+        SaleEmailBalanceOwing,
+        SaleEmailBringInsurance,
+        SaleEmailBringVoidCheque,
+        SaleEmailBringPlates,
+        SaleEmailNotes,
+        SaleEmailGoogleReview,
 
         PurchasePrice,
         PurchaseBuyerFee,
